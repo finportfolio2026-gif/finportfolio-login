@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinPortfolio — Courses</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
+
+    .header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      border: 1px solid #777;
+      padding: 8px 14px;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .intro {
+      margin-bottom: 30px;
+    }
+
+    .intro h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .intro p {
+      margin: 0;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .course {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 25px;
+    }
+
+    .course h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .course p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 45px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      color: #8b1e2d;
+      border: 1px solid #8b1e2d;
+      padding: 5px 9px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #8b1e2d;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 700px) {
+      .courses {
+        grid-template-columns: 1fr;
+      }
+
+      .intro h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo">FINPORTFOLIO</div>
+
+    <a href="dashboard.html" class="back">
+      ← Dashboard
+    </a>
+  </div>
+
+
+  <div class="container">
+
+    <div class="intro">
+      <h1>Courses</h1>
+      <p>
+        Learn finance through simple, practical and easy-to-understand lessons.
+      </p>
+    </div>
+
+
+    <div class="courses">
+
+      <div class="course">
+
+        <span class="tag">FREE</span>
+
+        <h2>Personal Finance Basics</h2>
+
+        <p>
+          Understand budgeting, saving, emergency funds and the basics of managing money.
+        </p>
+
+        <a href="#" class="btn">
+          Start Course →
+        </a>
+
+      </div>
+
+
+      <div class="course">
+
+        <span class="tag">FREE</span>
+
+        <h2>Mutual Fund Basics</h2>
+
+        <p>
+          Learn how mutual funds work, different fund types, SIPs, risk and returns.
+        </p>
+
+        <a href="#" class="btn">
+          Start Course →
+        </a>
+
+      </div>
+
+
+      <div class="course">
+
+        <span class="tag">FREE</span>
+
+        <h2>Stock Market Basics</h2>
+
+        <p>
+          Learn the fundamentals of stocks, exchanges, orders, investing and market risk.
+        </p>
+
+        <a href="#" class="btn">
+          Start Course →
+        </a>
+
+      </div>
+
+
+      <div class="course">
+
+        <span class="tag">FREE</span>
+
+        <h2>Investment & Risk Management</h2>
+
+        <p>
+          Understand risk, diversification, asset allocation and basic investment decisions.
+        </p>
+
+        <a href="#" class="btn">
+          Start Course →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
