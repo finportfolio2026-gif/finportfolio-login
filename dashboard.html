@@ -95,7 +95,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 15px;
     }
 
@@ -132,6 +132,12 @@
       color: #777;
       margin-top: 30px;
       font-size: 13px;
+    }
+
+    @media (max-width: 850px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 700px) {
@@ -213,6 +219,16 @@
           </p>
         </div>
 
+
+        <!-- ISSUED CERTIFICATES -->
+
+        <a href="issued-certificates.html" class="feature">
+          <h3>Issued Certificates</h3>
+          <p>
+            View certificates you have earned through FinPortfolio courses.
+          </p>
+        </a>
+
       </div>
     </div>
 
@@ -228,7 +244,7 @@
       "https://mxmxwosyhsfjaaocazdl.supabase.co";
 
     const SUPABASE_KEY =
-      "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+      "PASTE_YOUR_EXISTING_PUBLISHABLE_KEY_HERE";
 
 
     const supabaseClient = window.supabase.createClient(
