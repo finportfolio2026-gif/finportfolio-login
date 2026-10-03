@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FinPortfolio — Issued Certificates</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      border: 1px solid #777;
+      padding: 8px 14px;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .page-header {
+      margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+    }
+
+    .page-header p {
+      margin: 0;
+      color: #666;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .certificate-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .certificate-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .certificate-info h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .certificate-info p {
+      margin: 5px 0;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .issued-badge {
+      display: inline-block;
+      color: #245b2a;
+      background: #e8f5e9;
+      border: 1px solid #b7d9ba;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .certificate-actions {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid #eee;
+    }
+
+    .view-btn {
+      display: inline-block;
+      background: #8b1e2d;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .view-btn:hover {
+      opacity: 0.9;
+    }
+
+    .empty-state {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 40px 25px;
+      text-align: center;
+    }
+
+    .empty-state h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .empty-state p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      margin: 40px 0 25px;
+    }
+
+    @media (max-width: 700px) {
+
+      .container {
+        margin: 25px auto;
+      }
+
+      .page-header h1 {
+        font-size: 25px;
+      }
+
+      .certificate-top {
+        flex-direction: column;
+      }
+
+      .issued-badge {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+
+    <div class="logo">
+      FINPORTFOLIO
+    </div>
+
+    <a href="dashboard.html" class="back">
+      ← Dashboard
+    </a>
+
+  </div>
+
+
+  <div class="container">
+
+    <div class="page-header">
+
+      <h1>
+        Issued Certificates
+      </h1>
+
+      <p>
+        View and access certificates you have earned through
+        FinPortfolio courses.
+      </p>
+
+    </div>
+
+
+    <!-- CERTIFICATE -->
+
+    <div class="certificate-card">
+
+      <div class="certificate-top">
+
+        <div class="certificate-info">
+
+          <h2>
+            Personal Finance Basics
+          </h2>
+
+          <p>
+            <strong>Issued by:</strong> FinPortfolio
+          </p>
+
+          <p>
+            <strong>Status:</strong> Course Completed
+          </p>
+
+        </div>
+
+        <span class="issued-badge">
+          ISSUED
+        </span>
+
+      </div>
+
+
+      <div class="certificate-actions">
+
+        <a
+          href="certificate.html"
+          class="view-btn"
+        >
+          View Certificate →
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-note">
+
+      FinPortfolio — Where Finance Meets Clarity
+
+    </div>
+
+  </div>
+
+</body>
+</html>
