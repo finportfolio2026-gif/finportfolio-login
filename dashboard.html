@@ -104,6 +104,16 @@
       padding: 20px;
       border-radius: 8px;
       background: #fff;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .feature:hover {
+      border-color: #8b1e2d;
+      transform: translateY(-2px);
     }
 
     .feature h3 {
@@ -174,19 +184,33 @@
 
       <div class="grid">
 
-        <div class="feature">
+        <!-- COURSES -->
+
+        <a href="courses.html" class="feature">
           <h3>Courses</h3>
-          <p>Access finance learning resources and courses.</p>
-        </div>
+          <p>
+            Access finance learning resources and courses.
+          </p>
+        </a>
+
+
+        <!-- FINANCE TOOLS -->
 
         <div class="feature">
           <h3>Finance Tools</h3>
-          <p>Explore useful finance tools, calculators and templates.</p>
+          <p>
+            Explore useful finance tools, calculators and templates.
+          </p>
         </div>
+
+
+        <!-- RESEARCH -->
 
         <div class="feature">
           <h3>Research</h3>
-          <p>Explore selected research reports and financial insights.</p>
+          <p>
+            Explore selected research reports and financial insights.
+          </p>
         </div>
 
       </div>
@@ -206,10 +230,12 @@
     const SUPABASE_KEY =
       "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
 
+
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
+
 
     async function loadDashboard() {
 
@@ -218,10 +244,15 @@
         error: userError
       } = await supabaseClient.auth.getUser();
 
+
       if (userError || !user) {
+
         window.location.href = "index.html";
+
         return;
+
       }
+
 
       const { data: profile, error: profileError } =
         await supabaseClient
@@ -230,27 +261,38 @@
           .eq("id", user.id)
           .single();
 
+
       if (profileError) {
+
         document.getElementById("status").textContent =
           "Unable to load profile.";
+
         return;
+
       }
+
 
       document.getElementById("userName").textContent =
         profile.full_name || "User";
 
+
       document.getElementById("profileName").textContent =
         profile.full_name || "Not available";
+
 
       document.getElementById("profileEmail").textContent =
         profile.email || user.email;
 
+
       document.getElementById("membership").textContent =
         profile.membership || "Free";
 
+
       document.getElementById("status").textContent =
         "Your account is active.";
+
     }
+
 
     document.getElementById("logoutBtn").addEventListener(
       "click",
@@ -259,8 +301,10 @@
         await supabaseClient.auth.signOut();
 
         window.location.href = "index.html";
+
       }
     );
+
 
     loadDashboard();
 
