@@ -150,9 +150,11 @@
       </div>
 
       <!-- LOGIN -->
+
       <form id="loginForm">
 
         <label>Email</label>
+
         <input
           type="email"
           id="loginEmail"
@@ -161,6 +163,7 @@
         >
 
         <label>Password</label>
+
         <input
           type="password"
           id="loginPassword"
@@ -174,10 +177,13 @@
 
       </form>
 
+
       <!-- SIGNUP -->
+
       <form id="signupForm" class="hidden">
 
         <label>Full Name</label>
+
         <input
           type="text"
           id="signupName"
@@ -186,6 +192,7 @@
         >
 
         <label>Email</label>
+
         <input
           type="email"
           id="signupEmail"
@@ -194,6 +201,7 @@
         >
 
         <label>Password</label>
+
         <input
           type="password"
           id="signupPassword"
@@ -208,9 +216,11 @@
 
       </form>
 
+
       <div id="message" class="message"></div>
 
     </div>
+
 
     <div class="footer">
       © 2026 FinPortfolio
@@ -218,13 +228,8 @@
 
   </div>
 
-  <script>
 
-    /*
-      IMPORTANT:
-      Use your actual Supabase Project URL here.
-      Do NOT add /rest/v1/E or any other path.
-    */
+  <script>
 
     const SUPABASE_URL =
       "https://mxmxwosyhsfjaaocazdl.supabase.co";
@@ -239,23 +244,32 @@
     );
 
 
-    const loginTab = document.getElementById("loginTab");
-    const signupTab = document.getElementById("signupTab");
+    const loginTab =
+      document.getElementById("loginTab");
 
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
+    const signupTab =
+      document.getElementById("signupTab");
 
-    const message = document.getElementById("message");
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const signupForm =
+      document.getElementById("signupForm");
+
+    const message =
+      document.getElementById("message");
 
 
-    /* LOGIN / SIGNUP TABS */
+    /* LOGIN TAB */
 
     loginTab.addEventListener("click", () => {
 
       loginTab.classList.add("active");
+
       signupTab.classList.remove("active");
 
       loginForm.classList.remove("hidden");
+
       signupForm.classList.add("hidden");
 
       message.textContent = "";
@@ -263,12 +277,16 @@
     });
 
 
+    /* SIGNUP TAB */
+
     signupTab.addEventListener("click", () => {
 
       signupTab.classList.add("active");
+
       loginTab.classList.remove("active");
 
       signupForm.classList.remove("hidden");
+
       loginForm.classList.add("hidden");
 
       message.textContent = "";
@@ -281,6 +299,7 @@
     signupForm.addEventListener("submit", async (e) => {
 
       e.preventDefault();
+
 
       const name =
         document.getElementById("signupName").value.trim();
@@ -304,9 +323,11 @@
           password: password,
 
           options: {
+
             data: {
               full_name: name
             }
+
           }
 
         });
@@ -335,6 +356,7 @@
     loginForm.addEventListener("submit", async (e) => {
 
       e.preventDefault();
+
 
       const email =
         document.getElementById("loginEmail").value.trim();
@@ -367,13 +389,10 @@
       }
 
 
-      message.textContent =
-        "Login successful!";
+      /* LOGIN SUCCESS → DASHBOARD */
 
-      /*
-        Dashboard will be connected here
-        in the next step.
-      */
+      window.location.href =
+        "dashboard.html";
 
     });
 
