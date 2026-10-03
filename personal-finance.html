@@ -1430,8 +1430,21 @@
       const {
         data: {
           user
-        }
+        },
+        error: userError
       } = await supabaseClient.auth.getUser();
+
+
+      if (userError) {
+
+        console.error(
+          "Supabase user error:",
+          JSON.stringify(userError, null, 2)
+        );
+
+        return false;
+
+      }
 
 
       if (!user) {
@@ -1446,30 +1459,43 @@
 
 
       const {
+        data,
         error
       } = await supabaseClient
         .from("course_completions")
         .insert({
           user_id: user.id,
           course_name: "Personal Finance Basics"
-        });
+        })
+        .select();
 
 
       if (error) {
 
-        if (error.code === "23505") {
-          return true;
-        }
-
         console.error(
           "Certificate record error:",
-          error
+          JSON.stringify(error, null, 2)
+        );
+
+        console.error(
+          "User ID:",
+          user.id
+        );
+
+        console.error(
+          "Response data:",
+          data
         );
 
         return false;
 
       }
 
+
+      console.log(
+        "Course completion saved successfully:",
+        JSON.stringify(data, null, 2)
+      );
 
       return true;
 
