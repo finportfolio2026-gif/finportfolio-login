@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FinPortfolio — Certificate</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f7f3eb;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #202020;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 15px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .certificate {
+      background: #fff;
+      border: 10px solid #202020;
+      padding: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .inner {
+      border: 2px solid #8b1e2d;
+      min-height: 600px;
+      padding: 55px 45px;
+      text-align: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .brand {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 4px;
+      color: #8b1e2d;
+      margin-bottom: 25px;
+    }
+
+    .title {
+      font-size: 46px;
+      letter-spacing: 2px;
+      margin: 0;
+      font-weight: normal;
+    }
+
+    .line {
+      width: 90px;
+      height: 2px;
+      background: #8b1e2d;
+      margin: 22px auto;
+    }
+
+    .certify {
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      color: #666;
+      margin: 5px 0 18px;
+    }
+
+    .name {
+      font-size: 36px;
+      font-weight: bold;
+      color: #202020;
+      margin: 5px 0 15px;
+    }
+
+    .description {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #555;
+      margin: 0 auto 12px;
+      line-height: 1.6;
+    }
+
+    .course {
+      font-size: 28px;
+      color: #8b1e2d;
+      font-weight: bold;
+      margin: 8px 0 18px;
+    }
+
+    .provider {
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      color: #555;
+      margin: 0;
+    }
+
+    .footer {
+      margin-top: 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .signature {
+      text-align: center;
+      min-width: 180px;
+    }
+
+    .signature-line {
+      border-top: 1px solid #555;
+      margin-bottom: 7px;
+    }
+
+    .signature-name {
+      font-weight: bold;
+      color: #202020;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .actions button,
+    .actions a {
+      display: inline-block;
+      border: none;
+      padding: 11px 18px;
+      margin: 5px;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .print-btn {
+      background: #8b1e2d;
+      color: white;
+    }
+
+    .dashboard-btn {
+      background: #202020;
+      color: white;
+    }
+
+    .loading {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #666;
+      padding: 50px;
+    }
+
+    @media (max-width: 700px) {
+
+      body {
+        padding: 15px 8px;
+      }
+
+      .certificate {
+        border-width: 6px;
+      }
+
+      .inner {
+        min-height: 550px;
+        padding: 40px 20px;
+      }
+
+      .title {
+        font-size: 32px;
+      }
+
+      .name {
+        font-size: 27px;
+      }
+
+      .course {
+        font-size: 22px;
+      }
+
+      .description {
+        font-size: 14px;
+      }
+
+      .footer {
+        margin-top: 30px;
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+      }
+    }
+
+    @media print {
+
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .wrapper {
+        max-width: none;
+        width: 100%;
+      }
+
+      .certificate {
+        box-shadow: none;
+        width: 100%;
+      }
+
+      .actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrapper">
+
+    <div id="loading" class="loading">
+      Loading your certificate...
+    </div>
+
+    <div id="certificateContent" style="display: none;">
+
+      <div class="certificate">
+
+        <div class="inner">
+
+          <div class="brand">
+            FINPORTFOLIO
+          </div>
+
+          <h1 class="title">
+            Certificate of Completion
+          </h1>
+
+          <div class="line"></div>
+
+          <p class="certify">
+            This is to certify that
+          </p>
+
+          <div class="name" id="userName">
+            User
+          </div>
+
+          <p class="description">
+            has successfully completed the course
+          </p>
+
+          <div class="course">
+            Personal Finance Basics
+          </div>
+
+          <p class="provider">
+            by FinPortfolio
+          </p>
+
+          <div class="footer">
+
+            <div>
+              <div>Issued by</div>
+              <strong>FinPortfolio</strong>
+            </div>
+
+            <div class="signature">
+
+              <div class="signature-line"></div>
+
+              <div class="signature-name">
+                FinPortfolio
+              </div>
+
+              <div>
+                Founder & Research Lead
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="print-btn"
+          onclick="window.print()">
+          Print / Save as PDF
+        </button>
+
+        <a
+          href="dashboard.html"
+          class="dashboard-btn">
+          ← Dashboard
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+    const SUPABASE_KEY =
+      "YOUR_PUBLISHABLE_KEY_HERE";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    async function loadCertificate() {
+
+      /*
+        STEP 1:
+        Check whether the user actually passed
+        the Personal Finance Basics quiz.
+      */
+
+      const passed =
+        localStorage.getItem(
+          "finportfolio_course_passed"
+        );
+
+      if (passed !== "true") {
+
+        window.location.href =
+          "courses.html";
+
+        return;
+      }
+
+
+      /*
+        STEP 2:
+        Get the currently logged-in user.
+      */
+
+      const {
+        data: { user },
+        error: userError
+      } = await supabaseClient.auth.getUser();
+
+
+      if (userError || !user) {
+
+        window.location.href =
+          "index.html";
+
+        return;
+      }
+
+
+      /*
+        STEP 3:
+        Get the user's profile.
+      */
+
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select("full_name")
+        .eq("id", user.id)
+        .single();
+
+
+      if (profileError) {
+
+        document.getElementById("loading").textContent =
+          "Unable to load your certificate.";
+
+        return;
+      }
+
+
+      /*
+        STEP 4:
+        Display the user's name.
+      */
+
+      document.getElementById("userName").textContent =
+        profile.full_name || "FinPortfolio Learner";
+
+
+      /*
+        STEP 5:
+        Show certificate.
+      */
+
+      document.getElementById("loading").style.display =
+        "none";
+
+      document.getElementById("certificateContent").style.display =
+        "block";
+    }
+
+
+    loadCertificate();
+
+  </script>
+
+</body>
+</html>
