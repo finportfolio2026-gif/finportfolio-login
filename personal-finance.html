@@ -338,15 +338,22 @@
       cursor: pointer;
     }
 
-    .certificate-placeholder {
+    /* CERTIFICATE BUTTON */
+
+    .certificate-btn {
       display: inline-block;
       margin-top: 15px;
       background: #8b1e2d;
       color: white;
+      text-decoration: none;
       padding: 11px 17px;
       border-radius: 5px;
       font-size: 13px;
       font-weight: bold;
+    }
+
+    .certificate-btn:hover {
+      opacity: 0.9;
     }
 
     .footer-note {
@@ -1517,9 +1524,9 @@
           "Congratulations! You have successfully passed " +
           "the Personal Finance Basics final assessment." +
           "<br><br>" +
-          "<span class='certificate-placeholder'>" +
-          "Certificate — Coming Next" +
-          "</span>";
+          "<a href='certificate.html' class='certificate-btn'>" +
+          "View Certificate →" +
+          "</a>";
 
 
         result.style.background =
