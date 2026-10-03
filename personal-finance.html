@@ -117,6 +117,7 @@
       width: 0%;
       height: 100%;
       background: #8b1e2d;
+      transition: width 0.3s ease;
     }
 
     .lesson {
@@ -125,6 +126,10 @@
       border-radius: 10px;
       padding: 30px;
       margin-bottom: 20px;
+    }
+
+    .lesson.locked {
+      opacity: 0.55;
     }
 
     .lesson-number {
@@ -189,6 +194,40 @@
       color: #777;
     }
 
+    .lesson-action {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .complete-btn {
+      background: #8b1e2d;
+      color: white;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .complete-btn:hover {
+      opacity: 0.9;
+    }
+
+    .complete-btn.completed {
+      background: #555;
+      cursor: default;
+    }
+
+    .locked-message {
+      font-size: 13px;
+      color: #777;
+      margin-top: 15px;
+      padding: 12px;
+      background: #f7f3eb;
+      border-radius: 5px;
+    }
+
     .quiz-preview {
       background: #202020;
       color: white;
@@ -196,6 +235,10 @@
       padding: 30px;
       margin-top: 30px;
       text-align: center;
+    }
+
+    .quiz-preview.locked {
+      opacity: 0.6;
     }
 
     .quiz-preview h2 {
@@ -216,6 +259,22 @@
       border-radius: 4px;
       font-size: 11px;
       margin-bottom: 12px;
+    }
+
+    .quiz-btn {
+      display: none;
+      margin-top: 15px;
+      background: white;
+      color: #202020;
+      text-decoration: none;
+      padding: 11px 17px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .quiz-btn.show {
+      display: inline-block;
     }
 
     .footer-note {
@@ -247,6 +306,10 @@
 
       .course-meta {
         gap: 12px;
+      }
+
+      .lesson-action {
+        text-align: left;
       }
     }
   </style>
@@ -310,12 +373,12 @@
 
       <div class="progress-box">
 
-        <div class="progress-text">
+        <div class="progress-text" id="progressText">
           Course Progress — 0%
         </div>
 
         <div class="progress-bar">
-          <div class="progress-fill"></div>
+          <div class="progress-fill" id="progressFill"></div>
         </div>
 
       </div>
@@ -325,7 +388,7 @@
 
     <!-- LESSON 1 -->
 
-    <div class="lesson">
+    <div class="lesson" id="lesson1">
 
       <div class="lesson-number">
         LESSON 01
@@ -378,12 +441,18 @@
         trying to achieve.
       </div>
 
+      <div class="lesson-action">
+        <button class="complete-btn" id="button1" onclick="completeLesson(1)">
+          Mark Lesson 1 as Complete →
+        </button>
+      </div>
+
     </div>
 
 
     <!-- LESSON 2 -->
 
-    <div class="lesson">
+    <div class="lesson locked" id="lesson2">
 
       <div class="lesson-number">
         LESSON 02
@@ -444,12 +513,22 @@
         clearer picture of your financial position.
       </div>
 
+      <div class="lesson-action">
+        <button class="complete-btn" id="button2" onclick="completeLesson(2)">
+          Mark Lesson 2 as Complete →
+        </button>
+      </div>
+
+      <div class="locked-message" id="locked2">
+        🔒 Complete Lesson 1 to unlock this lesson.
+      </div>
+
     </div>
 
 
     <!-- LESSON 3 -->
 
-    <div class="lesson">
+    <div class="lesson locked" id="lesson3">
 
       <div class="lesson-number">
         LESSON 03
@@ -506,12 +585,22 @@
         Its purpose is to help you make intentional spending decisions.
       </div>
 
+      <div class="lesson-action">
+        <button class="complete-btn" id="button3" onclick="completeLesson(3)">
+          Mark Lesson 3 as Complete →
+        </button>
+      </div>
+
+      <div class="locked-message" id="locked3">
+        🔒 Complete Lesson 2 to unlock this lesson.
+      </div>
+
     </div>
 
 
     <!-- LESSON 4 -->
 
-    <div class="lesson">
+    <div class="lesson locked" id="lesson4">
 
       <div class="lesson-number">
         LESSON 04
@@ -560,12 +649,22 @@
         unexpected expenses without immediately depending on debt.
       </div>
 
+      <div class="lesson-action">
+        <button class="complete-btn" id="button4" onclick="completeLesson(4)">
+          Mark Lesson 4 as Complete →
+        </button>
+      </div>
+
+      <div class="locked-message" id="locked4">
+        🔒 Complete Lesson 3 to unlock this lesson.
+      </div>
+
     </div>
 
 
     <!-- LESSON 5 -->
 
-    <div class="lesson">
+    <div class="lesson locked" id="lesson5">
 
       <div class="lesson-number">
         LESSON 05
@@ -623,12 +722,22 @@
         risk profile.
       </div>
 
+      <div class="lesson-action">
+        <button class="complete-btn" id="button5" onclick="completeLesson(5)">
+          Mark Lesson 5 as Complete →
+        </button>
+      </div>
+
+      <div class="locked-message" id="locked5">
+        🔒 Complete Lesson 4 to unlock this lesson.
+      </div>
+
     </div>
 
 
     <!-- LESSON 6 -->
 
-    <div class="lesson">
+    <div class="lesson locked" id="lesson6">
 
       <div class="lesson-number">
         LESSON 06
@@ -701,30 +810,38 @@
         putting all your financial resources into a single investment.
       </div>
 
+      <div class="lesson-action">
+        <button class="complete-btn" id="button6" onclick="completeLesson(6)">
+          Mark Lesson 6 as Complete →
+        </button>
+      </div>
+
+      <div class="locked-message" id="locked6">
+        🔒 Complete Lesson 5 to unlock this lesson.
+      </div>
+
     </div>
 
 
     <!-- FINAL QUIZ -->
 
-    <div class="quiz-preview">
+    <div class="quiz-preview locked" id="quizBox">
 
       <span class="quiz-label">
         FINAL ASSESSMENT
       </span>
 
       <h2>
-        Ready for the Final Quiz?
+        Final Quiz
       </h2>
 
-      <p>
-        Complete all six lessons and test your understanding through
-        the final assessment.
+      <p id="quizMessage">
+        Complete all six lessons to unlock the final quiz.
       </p>
 
-      <p>
-        A passing score will be required to complete the course and
-        become eligible for the FinPortfolio Certificate of Completion.
-      </p>
+      <a href="#" class="quiz-btn" id="quizBtn">
+        Start Final Quiz →
+      </a>
 
     </div>
 
@@ -736,6 +853,156 @@
     </div>
 
   </div>
+
+
+  <script>
+
+    let completedLessons =
+      JSON.parse(localStorage.getItem("finportfolio_course_progress")) || [];
+
+    function updateCourse() {
+
+      for (let i = 1; i <= 6; i++) {
+
+        const lesson =
+          document.getElementById("lesson" + i);
+
+        const button =
+          document.getElementById("button" + i);
+
+        const lockedMessage =
+          document.getElementById("locked" + i);
+
+        if (completedLessons.includes(i)) {
+
+          lesson.classList.remove("locked");
+
+          button.disabled = true;
+
+          button.classList.add("completed");
+
+          button.textContent =
+            "✓ Lesson " + i + " Completed";
+
+          if (lockedMessage) {
+            lockedMessage.style.display = "none";
+          }
+
+        } else if (
+          i === 1 ||
+          completedLessons.includes(i - 1)
+        ) {
+
+          lesson.classList.remove("locked");
+
+          button.disabled = false;
+
+          if (lockedMessage) {
+            lockedMessage.style.display = "none";
+          }
+
+        } else {
+
+          lesson.classList.add("locked");
+
+          button.disabled = true;
+
+          if (lockedMessage) {
+            lockedMessage.style.display = "block";
+          }
+
+        }
+
+      }
+
+
+      const completedCount =
+        completedLessons.length;
+
+      const progress =
+        Math.round((completedCount / 6) * 100);
+
+      document.getElementById("progressText").textContent =
+        "Course Progress — " + progress + "%";
+
+      document.getElementById("progressFill").style.width =
+        progress + "%";
+
+
+      const quizBox =
+        document.getElementById("quizBox");
+
+      const quizMessage =
+        document.getElementById("quizMessage");
+
+      const quizBtn =
+        document.getElementById("quizBtn");
+
+
+      if (completedCount === 6) {
+
+        quizBox.classList.remove("locked");
+
+        quizMessage.textContent =
+          "You have completed all six lessons. You can now take the final assessment.";
+
+        quizBtn.classList.add("show");
+
+      } else {
+
+        quizBox.classList.add("locked");
+
+        quizMessage.textContent =
+          "Complete all six lessons to unlock the final quiz.";
+
+        quizBtn.classList.remove("show");
+
+      }
+
+    }
+
+
+    function completeLesson(number) {
+
+      if (!completedLessons.includes(number)) {
+
+        completedLessons.push(number);
+
+        completedLessons.sort(
+          function(a, b) {
+            return a - b;
+          }
+        );
+
+        localStorage.setItem(
+          "finportfolio_course_progress",
+          JSON.stringify(completedLessons)
+        );
+
+        updateCourse();
+
+        if (number < 6) {
+
+          const nextLesson =
+            document.getElementById(
+              "lesson" + (number + 1)
+            );
+
+          nextLesson.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+        }
+
+      }
+
+    }
+
+
+    updateCourse();
+
+  </script>
 
 </body>
 </html>
