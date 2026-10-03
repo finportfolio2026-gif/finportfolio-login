@@ -6,6 +6,8 @@
 
   <title>FinPortfolio — Personal Finance Basics</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -1252,6 +1254,19 @@
 
   <script>
 
+    const SUPABASE_URL =
+      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
     let completedLessons =
       JSON.parse(
         localStorage.getItem("finportfolio_course_progress")
@@ -1410,7 +1425,58 @@
     }
 
 
-    function submitQuiz() {
+    async function issueCertificateRecord() {
+
+      const {
+        data: {
+          user
+        }
+      } = await supabaseClient.auth.getUser();
+
+
+      if (!user) {
+
+        console.error(
+          "No logged-in user found."
+        );
+
+        return false;
+
+      }
+
+
+      const {
+        error
+      } = await supabaseClient
+        .from("course_completions")
+        .insert({
+          user_id: user.id,
+          course_name: "Personal Finance Basics"
+        });
+
+
+      if (error) {
+
+        if (error.code === "23505") {
+          return true;
+        }
+
+        console.error(
+          "Certificate record error:",
+          error
+        );
+
+        return false;
+
+      }
+
+
+      return true;
+
+    }
+
+
+    async function submitQuiz() {
 
       const answers = {
 
@@ -1514,6 +1580,12 @@
 
       if (percentage >= 50) {
 
+        localStorage.setItem(
+          "finportfolio_course_passed",
+          "true"
+        );
+
+
         result.innerHTML =
           "<strong>Quiz Passed!</strong><br><br>" +
           "Your Score: " +
@@ -1524,9 +1596,7 @@
           "Congratulations! You have successfully passed " +
           "the Personal Finance Basics final assessment." +
           "<br><br>" +
-          "<a href='certificate.html' class='certificate-btn'>" +
-          "View Certificate →" +
-          "</a>";
+          "<span style='font-size:13px;color:#555;'>Issuing your certificate...</span>";
 
 
         result.style.background =
@@ -1537,10 +1607,43 @@
           "#245b2a";
 
 
-        localStorage.setItem(
-          "finportfolio_course_passed",
-          "true"
-        );
+        const certificateIssued =
+          await issueCertificateRecord();
+
+
+        if (certificateIssued) {
+
+          result.innerHTML =
+            "<strong>Quiz Passed!</strong><br><br>" +
+            "Your Score: " +
+            score +
+            "/10 (" +
+            percentage +
+            "%)<br><br>" +
+            "Congratulations! You have successfully passed " +
+            "the Personal Finance Basics final assessment." +
+            "<br><br>" +
+            "<a href='certificate.html' class='certificate-btn'>" +
+            "View Certificate →" +
+            "</a>";
+
+        } else {
+
+          result.innerHTML =
+            "<strong>Quiz Passed!</strong><br><br>" +
+            "Your Score: " +
+            score +
+            "/10 (" +
+            percentage +
+            "%)<br><br>" +
+            "Your course has been marked as passed, but we could not " +
+            "save the certificate record right now. Please try again." +
+            "<br><br>" +
+            "<button class='retake-btn' onclick='submitQuiz()'>" +
+            "Try Again" +
+            "</button>";
+
+        }
 
       } else {
 
