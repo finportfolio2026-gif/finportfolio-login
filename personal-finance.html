@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FinPortfolio — Personal Finance Basics</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
+
+    .header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      border: 1px solid #777;
+      padding: 8px 14px;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .course-header {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 25px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      color: #8b1e2d;
+      border: 1px solid #8b1e2d;
+      padding: 5px 9px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 30px;
+    }
+
+    .intro {
+      color: #666;
+      line-height: 1.6;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .course-meta {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: #555;
+      border-top: 1px solid #eee;
+      padding-top: 18px;
+    }
+
+    .course-meta strong {
+      color: #202020;
+    }
+
+    .progress-box {
+      background: #f7f3eb;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 7px;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #8b1e2d;
+    }
+
+    .lesson {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    .lesson-number {
+      color: #8b1e2d;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+
+    .lesson h2 {
+      margin: 0 0 15px;
+      font-size: 22px;
+    }
+
+    .lesson h3 {
+      margin-top: 25px;
+      font-size: 17px;
+    }
+
+    .lesson p {
+      color: #444;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .lesson ul {
+      color: #444;
+      line-height: 1.8;
+      padding-left: 22px;
+    }
+
+    .highlight {
+      background: #f7f3eb;
+      border-left: 4px solid #8b1e2d;
+      padding: 15px 18px;
+      margin: 20px 0;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .example {
+      border: 1px solid #ddd;
+      padding: 18px;
+      border-radius: 7px;
+      margin: 20px 0;
+      background: #fafafa;
+    }
+
+    .example-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #8b1e2d;
+      margin-bottom: 8px;
+    }
+
+    .lesson-end {
+      border-top: 1px solid #eee;
+      margin-top: 25px;
+      padding-top: 15px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .quiz-preview {
+      background: #202020;
+      color: white;
+      border-radius: 10px;
+      padding: 30px;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .quiz-preview h2 {
+      margin-top: 0;
+      font-size: 22px;
+    }
+
+    .quiz-preview p {
+      color: #ccc;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .quiz-label {
+      display: inline-block;
+      border: 1px solid #aaa;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      margin: 30px 0;
+    }
+
+    @media (max-width: 700px) {
+
+      .container {
+        margin: 25px auto;
+      }
+
+      .course-header,
+      .lesson,
+      .quiz-preview {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .lesson h2 {
+        font-size: 20px;
+      }
+
+      .course-meta {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+
+    <div class="logo">
+      FINPORTFOLIO
+    </div>
+
+    <a href="courses.html" class="back">
+      ← Courses
+    </a>
+
+  </div>
+
+
+  <div class="container">
+
+
+    <!-- COURSE HEADER -->
+
+    <div class="course-header">
+
+      <span class="tag">
+        FREE COURSE
+      </span>
+
+      <h1>
+        Personal Finance Basics
+      </h1>
+
+      <p class="intro">
+        A practical introduction to managing money, building financial
+        discipline, saving for the future and understanding the basics
+        of investing.
+      </p>
+
+      <div class="course-meta">
+
+        <span>
+          <strong>Level:</strong> Beginner
+        </span>
+
+        <span>
+          <strong>Lessons:</strong> 6
+        </span>
+
+        <span>
+          <strong>Format:</strong> Reading
+        </span>
+
+        <span>
+          <strong>Assessment:</strong> Final Quiz
+        </span>
+
+      </div>
+
+      <div class="progress-box">
+
+        <div class="progress-text">
+          Course Progress — 0%
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- LESSON 1 -->
+
+    <div class="lesson">
+
+      <div class="lesson-number">
+        LESSON 01
+      </div>
+
+      <h2>
+        Understanding Personal Finance
+      </h2>
+
+      <p>
+        Personal finance is the process of managing the money you earn,
+        spend, save and invest.
+      </p>
+
+      <p>
+        It is not simply about earning more. Good personal finance is
+        also about making thoughtful decisions about the money you
+        already have.
+      </p>
+
+      <div class="highlight">
+
+        <strong>The basic financial cycle:</strong><br><br>
+
+        Earn → Spend → Save → Invest → Protect
+
+      </div>
+
+      <h3>
+        Key areas of personal finance
+      </h3>
+
+      <ul>
+        <li>Managing income and everyday expenses</li>
+        <li>Creating a realistic budget</li>
+        <li>Building savings</li>
+        <li>Maintaining an emergency fund</li>
+        <li>Investing for future goals</li>
+        <li>Managing financial risks and debt</li>
+      </ul>
+
+      <p>
+        The objective is to create a system where your money supports
+        both your current needs and your future goals.
+      </p>
+
+      <div class="lesson-end">
+        Key takeaway: Financial decisions become easier when you know
+        where your money comes from, where it goes and what you are
+        trying to achieve.
+      </div>
+
+    </div>
+
+
+    <!-- LESSON 2 -->
+
+    <div class="lesson">
+
+      <div class="lesson-number">
+        LESSON 02
+      </div>
+
+      <h2>
+        Income & Expenses
+      </h2>
+
+      <p>
+        Income is the money you receive. Expenses are the amounts you
+        spend to meet your needs, wants and financial commitments.
+      </p>
+
+      <h3>
+        Understanding income
+      </h3>
+
+      <p>
+        Income can come from sources such as salary, business income,
+        freelance work, interest or other legitimate sources.
+      </p>
+
+      <h3>
+        Understanding expenses
+      </h3>
+
+      <p>
+        Expenses can include food, transportation, education, bills,
+        entertainment, subscriptions and other purchases.
+      </p>
+
+      <div class="example">
+
+        <div class="example-title">
+          SIMPLE EXAMPLE
+        </div>
+
+        <p>
+          Suppose you receive ₹25,000 in a month and spend ₹18,000.
+          The remaining ₹7,000 can potentially be allocated towards
+          savings, investments or other financial goals.
+        </p>
+
+      </div>
+
+      <div class="highlight">
+
+        <strong>Simple rule:</strong><br>
+
+        If you don't know where your money is going, it becomes
+        difficult to decide where your money should go.
+
+      </div>
+
+      <div class="lesson-end">
+        Key takeaway: Knowing your income and expenses gives you a
+        clearer picture of your financial position.
+      </div>
+
+    </div>
+
+
+    <!-- LESSON 3 -->
+
+    <div class="lesson">
+
+      <div class="lesson-number">
+        LESSON 03
+      </div>
+
+      <h2>
+        Budgeting
+      </h2>
+
+      <p>
+        A budget is a plan for how you intend to use your income over
+        a particular period.
+      </p>
+
+      <p>
+        Budgeting helps you understand your spending patterns and
+        allocate money towards important financial goals.
+      </p>
+
+      <h3>
+        A simple budgeting process
+      </h3>
+
+      <ul>
+        <li>Identify your monthly income</li>
+        <li>List your regular expenses</li>
+        <li>Identify discretionary spending</li>
+        <li>Set a savings target</li>
+        <li>Review your actual spending regularly</li>
+      </ul>
+
+      <div class="example">
+
+        <div class="example-title">
+          SIMPLE EXAMPLE
+        </div>
+
+        <p>
+          If your monthly income is ₹30,000, you might first account
+          for essential expenses, then allocate a portion towards
+          savings and investments, while keeping some amount for
+          discretionary spending.
+        </p>
+
+      </div>
+
+      <p>
+        A good budget should be realistic. A plan that is impossible
+        to follow is unlikely to remain useful for long.
+      </p>
+
+      <div class="lesson-end">
+        Key takeaway: A budget is a planning tool, not a restriction.
+        Its purpose is to help you make intentional spending decisions.
+      </div>
+
+    </div>
+
+
+    <!-- LESSON 4 -->
+
+    <div class="lesson">
+
+      <div class="lesson-number">
+        LESSON 04
+      </div>
+
+      <h2>
+        Saving & Emergency Fund
+      </h2>
+
+      <p>
+        Saving means setting aside part of your income for future
+        needs, goals or unexpected situations.
+      </p>
+
+      <h3>
+        Why an emergency fund matters
+      </h3>
+
+      <p>
+        An emergency fund is money kept aside for unexpected financial
+        needs, such as urgent expenses or a temporary interruption in
+        income.
+      </p>
+
+      <div class="highlight">
+
+        <strong>Think before investing:</strong><br><br>
+
+        Your financial plan should account for unexpected expenses
+        before taking on investments that may fluctuate in value.
+
+      </div>
+
+      <h3>
+        Savings vs Emergency Fund
+      </h3>
+
+      <p>
+        General savings may be used for planned goals such as education,
+        travel or a future purchase. An emergency fund is specifically
+        intended for unexpected financial needs.
+      </p>
+
+      <div class="lesson-end">
+        Key takeaway: Building a financial cushion can help you handle
+        unexpected expenses without immediately depending on debt.
+      </div>
+
+    </div>
+
+
+    <!-- LESSON 5 -->
+
+    <div class="lesson">
+
+      <div class="lesson-number">
+        LESSON 05
+      </div>
+
+      <h2>
+        Introduction to Investing
+      </h2>
+
+      <p>
+        Investing means putting money into assets with the expectation
+        of generating returns over time.
+      </p>
+
+      <p>
+        Examples of investment avenues include stocks, bonds, mutual
+        funds and other financial or real assets.
+      </p>
+
+      <h3>
+        Saving vs Investing
+      </h3>
+
+      <p>
+        Saving generally focuses on preserving money for near-term
+        needs, while investing is usually associated with longer-term
+        goals and involves some level of risk.
+      </p>
+
+      <div class="highlight">
+
+        <strong>Remember:</strong><br>
+
+        Higher potential returns generally come with greater uncertainty
+        or risk. An investment decision should consider your goal,
+        time horizon and ability to handle losses.
+
+      </div>
+
+      <h3>
+        Common investment considerations
+      </h3>
+
+      <ul>
+        <li>Investment objective</li>
+        <li>Time horizon</li>
+        <li>Risk tolerance</li>
+        <li>Liquidity needs</li>
+        <li>Expected return</li>
+      </ul>
+
+      <div class="lesson-end">
+        Key takeaway: Investing is not simply about chasing returns.
+        The investment should make sense for the investor's goal and
+        risk profile.
+      </div>
+
+    </div>
+
+
+    <!-- LESSON 6 -->
+
+    <div class="lesson">
+
+      <div class="lesson-number">
+        LESSON 06
+      </div>
+
+      <h2>
+        Risk & Diversification
+      </h2>
+
+      <p>
+        Risk is the possibility that an investment may produce a result
+        different from what you expected, including losing some or all
+        of the invested amount.
+      </p>
+
+      <h3>
+        What is diversification?
+      </h3>
+
+      <p>
+        Diversification means spreading investments across different
+        assets or investments rather than concentrating everything in
+        one place.
+      </p>
+
+      <div class="example">
+
+        <div class="example-title">
+          SIMPLE EXAMPLE
+        </div>
+
+        <p>
+          Imagine an investor puts all of their money into a single
+          investment. If that investment performs poorly, the entire
+          portfolio can be affected.
+        </p>
+
+        <p>
+          Holding a range of investments can reduce concentration in
+          one particular investment, although diversification does not
+          eliminate investment risk.
+        </p>
+
+      </div>
+
+      <h3>
+        Before making an investment decision
+      </h3>
+
+      <ul>
+        <li>Understand what you are investing in</li>
+        <li>Consider your financial goal</li>
+        <li>Consider your time horizon</li>
+        <li>Understand the associated risks</li>
+        <li>Avoid making decisions only because of past returns</li>
+      </ul>
+
+      <div class="highlight">
+
+        <strong>Final takeaway:</strong><br>
+
+        A strong financial plan connects income, spending, saving,
+        investing and risk management instead of treating each area
+        separately.
+
+      </div>
+
+      <div class="lesson-end">
+        Key takeaway: Understand risk before seeking returns, and avoid
+        putting all your financial resources into a single investment.
+      </div>
+
+    </div>
+
+
+    <!-- FINAL QUIZ -->
+
+    <div class="quiz-preview">
+
+      <span class="quiz-label">
+        FINAL ASSESSMENT
+      </span>
+
+      <h2>
+        Ready for the Final Quiz?
+      </h2>
+
+      <p>
+        Complete all six lessons and test your understanding through
+        the final assessment.
+      </p>
+
+      <p>
+        A passing score will be required to complete the course and
+        become eligible for the FinPortfolio Certificate of Completion.
+      </p>
+
+    </div>
+
+
+    <div class="footer-note">
+
+      FinPortfolio — Where Finance Meets Clarity
+
+    </div>
+
+  </div>
+
+</body>
+</html>
