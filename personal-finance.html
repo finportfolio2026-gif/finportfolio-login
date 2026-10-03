@@ -228,6 +228,8 @@
       border-radius: 5px;
     }
 
+    /* QUIZ */
+
     .quiz-preview {
       background: #202020;
       color: white;
@@ -261,20 +263,90 @@
       margin-bottom: 12px;
     }
 
-    .quiz-btn {
-      display: none;
-      margin-top: 15px;
+    .quiz-info {
+      background: #f7f3eb;
+      color: #555;
+      padding: 12px;
+      border-radius: 5px;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+
+    .question {
       background: white;
       color: #202020;
-      text-decoration: none;
+      text-align: left;
+      padding: 20px;
+      border-radius: 7px;
+      margin: 15px 0;
+    }
+
+    .question h3 {
+      margin-top: 0;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .question label {
+      display: block;
+      padding: 9px 0;
+      color: #444;
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    .question input {
+      margin-right: 8px;
+    }
+
+    .submit-quiz {
+      background: #8b1e2d;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .submit-quiz:hover {
+      opacity: 0.9;
+    }
+
+    #quizResult {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 6px;
+      font-size: 15px;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .retake-btn {
+      display: inline-block;
+      margin-top: 15px;
+      background: #202020;
+      color: white;
+      border: 1px solid #777;
+      padding: 10px 16px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .certificate-placeholder {
+      display: inline-block;
+      margin-top: 15px;
+      background: #8b1e2d;
+      color: white;
       padding: 11px 17px;
       border-radius: 5px;
       font-size: 13px;
       font-weight: bold;
-    }
-
-    .quiz-btn.show {
-      display: inline-block;
     }
 
     .footer-note {
@@ -310,6 +382,10 @@
 
       .lesson-action {
         text-align: left;
+      }
+
+      .question {
+        padding: 17px;
       }
     }
   </style>
@@ -832,16 +908,328 @@
       </span>
 
       <h2>
-        Final Quiz
+        Personal Finance Basics — Final Quiz
       </h2>
 
       <p id="quizMessage">
         Complete all six lessons to unlock the final quiz.
       </p>
 
-      <a href="#" class="quiz-btn" id="quizBtn">
-        Start Final Quiz →
-      </a>
+      <div id="quizArea" style="display: none;">
+
+        <div class="quiz-info">
+          <strong>10 Questions</strong>
+          <span> | </span>
+          <strong>Passing Score: 50%</strong>
+        </div>
+
+
+        <!-- QUESTION 1 -->
+
+        <div class="question">
+
+          <h3>
+            1. You receive ₹25,000 in a month and spend ₹18,000.
+            How much remains?
+          </h3>
+
+          <label>
+            <input type="radio" name="q1" value="A">
+            ₹5,000
+          </label>
+
+          <label>
+            <input type="radio" name="q1" value="B">
+            ₹6,000
+          </label>
+
+          <label>
+            <input type="radio" name="q1" value="C">
+            ₹7,000
+          </label>
+
+          <label>
+            <input type="radio" name="q1" value="D">
+            ₹8,000
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 2 -->
+
+        <div class="question">
+
+          <h3>
+            2. Which of the following best describes a budget?
+          </h3>
+
+          <label>
+            <input type="radio" name="q2" value="A">
+            A plan for how income will be used over a period
+          </label>
+
+          <label>
+            <input type="radio" name="q2" value="B">
+            A record containing only past purchases
+          </label>
+
+          <label>
+            <input type="radio" name="q2" value="C">
+            A guarantee that expenses will never exceed income
+          </label>
+
+          <label>
+            <input type="radio" name="q2" value="D">
+            A method used only for investment decisions
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 3 -->
+
+        <div class="question">
+
+          <h3>
+            3. An emergency fund is intended specifically
+            for unexpected financial needs.
+          </h3>
+
+          <label>
+            <input type="radio" name="q3" value="A">
+            True
+          </label>
+
+          <label>
+            <input type="radio" name="q3" value="B">
+            False
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 4 -->
+
+        <div class="question">
+
+          <h3>
+            4. Which factors should an investor consider when
+            deciding whether an investment is appropriate?
+          </h3>
+
+          <label>
+            <input type="radio" name="q4" value="A">
+            Only past returns
+          </label>
+
+          <label>
+            <input type="radio" name="q4" value="B">
+            Goal, time horizon and risk tolerance
+          </label>
+
+          <label>
+            <input type="radio" name="q4" value="C">
+            Only the current price
+          </label>
+
+          <label>
+            <input type="radio" name="q4" value="D">
+            Only the amount invested
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 5 -->
+
+        <div class="question">
+
+          <h3>
+            5. Which of these are common considerations before
+            making an investment decision? Select all that apply.
+          </h3>
+
+          <label>
+            <input type="checkbox" name="q5" value="A">
+            Investment objective
+          </label>
+
+          <label>
+            <input type="checkbox" name="q5" value="B">
+            Time horizon
+          </label>
+
+          <label>
+            <input type="checkbox" name="q5" value="C">
+            Risk tolerance
+          </label>
+
+          <label>
+            <input type="checkbox" name="q5" value="D">
+            Ignoring liquidity needs
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 6 -->
+
+        <div class="question">
+
+          <h3>
+            6. Diversification can reduce concentration in a
+            single investment, but it does not eliminate investment risk.
+          </h3>
+
+          <label>
+            <input type="radio" name="q6" value="A">
+            True
+          </label>
+
+          <label>
+            <input type="radio" name="q6" value="B">
+            False
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 7 -->
+
+        <div class="question">
+
+          <h3>
+            7. Which approach is most consistent with a practical
+            budgeting process?
+          </h3>
+
+          <label>
+            <input type="radio" name="q7" value="A">
+            Spend first and decide later
+          </label>
+
+          <label>
+            <input type="radio" name="q7" value="B">
+            Account for essential expenses, savings and discretionary spending
+          </label>
+
+          <label>
+            <input type="radio" name="q7" value="C">
+            Put the entire income into investments
+          </label>
+
+          <label>
+            <input type="radio" name="q7" value="D">
+            Avoid tracking spending
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 8 -->
+
+        <div class="question">
+
+          <h3>
+            8. What is one key difference between saving and investing?
+          </h3>
+
+          <label>
+            <input type="radio" name="q8" value="A">
+            Saving is generally for near-term needs, while investing
+            is generally associated with longer-term goals and involves risk
+          </label>
+
+          <label>
+            <input type="radio" name="q8" value="B">
+            Saving always produces higher returns
+          </label>
+
+          <label>
+            <input type="radio" name="q8" value="C">
+            Investing involves no risk over a long period
+          </label>
+
+          <label>
+            <input type="radio" name="q8" value="D">
+            Saving and investing are exactly the same
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 9 -->
+
+        <div class="question">
+
+          <h3>
+            9. An investor puts all their money into one investment.
+            What is the main risk highlighted by this situation?
+          </h3>
+
+          <label>
+            <input type="radio" name="q9" value="A">
+            Currency risk
+          </label>
+
+          <label>
+            <input type="radio" name="q9" value="B">
+            Concentration risk
+          </label>
+
+          <label>
+            <input type="radio" name="q9" value="C">
+            Liquidity certainty
+          </label>
+
+          <label>
+            <input type="radio" name="q9" value="D">
+            Guaranteed return risk
+          </label>
+
+        </div>
+
+
+        <!-- QUESTION 10 -->
+
+        <div class="question">
+
+          <h3>
+            10. Which statement best summarizes the approach
+            to personal finance taught in this course?
+          </h3>
+
+          <label>
+            <input type="radio" name="q10" value="A">
+            Focus only on increasing income
+          </label>
+
+          <label>
+            <input type="radio" name="q10" value="B">
+            Treat investing as the only important part of planning
+          </label>
+
+          <label>
+            <input type="radio" name="q10" value="C">
+            Connect income, spending, saving, investing and risk management
+          </label>
+
+          <label>
+            <input type="radio" name="q10" value="D">
+            Avoid financial planning until income becomes high
+          </label>
+
+        </div>
+
+
+        <button class="submit-quiz" onclick="submitQuiz()">
+          Submit Quiz →
+        </button>
+
+        <div id="quizResult"></div>
+
+      </div>
 
     </div>
 
@@ -858,7 +1246,10 @@
   <script>
 
     let completedLessons =
-      JSON.parse(localStorage.getItem("finportfolio_course_progress")) || [];
+      JSON.parse(
+        localStorage.getItem("finportfolio_course_progress")
+      ) || [];
+
 
     function updateCourse() {
 
@@ -872,6 +1263,7 @@
 
         const lockedMessage =
           document.getElementById("locked" + i);
+
 
         if (completedLessons.includes(i)) {
 
@@ -919,11 +1311,14 @@
       const completedCount =
         completedLessons.length;
 
+
       const progress =
         Math.round((completedCount / 6) * 100);
 
+
       document.getElementById("progressText").textContent =
         "Course Progress — " + progress + "%";
+
 
       document.getElementById("progressFill").style.width =
         progress + "%";
@@ -932,11 +1327,13 @@
       const quizBox =
         document.getElementById("quizBox");
 
+
       const quizMessage =
         document.getElementById("quizMessage");
 
-      const quizBtn =
-        document.getElementById("quizBtn");
+
+      const quizArea =
+        document.getElementById("quizArea");
 
 
       if (completedCount === 6) {
@@ -944,9 +1341,10 @@
         quizBox.classList.remove("locked");
 
         quizMessage.textContent =
-          "You have completed all six lessons. You can now take the final assessment.";
+          "All six lessons completed. You can now take the final assessment.";
 
-        quizBtn.classList.add("show");
+        quizArea.style.display =
+          "block";
 
       } else {
 
@@ -955,7 +1353,8 @@
         quizMessage.textContent =
           "Complete all six lessons to unlock the final quiz.";
 
-        quizBtn.classList.remove("show");
+        quizArea.style.display =
+          "none";
 
       }
 
@@ -974,12 +1373,15 @@
           }
         );
 
+
         localStorage.setItem(
           "finportfolio_course_progress",
           JSON.stringify(completedLessons)
         );
 
+
         updateCourse();
+
 
         if (number < 6) {
 
@@ -987,6 +1389,7 @@
             document.getElementById(
               "lesson" + (number + 1)
             );
+
 
           nextLesson.scrollIntoView({
             behavior: "smooth",
@@ -996,6 +1399,211 @@
         }
 
       }
+
+    }
+
+
+    function submitQuiz() {
+
+      const answers = {
+
+        q1: "C",
+
+        q2: "A",
+
+        q3: "A",
+
+        q4: "B",
+
+        q5: ["A", "B", "C"],
+
+        q6: "A",
+
+        q7: "B",
+
+        q8: "A",
+
+        q9: "B",
+
+        q10: "C"
+
+      };
+
+
+      let score = 0;
+
+
+      for (let i = 1; i <= 10; i++) {
+
+        const selected =
+          document.querySelectorAll(
+            'input[name="q' + i + '"]:checked'
+          );
+
+
+        if (selected.length === 0) {
+
+          alert(
+            "Please answer all 10 questions before submitting the quiz."
+          );
+
+          return;
+
+        }
+
+
+        if (i === 5) {
+
+          const selectedValues =
+            Array.from(selected)
+              .map(function(input) {
+                return input.value;
+              })
+              .sort();
+
+
+          const correctValues =
+            answers.q5
+              .slice()
+              .sort();
+
+
+          if (
+            JSON.stringify(selectedValues) ===
+            JSON.stringify(correctValues)
+          ) {
+
+            score++;
+
+          }
+
+        } else {
+
+          if (
+            selected[0].value ===
+            answers["q" + i]
+          ) {
+
+            score++;
+
+          }
+
+        }
+
+      }
+
+
+      const percentage =
+        score * 10;
+
+
+      const result =
+        document.getElementById("quizResult");
+
+
+      result.style.display =
+        "block";
+
+
+      if (percentage >= 50) {
+
+        result.innerHTML =
+          "<strong>Quiz Passed!</strong><br><br>" +
+          "Your Score: " +
+          score +
+          "/10 (" +
+          percentage +
+          "%)<br><br>" +
+          "Congratulations! You have successfully passed " +
+          "the Personal Finance Basics final assessment." +
+          "<br><br>" +
+          "<span class='certificate-placeholder'>" +
+          "Certificate — Coming Next" +
+          "</span>";
+
+
+        result.style.background =
+          "#e8f5e9";
+
+
+        result.style.color =
+          "#245b2a";
+
+
+        localStorage.setItem(
+          "finportfolio_course_passed",
+          "true"
+        );
+
+      } else {
+
+        result.innerHTML =
+          "<strong>Quiz Not Passed</strong><br><br>" +
+          "Your Score: " +
+          score +
+          "/10 (" +
+          percentage +
+          "%)<br><br>" +
+          "You need at least 50% to pass. " +
+          "Please review the lessons and try the quiz again." +
+          "<br><br>" +
+          "<button class='retake-btn' onclick='retakeQuiz()'>" +
+          "Retake Quiz" +
+          "</button>";
+
+
+        result.style.background =
+          "#fbeaea";
+
+
+        result.style.color =
+          "#8b1e2d";
+
+
+        localStorage.removeItem(
+          "finportfolio_course_passed"
+        );
+
+      }
+
+
+      result.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }
+
+
+    function retakeQuiz() {
+
+      const inputs =
+        document.querySelectorAll(
+          "#quizArea input"
+        );
+
+
+      inputs.forEach(function(input) {
+        input.checked = false;
+      });
+
+
+      const result =
+        document.getElementById("quizResult");
+
+
+      result.style.display =
+        "none";
+
+
+      result.innerHTML = "";
+
+
+      document.getElementById("quizArea")
+        .scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
 
     }
 
