@@ -153,12 +153,24 @@
       <form id="loginForm">
 
         <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Enter your email"
+          required
+        >
 
         <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Enter your password"
+          required
+        >
 
-        <button class="btn" type="submit">Login</button>
+        <button class="btn" type="submit">
+          Login
+        </button>
 
       </form>
 
@@ -166,15 +178,33 @@
       <form id="signupForm" class="hidden">
 
         <label>Full Name</label>
-        <input type="text" id="signupName" placeholder="Enter your full name" required>
+        <input
+          type="text"
+          id="signupName"
+          placeholder="Enter your full name"
+          required
+        >
 
         <label>Email</label>
-        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+        <input
+          type="email"
+          id="signupEmail"
+          placeholder="Enter your email"
+          required
+        >
 
         <label>Password</label>
-        <input type="password" id="signupPassword" placeholder="Create a password" required>
+        <input
+          type="password"
+          id="signupPassword"
+          placeholder="Create a password"
+          required
+          minlength="6"
+        >
 
-        <button class="btn" type="submit">Create Account</button>
+        <button class="btn" type="submit">
+          Create Account
+        </button>
 
       </form>
 
@@ -190,13 +220,24 @@
 
   <script>
 
-    const SUPABASE_URL = "https://mxmxwosyhsfjaaocazdl.supabase.co/rest/v1/E";
-    const SUPABASE_KEY = "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+    /*
+      IMPORTANT:
+      Use your actual Supabase Project URL here.
+      Do NOT add /rest/v1/E or any other path.
+    */
+
+    const SUPABASE_URL =
+      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+    const SUPABASE_KEY =
+      "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
+
 
     const loginTab = document.getElementById("loginTab");
     const signupTab = document.getElementById("signupTab");
@@ -206,7 +247,11 @@
 
     const message = document.getElementById("message");
 
+
+    /* LOGIN / SIGNUP TABS */
+
     loginTab.addEventListener("click", () => {
+
       loginTab.classList.add("active");
       signupTab.classList.remove("active");
 
@@ -214,9 +259,12 @@
       signupForm.classList.add("hidden");
 
       message.textContent = "";
+
     });
 
+
     signupTab.addEventListener("click", () => {
+
       signupTab.classList.add("active");
       loginTab.classList.remove("active");
 
@@ -224,32 +272,55 @@
       loginForm.classList.add("hidden");
 
       message.textContent = "";
+
     });
+
+
+    /* CREATE ACCOUNT */
 
     signupForm.addEventListener("submit", async (e) => {
 
       e.preventDefault();
 
-      const name = document.getElementById("signupName").value;
-      const email = document.getElementById("signupEmail").value;
-      const password = document.getElementById("signupPassword").value;
+      const name =
+        document.getElementById("signupName").value.trim();
 
-      message.textContent = "Creating your account...";
+      const email =
+        document.getElementById("signupEmail").value.trim();
 
-      const { data, error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: {
-            full_name: name
+      const password =
+        document.getElementById("signupPassword").value;
+
+
+      message.textContent =
+        "Creating your account...";
+
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password,
+
+          options: {
+            data: {
+              full_name: name
+            }
           }
-        }
-      });
+
+        });
+
 
       if (error) {
-        message.textContent = error.message;
+
+        message.textContent =
+          error.message;
+
         return;
+
       }
+
 
       message.textContent =
         "Account created! Please check your email to verify your account.";
@@ -258,29 +329,51 @@
 
     });
 
+
+    /* LOGIN */
+
     loginForm.addEventListener("submit", async (e) => {
 
       e.preventDefault();
 
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
+      const email =
+        document.getElementById("loginEmail").value.trim();
 
-      message.textContent = "Logging in...";
+      const password =
+        document.getElementById("loginPassword").value;
+
+
+      message.textContent =
+        "Logging in...";
+
 
       const { data, error } =
         await supabaseClient.auth.signInWithPassword({
+
           email: email,
+
           password: password
+
         });
 
+
       if (error) {
-        message.textContent = error.message;
+
+        message.textContent =
+          error.message;
+
         return;
+
       }
 
-      message.textContent = "Login successful!";
 
-      // Dashboard will be connected in the next step.
+      message.textContent =
+        "Login successful!";
+
+      /*
+        Dashboard will be connected here
+        in the next step.
+      */
 
     });
 
