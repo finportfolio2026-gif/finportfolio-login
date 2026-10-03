@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinPortfolio — Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logout {
+      background: transparent;
+      color: white;
+      border: 1px solid #777;
+      padding: 8px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .welcome {
+      margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #666;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .info {
+      margin: 12px 0;
+      font-size: 15px;
+    }
+
+    .membership {
+      display: inline-block;
+      background: #f7f3eb;
+      border: 1px solid #8b1e2d;
+      color: #8b1e2d;
+      padding: 7px 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .feature {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      font-size: 16px;
+    }
+
+    .feature p {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .status {
+      text-align: center;
+      color: #777;
+      margin-top: 30px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo">FINPORTFOLIO</div>
+    <button class="logout" id="logoutBtn">Logout</button>
+  </div>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h1>Welcome, <span id="userName">User</span></h1>
+      <p>Your personal FinPortfolio dashboard.</p>
+    </div>
+
+    <div class="card">
+      <h2>My Account</h2>
+
+      <div class="info">
+        <strong>Name:</strong>
+        <span id="profileName">Loading...</span>
+      </div>
+
+      <div class="info">
+        <strong>Email:</strong>
+        <span id="profileEmail">Loading...</span>
+      </div>
+
+      <div class="info">
+        <strong>Membership:</strong><br>
+        <span class="membership" id="membership">Loading...</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>FinPortfolio Resources</h2>
+
+      <div class="grid">
+
+        <div class="feature">
+          <h3>Courses</h3>
+          <p>Access finance learning resources and courses.</p>
+        </div>
+
+        <div class="feature">
+          <h3>Finance Tools</h3>
+          <p>Explore useful finance tools, calculators and templates.</p>
+        </div>
+
+        <div class="feature">
+          <h3>Research</h3>
+          <p>Explore selected research reports and financial insights.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="status" id="status">
+      Loading your account...
+    </div>
+
+  </div>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    async function loadDashboard() {
+
+      const {
+        data: { user },
+        error: userError
+      } = await supabaseClient.auth.getUser();
+
+      if (userError || !user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      const { data: profile, error: profileError } =
+        await supabaseClient
+          .from("profiles")
+          .select("full_name, email, membership")
+          .eq("id", user.id)
+          .single();
+
+      if (profileError) {
+        document.getElementById("status").textContent =
+          "Unable to load profile.";
+        return;
+      }
+
+      document.getElementById("userName").textContent =
+        profile.full_name || "User";
+
+      document.getElementById("profileName").textContent =
+        profile.full_name || "Not available";
+
+      document.getElementById("profileEmail").textContent =
+        profile.email || user.email;
+
+      document.getElementById("membership").textContent =
+        profile.membership || "Free";
+
+      document.getElementById("status").textContent =
+        "Your account is active.";
+    }
+
+    document.getElementById("logoutBtn").addEventListener(
+      "click",
+      async () => {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "index.html";
+      }
+    );
+
+    loadDashboard();
+
+  </script>
+
+</body>
+</html>
