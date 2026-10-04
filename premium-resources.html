@@ -184,7 +184,10 @@
 
     .locked .resource-btn {
       background: #999;
-      pointer-events: none;
+    }
+
+    .locked .resource-btn:hover {
+      background: #777;
     }
 
     .lock-label {
@@ -219,12 +222,6 @@
       font-size: 14px;
     }
 
-    .status-message {
-      text-align: center;
-      padding: 80px 20px;
-      color: #666;
-    }
-
     footer {
       text-align: center;
       color: #888;
@@ -240,6 +237,7 @@
     }
 
     @media (max-width: 600px) {
+
       header {
         padding: 16px 18px;
       }
@@ -276,11 +274,15 @@
 <body>
 
   <header>
-    <div class="logo">FINPORTFOLIO</div>
+
+    <div class="logo">
+      FINPORTFOLIO
+    </div>
 
     <a href="dashboard.html" class="back-btn">
       ← Dashboard
     </a>
+
   </header>
 
 
@@ -305,9 +307,12 @@
     </div>
 
 
+    <!-- MEMBERSHIP -->
+
     <div class="membership-box">
 
       <div>
+
         <div class="membership-label">
           Your Membership
         </div>
@@ -315,6 +320,7 @@
         <div id="membership">
           Checking membership...
         </div>
+
       </div>
 
       <div id="membershipStatus"></div>
@@ -328,8 +334,11 @@
       Pro Resources
     </h2>
 
+
     <div class="resource-grid">
 
+
+      <!-- Premium Finance Insights -->
 
       <div class="resource-card" data-plan="Pro">
 
@@ -346,12 +355,18 @@
           investments and important financial concepts.
         </p>
 
-       <a href="premium-insights.html" class="resource-btn">
-  Read Resource →
-</a>
+        <a
+          href="premium-insights.html"
+          class="resource-btn"
+          data-resource="premium-insights"
+        >
+          Read Resource →
+        </a>
 
       </div>
 
+
+      <!-- Selected Research -->
 
       <div class="resource-card" data-plan="Pro">
 
@@ -368,12 +383,18 @@
           markets, investments and financial topics.
         </p>
 
-        <a href="selected-research.html" class="resource-btn">
-  View Report →
-</a>
+        <a
+          href="selected-research.html"
+          class="resource-btn"
+          data-resource="selected-research"
+        >
+          View Report →
+        </a>
 
       </div>
 
+
+      <!-- Case Studies -->
 
       <div class="resource-card" data-plan="Pro">
 
@@ -390,12 +411,18 @@
           designed for practical learning.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="case-study"
+        >
           Open Case Study →
         </a>
 
       </div>
 
+
+      <!-- Finance Tools -->
 
       <div class="resource-card" data-plan="Pro">
 
@@ -412,12 +439,18 @@
           learning, analysis and financial planning.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="finance-tools"
+        >
           Access Tools →
         </a>
 
       </div>
 
+
+      <!-- Resource Library -->
 
       <div class="resource-card" data-plan="Pro">
 
@@ -434,12 +467,18 @@
           available exclusively to members.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="resource-library"
+        >
           Explore Library →
         </a>
 
       </div>
 
+
+      <!-- Learning Material -->
 
       <div class="resource-card" data-plan="Pro">
 
@@ -456,7 +495,11 @@
           practical finance knowledge.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="learning-material"
+        >
           Start Learning →
         </a>
 
@@ -471,8 +514,11 @@
       Pro Plus Resources
     </h2>
 
+
     <div class="resource-grid">
 
+
+      <!-- Advanced Research -->
 
       <div class="resource-card" data-plan="Pro Plus">
 
@@ -493,12 +539,18 @@
           sectors, markets and financial themes.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="advanced-research"
+        >
           View Report →
         </a>
 
       </div>
 
+
+      <!-- Market Insights -->
 
       <div class="resource-card" data-plan="Pro Plus">
 
@@ -519,12 +571,18 @@
           and market developments.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="market-insights"
+        >
           Explore Insights →
         </a>
 
       </div>
 
+
+      <!-- Excel -->
 
       <div class="resource-card" data-plan="Pro Plus">
 
@@ -545,12 +603,18 @@
           analysis and practical work.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="excel-templates"
+        >
           Access Templates →
         </a>
 
       </div>
 
+
+      <!-- Financial Models -->
 
       <div class="resource-card" data-plan="Pro Plus">
 
@@ -571,12 +635,18 @@
           analysis, learning and decision-making.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="financial-models"
+        >
           Open Models →
         </a>
 
       </div>
 
+
+      <!-- Early Access -->
 
       <div class="resource-card" data-plan="Pro Plus">
 
@@ -597,12 +667,18 @@
           before general availability.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="early-access"
+        >
           Explore →
         </a>
 
       </div>
 
+
+      <!-- Pro Plus Library -->
 
       <div class="resource-card" data-plan="Pro Plus">
 
@@ -623,7 +699,11 @@
           deeper practical finance material.
         </p>
 
-        <a href="#" class="resource-btn">
+        <a
+          href="#"
+          class="resource-btn"
+          data-resource="pro-plus-library"
+        >
           Open Library →
         </a>
 
@@ -631,6 +711,8 @@
 
     </div>
 
+
+    <!-- INFO -->
 
     <div class="info-box">
 
@@ -659,6 +741,12 @@
     const SUPABASE_URL =
       "https://mxmxwosyhsfjaaocazdl.supabase.co";
 
+
+    /*
+      Use your existing Supabase publishable key here.
+      Do not use a service_role key.
+    */
+
     const SUPABASE_KEY =
       "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
 
@@ -686,6 +774,10 @@
         await supabaseClient.auth.getSession();
 
 
+      /*
+        USER NOT LOGGED IN
+      */
+
       if (
         sessionError ||
         !session ||
@@ -700,6 +792,10 @@
 
       const user = session.user;
 
+
+      /*
+        GET PROFILE
+      */
 
       const {
         data: profile,
@@ -729,8 +825,15 @@
             text-align:center;
             font-family:Arial;
           ">
-            <h2>Unable to load your account</h2>
-            <p>Please try again.</p>
+
+            <h2>
+              Unable to load your account
+            </h2>
+
+            <p>
+              Please try again.
+            </p>
+
           </div>
         `;
 
@@ -739,6 +842,10 @@
         return;
       }
 
+
+      /*
+        DETERMINE PLAN
+      */
 
       const plan =
         profile.membership_plan ||
@@ -750,6 +857,10 @@
         profile.membership_status ||
         "Active";
 
+
+      /*
+        MEMBERSHIP DISPLAY
+      */
 
       const membershipElement =
         document.getElementById("membership");
@@ -763,8 +874,13 @@
             : plan === "Pro"
             ? "FinPortfolio Pro"
             : "Free";
+
       }
 
+
+      /*
+        STATUS DISPLAY
+      */
 
       const statusElement =
         document.getElementById("membershipStatus");
@@ -776,8 +892,13 @@
           plan !== "Free"
             ? "● " + status
             : "Free Account";
+
       }
 
+
+      /*
+        PRO RESOURCES
+      */
 
       const proResources =
         document.querySelectorAll(
@@ -785,13 +906,15 @@
         );
 
 
-      const proPlusResources =
-        document.querySelectorAll(
-          '[data-plan="Pro Plus"]'
-        );
-
-
       proResources.forEach(function(resource) {
+
+        const button =
+          resource.querySelector(".resource-btn");
+
+
+        /*
+          USER HAS PRO OR PRO PLUS
+        */
 
         if (
           plan === "Pro" ||
@@ -800,16 +923,35 @@
 
           resource.classList.remove("locked");
 
+
           const lock =
             resource.querySelector(".lock-label");
+
 
           if (lock) {
             lock.remove();
           }
 
-        } else {
+
+          /*
+            Existing resource links stay active.
+          */
+
+        }
+
+
+        /*
+          USER IS FREE
+        */
+
+        else {
 
           resource.classList.add("locked");
+
+
+          /*
+            Add Pro lock label.
+          */
 
           if (
             !resource.querySelector(".lock-label")
@@ -818,33 +960,144 @@
             const lock =
               document.createElement("div");
 
-            lock.className = "lock-label";
+            lock.className =
+              "lock-label";
 
-            lock.textContent = "Pro";
+            lock.textContent =
+              "Pro";
 
             resource.appendChild(lock);
+
           }
+
+
+          /*
+            Send Free users to payment page.
+          */
+
+          if (button) {
+
+            button.href =
+              "payment.html?plan=pro";
+
+            button.textContent =
+              "Get Pro — ₹99 →";
+
+          }
+
         }
 
       });
 
 
+      /*
+        PRO PLUS RESOURCES
+      */
+
+      const proPlusResources =
+        document.querySelectorAll(
+          '[data-plan="Pro Plus"]'
+        );
+
+
       proPlusResources.forEach(function(resource) {
+
+        const button =
+          resource.querySelector(".resource-btn");
+
+
+        /*
+          PRO PLUS USER
+        */
 
         if (plan === "Pro Plus") {
 
           resource.classList.remove("locked");
 
+
           const lock =
             resource.querySelector(".lock-label");
+
 
           if (lock) {
             lock.remove();
           }
 
-        } else {
+        }
+
+
+        /*
+          PRO USER
+        */
+
+        else if (plan === "Pro") {
 
           resource.classList.add("locked");
+
+
+          const lock =
+            resource.querySelector(".lock-label");
+
+
+          if (lock) {
+
+            lock.textContent =
+              "Upgrade";
+
+          }
+
+
+          /*
+            Pro user can upgrade.
+          */
+
+          if (button) {
+
+            button.href =
+              "payment.html?plan=proplus";
+
+            button.textContent =
+              "Upgrade to Pro Plus — ₹149 →";
+
+          }
+
+        }
+
+
+        /*
+          FREE USER
+        */
+
+        else {
+
+          resource.classList.add("locked");
+
+
+          const lock =
+            resource.querySelector(".lock-label");
+
+
+          if (lock) {
+
+            lock.textContent =
+              "Pro Plus";
+
+          }
+
+
+          /*
+            Free user goes to Pro Plus payment.
+          */
+
+          if (button) {
+
+            button.href =
+              "payment.html?plan=proplus";
+
+            button.textContent =
+              "Get Pro Plus — ₹149 →";
+
+          }
 
         }
 
@@ -852,6 +1105,10 @@
 
     }
 
+
+    /*
+      LOAD PAGE
+    */
 
     loadPremiumResources();
 
