@@ -1,80 +1,42 @@
 <script>
-
 const SUPABASE_URL =
   "https://mxmxwosyhsfjaaocazdl.supabase.co";
 
 const SUPABASE_KEY =
   "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
 
+let supabaseClient = null;
 
-/*
-  LOAD SUPABASE LIBRARY FIRST
-*/
+/* ================================
+   LOAD SUPABASE
+================================ */
 
 function loadSupabase() {
+  return new Promise((resolve, reject) => {
 
-  return new Promise(function(resolve, reject) {
-
-    if (
-      window.supabase &&
-      typeof window.supabase.createClient === "function"
-    ) {
-
+    if (window.supabase) {
       resolve();
-
       return;
-
     }
 
-
-    const script =
-      document.createElement("script");
+    const script = document.createElement("script");
 
     script.src =
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
 
-    script.onload = function() {
+    script.onload = () => resolve();
 
-      if (
-        window.supabase &&
-        typeof window.supabase.createClient === "function"
-      ) {
-
-        resolve();
-
-      } else {
-
-        reject(
-          new Error("Supabase library failed to load.")
-        );
-
-      }
-
-    };
-
-
-    script.onerror = function() {
-
-      reject(
-        new Error("Unable to load Supabase library.")
-      );
-
-    };
-
+    script.onerror = () =>
+      reject(new Error("Supabase library failed to load"));
 
     document.head.appendChild(script);
-
   });
-
 }
 
 
-let supabaseClient;
-
-
-/*
-  INITIALIZE SUPABASE
-*/
+/* ================================
+   INITIALIZE SUPABASE
+================================ */
 
 async function initializeSupabase() {
 
@@ -82,6 +44,9 @@ async function initializeSupabase() {
 
     await loadSupabase();
 
+    if (!window.supabase) {
+      throw new Error("Supabase library not available");
+    }
 
     supabaseClient =
       window.supabase.createClient(
@@ -96,7 +61,6 @@ async function initializeSupabase() {
         }
       );
 
-
     await loadDashboard();
 
   } catch (error) {
@@ -106,24 +70,13 @@ async function initializeSupabase() {
       error
     );
 
-    const status =
-      document.getElementById("status");
-
-    if (status) {
-
-      status.textContent =
-        "Unable to connect to your account.";
-
-    }
-
   }
-
 }
 
 
-/*
-  OPEN PREMIUM RESOURCES
-*/
+/* ================================
+   OPEN PREMIUM RESOURCES
+================================ */
 
 function openPremiumResources() {
 
@@ -133,374 +86,423 @@ function openPremiumResources() {
 }
 
 
-/*
-  LOAD DASHBOARD
-*/
+/* ================================
+   LOAD DASHBOARD
+================================ */
 
 async function loadDashboard() {
 
-  /*
-    RESTORE SAVED SESSION
-  */
-
-  const {
-    data: { session },
-    error: sessionError
-  } =
-    await supabaseClient.auth.getSession();
-
-
-  if (sessionError) {
-
-    console.error(sessionError);
-
-    window.location.replace("index.html");
-
+  if (!supabaseClient) {
+    console.error("Supabase client not initialized");
     return;
-
   }
 
+  try {
 
-  /*
-    NO SESSION
-  */
+    /* Get logged-in session */
 
-  if (!session || !session.user) {
-
-    window.location.replace("index.html");
-
-    return;
-
-  }
+    const {
+      data: { session },
+      error: sessionError
+    } =
+      await supabaseClient.auth.getSession();
 
 
-  const user =
-    session.user;
+    if (sessionError) {
+
+      console.error(
+        "Session error:",
+        sessionError
+      );
+
+      return;
+    }
 
 
-  /*
-    GET PROFILE
-  */
+    /* No login session */
 
-  const {
-    data: profile,
-    error: profileError
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select(`
-        full_name,
-        email,
-        membership,
-        membership_plan,
-        membership_status,
-        membership_start_date,
-        membership_expiry_date
-      `)
-      .eq("id", user.id)
-      .single();
+    if (!session || !session.user) {
+
+      window.location.replace("index.html");
+
+      return;
+    }
 
 
-  if (profileError) {
+    const user = session.user;
+
+
+    /* ================================
+       GET PROFILE
+    ================================= */
+
+    const {
+      data: profile,
+      error: profileError
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(`
+          full_name,
+          email,
+          membership,
+          membership_plan,
+          membership_status,
+          membership_start_date,
+          membership_expiry_date
+        `)
+        .eq("id", user.id)
+        .single();
+
+
+    if (profileError) {
+
+      console.error(
+        "Profile loading error:",
+        profileError
+      );
+
+      return;
+    }
+
+
+    if (!profile) {
+
+      console.error(
+        "Profile not found"
+      );
+
+      return;
+    }
+
+
+    /* ================================
+       MEMBERSHIP
+    ================================= */
+
+    const plan =
+      profile.membership_plan ||
+      profile.membership ||
+      "Free";
+
 
     const status =
-      document.getElementById("status");
+      profile.membership_status ||
+      "Active";
 
-    if (status) {
 
-      status.textContent =
-        "Unable to load profile.";
+    /* ================================
+       USER NAME
+    ================================= */
+
+    const userName =
+      document.getElementById("userName");
+
+    if (userName) {
+
+      userName.textContent =
+        profile.full_name ||
+        user.email ||
+        "User";
 
     }
 
-    console.error(profileError);
 
-    return;
+    /* ================================
+       PROFILE NAME
+    ================================= */
 
-  }
+    const profileName =
+      document.getElementById("profileName");
 
+    if (profileName) {
 
-  /*
-    BASIC PROFILE
-  */
+      profileName.textContent =
+        profile.full_name ||
+        "User";
 
-  document.getElementById("userName").textContent =
-    profile.full_name || "User";
-
-
-  document.getElementById("profileName").textContent =
-    profile.full_name || "Not available";
+    }
 
 
-  document.getElementById("profileEmail").textContent =
-    profile.email || user.email;
+    /* ================================
+       EMAIL
+    ================================= */
+
+    const profileEmail =
+      document.getElementById("profileEmail");
+
+    if (profileEmail) {
+
+      profileEmail.textContent =
+        profile.email ||
+        user.email ||
+        "";
+
+    }
 
 
-  /*
-    MEMBERSHIP
-  */
+    /* ================================
+       MEMBERSHIP DISPLAY
+    ================================= */
 
-  const plan =
-    profile.membership_plan ||
-    profile.membership ||
-    "Free";
+    const membershipElement =
+      document.getElementById("membership");
+
+    if (membershipElement) {
+
+      if (plan === "Pro Plus") {
+
+        membershipElement.textContent =
+          "FinPortfolio Pro Plus";
+
+      } else if (plan === "Pro") {
+
+        membershipElement.textContent =
+          "FinPortfolio Pro";
+
+      } else {
+
+        membershipElement.textContent =
+          "Free";
+
+      }
+
+    }
 
 
-  const membershipElement =
-    document.getElementById("membership");
+    /* ================================
+       MEMBERSHIP STATUS
+    ================================= */
+
+    const membershipStatus =
+      document.getElementById(
+        "membershipStatus"
+      );
+
+    if (membershipStatus) {
+
+      if (plan !== "Free") {
+
+        membershipStatus.textContent =
+          "● " + status;
+
+      } else {
+
+        membershipStatus.textContent =
+          "";
+
+      }
+
+    }
 
 
-  const statusElement =
-    document.getElementById("membershipStatus");
+    /* ================================
+       MEMBERSHIP PLAN BADGE
+    ================================= */
+
+    const planBadge =
+      document.getElementById("planBadge");
+
+    if (planBadge) {
+
+      planBadge.textContent =
+        plan === "Pro Plus"
+          ? "PRO PLUS"
+          : plan === "Pro"
+          ? "PRO"
+          : "FREE";
+
+    }
 
 
-  membershipElement.textContent =
-    plan === "Pro Plus"
-      ? "FinPortfolio Pro Plus"
-      : plan === "Pro"
-      ? "FinPortfolio Pro"
-      : "Free";
+    /* ================================
+       EXPIRY DATE
+    ================================= */
+
+    const expiryElement =
+      document.getElementById(
+        "membershipExpiry"
+      );
+
+    if (
+      expiryElement &&
+      profile.membership_expiry_date
+    ) {
+
+      const expiryDate =
+        new Date(
+          profile.membership_expiry_date
+        );
+
+      expiryElement.textContent =
+        expiryDate.toLocaleDateString(
+          "en-IN",
+          {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+          }
+        );
+
+    }
 
 
-  membershipElement.className =
-    "membership " +
-    (
-      plan === "Pro Plus"
-        ? "proplus"
-        : plan === "Pro"
-        ? "pro"
-        : "free"
+    /* ================================
+       RESOURCE ACCESS
+    ================================= */
+
+    const proResources =
+      document.querySelectorAll(
+        '[data-plan="Pro"]'
+      );
+
+
+    const proPlusResources =
+      document.querySelectorAll(
+        '[data-plan="Pro Plus"]'
+      );
+
+
+    /* PRO ACCESS */
+
+    proResources.forEach(
+      function(resource) {
+
+        if (
+          plan === "Pro" ||
+          plan === "Pro Plus"
+        ) {
+
+          resource.classList.remove(
+            "locked"
+          );
+
+        } else {
+
+          resource.classList.add(
+            "locked"
+          );
+
+        }
+
+      }
     );
 
 
-  if (plan !== "Free") {
+    /* PRO PLUS ACCESS */
 
-    statusElement.textContent =
-      profile.membership_status === "Active"
-        ? "● Active"
-        : "● " +
-          (
-            profile.membership_status ||
-            "Inactive"
+    proPlusResources.forEach(
+      function(resource) {
+
+        if (
+          plan === "Pro Plus"
+        ) {
+
+          resource.classList.remove(
+            "locked"
           );
 
-  } else {
+        } else {
 
-    statusElement.textContent = "";
+          resource.classList.add(
+            "locked"
+          );
 
-  }
+        }
 
+      }
+    );
 
-  /*
-    RESOURCE ACCESS
-  */
 
-  const proResources = [
+    console.log(
+      "Dashboard loaded successfully"
+    );
 
-    document.getElementById("proResource"),
+    console.log(
+      "Membership:",
+      plan
+    );
 
-    document.getElementById("proCaseStudies")
+  } catch (error) {
 
-  ].filter(Boolean);
-
-
-  const proPlusResources = [
-
-    document.getElementById("proPlusResource"),
-
-    document.getElementById("modelResource")
-
-  ].filter(Boolean);
-
-
-  /*
-    FREE
-  */
-
-  if (plan === "Free") {
-
-    proResources.forEach(function(resource) {
-
-      resource.classList.add("locked");
-
-      resource.onclick = null;
-
-      resource.innerHTML = `
-
-        <span class="badge badge-pro">
-          🔒 PRO
-        </span>
-
-        <h3>📊 Premium Insights</h3>
-
-        <p>
-          Premium finance insights and selected reports.
-          Upgrade your membership to access this resource.
-        </p>
-
-        <a href="#" class="upgrade">
-          Upgrade to Pro →
-        </a>
-
-      `;
-
-    });
-
-
-    proPlusResources.forEach(function(resource) {
-
-      resource.classList.add("locked");
-
-      resource.onclick = null;
-
-      resource.innerHTML = `
-
-        <span class="badge badge-plus">
-          🔒 PRO PLUS
-        </span>
-
-        <h3>📈 Advanced Research</h3>
-
-        <p>
-          Advanced research, financial models and market insights.
-          Available with Pro Plus membership.
-        </p>
-
-        <a href="#" class="upgrade">
-          View Pro Plus →
-        </a>
-
-      `;
-
-    });
-
-  }
-
-
-  /*
-    PRO
-  */
-
-  else if (plan === "Pro") {
-
-    proResources.forEach(function(resource) {
-
-      resource.classList.remove("locked");
-
-      resource.style.cursor =
-        "pointer";
-
-    });
-
-
-    proPlusResources.forEach(function(resource) {
-
-      resource.classList.add("locked");
-
-      resource.onclick = null;
-
-      resource.innerHTML = `
-
-        <span class="badge badge-plus">
-          🔒 PRO PLUS
-        </span>
-
-        <h3>📈 Advanced Research</h3>
-
-        <p>
-          Advanced research, financial models and market insights.
-          Upgrade to Pro Plus to unlock these resources.
-        </p>
-
-        <a href="#" class="upgrade">
-          Upgrade to Pro Plus →
-        </a>
-
-      `;
-
-    });
-
-  }
-
-
-  /*
-    PRO PLUS
-  */
-
-  else if (plan === "Pro Plus") {
-
-    proResources.forEach(function(resource) {
-
-      resource.classList.remove("locked");
-
-      resource.style.cursor =
-        "pointer";
-
-    });
-
-
-    proPlusResources.forEach(function(resource) {
-
-      resource.classList.remove("locked");
-
-      resource.style.cursor =
-        "pointer";
-
-    });
-
-  }
-
-
-  const status =
-    document.getElementById("status");
-
-  if (status) {
-
-    status.textContent =
-      "Your account is active.";
+    console.error(
+      "Dashboard error:",
+      error
+    );
 
   }
 
 }
 
 
-/*
-  LOGOUT
-*/
+/* ================================
+   LOGOUT
+================================ */
+
+async function logoutUser() {
+
+  if (!supabaseClient) {
+    return;
+  }
+
+  try {
+
+    const { error } =
+      await supabaseClient.auth.signOut();
+
+    if (error) {
+
+      console.error(
+        "Logout error:",
+        error
+      );
+
+      return;
+    }
+
+    window.location.replace(
+      "index.html"
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Logout failed:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ================================
+   PAGE LOAD
+================================ */
 
 document.addEventListener(
   "DOMContentLoaded",
   function() {
 
-    const logoutBtn =
+    /* Logout button */
+
+    const logoutButton =
       document.getElementById("logoutBtn");
 
+    if (logoutButton) {
 
-    if (logoutBtn) {
-
-      logoutBtn.addEventListener(
+      logoutButton.addEventListener(
         "click",
-        async function() {
-
-          await supabaseClient.auth.signOut();
-
-          window.location.replace(
-            "index.html"
-          );
-
-        }
+        logoutUser
       );
 
     }
 
 
-    /*
-      START
-    */
+    /* Start Supabase */
 
     initializeSupabase();
 
   }
 );
-
 </script>
