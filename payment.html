@@ -322,7 +322,9 @@
 
     <div class="plans">
 
-      <div class="plan selected" data-plan="Pro" data-price="99"
+      <div class="plan selected"
+           data-plan="Pro"
+           data-price="99"
            onclick="selectPlan(this)">
 
         <h2>FinPortfolio Pro</h2>
@@ -334,7 +336,9 @@
       </div>
 
 
-      <div class="plan" data-plan="Pro Plus" data-price="149"
+      <div class="plan"
+           data-plan="Pro Plus"
+           data-price="149"
            onclick="selectPlan(this)">
 
         <h2>FinPortfolio Pro Plus</h2>
@@ -463,7 +467,8 @@
           Your membership will be activated after verification.
         </p>
 
-        <a href="dashboard.html" class="back-btn"
+        <a href="dashboard.html"
+           class="back-btn"
            style="display:inline-block; margin-top:15px; color:#202020; border-color:#202020;">
           Return to Dashboard
         </a>
@@ -503,6 +508,45 @@
   }
 
 
+  /*
+    AUTO SELECT PLAN FROM URL
+
+    payment.html?plan=pro
+      → Pro ₹99
+
+    payment.html?plan=proplus
+      → Pro Plus ₹149
+
+    payment.html
+      → Pro ₹99 by default
+  */
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const planFromURL = urlParams.get("plan");
+
+  if (planFromURL === "proplus") {
+
+    const proPlusPlan = document.querySelector(
+      '.plan[data-plan="Pro Plus"]'
+    );
+
+    if (proPlusPlan) {
+      selectPlan(proPlusPlan);
+    }
+
+  } else if (planFromURL === "pro") {
+
+    const proPlan = document.querySelector(
+      '.plan[data-plan="Pro"]'
+    );
+
+    if (proPlan) {
+      selectPlan(proPlan);
+    }
+
+  }
+
+
   document.getElementById("paymentForm").addEventListener("submit", function(event) {
 
     event.preventDefault();
@@ -526,7 +570,7 @@
     /*
       Temporary manual-verification flow.
 
-      The payment details are currently shown as a confirmation.
+      Payment details are currently shown as a confirmation.
       Supabase payment-submission storage can be connected later.
     */
 
