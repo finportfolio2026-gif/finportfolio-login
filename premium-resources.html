@@ -1,189 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script>
+  <title>FinPortfolio — Premium Resources</title>
 
-const SUPABASE_URL =
-  "https://mxmxwosyhsfjaaocazdl.supabase.co";
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const SUPABASE_KEY =
-  "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
+    header {
+      background: #202020;
+      color: white;
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      border: 1px solid #777;
+      padding: 9px 15px;
+      border-radius: 4px;
+    }
+
+    .back-btn:hover {
+      border-color: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 45px 20px 60px;
+    }
+
+    .top-section {
+      margin-bottom: 35px;
+    }
+
+    .eyebrow {
+      color: #8b1e2d;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .intro {
+      margin: 0;
+      color: #666;
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+
+    .membership-box {
+      background: white;
+      border: 1px solid #ddd5ca;
+      border-left: 4px solid #8b1e2d;
+      padding: 18px 20px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .membership-label {
+      color: #777;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    #membership {
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    #membershipStatus {
+      color: #2f6b3b;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 23px;
+      margin: 0 0 18px;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 45px;
+    }
+
+    .resource-card {
+      background: white;
+      border: 1px solid #ddd5ca;
+      padding: 23px;
+      min-height: 190px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-card:hover {
+      border-color: #8b1e2d;
+    }
+
+    .resource-type {
+      font-size: 11px;
+      color: #8b1e2d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .resource-card h3 {
+      margin: 0 0 9px;
+      font-size: 18px;
+    }
+
+    .resource-card p {
+      margin: 0 0 18px;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .resource-btn {
+      margin-top: auto;
+      display: inline-block;
+      text-decoration: none;
+      background: #8b1e2d;
+      color: white;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 3px;
+      text-align: center;
+    }
+
+    .resource-btn:hover {
+      background: #711622;
+    }
+
+    .locked {
+      opacity: 0.58;
+    }
+
+    .locked .resource-btn {
+      background: #999;
+      pointer-events: none;
+    }
+
+    .lock-label {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #eee;
+      color: #555;
+      padding: 5px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .info-box {
+      background: #202020;
+      color: white;
+      padding: 28px;
+      margin-top: 10px;
+    }
+
+    .info-box h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .info-box p {
+      margin: 0;
+      color: #d7d7d7;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .status-message {
+      text-align: center;
+      padding: 80px 20px;
+      color: #666;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      padding: 25px 20px;
+      border-top: 1px solid #ddd5ca;
+    }
+
+    @media (max-width: 850px) {
+      .resource-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
-  );
+
+    @media (max-width: 600px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .back-btn {
+        font-size: 12px;
+        padding: 8px 11px;
+      }
+
+      .container {
+        padding: 32px 16px 45px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .membership-box {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">FINPORTFOLIO</div>
+
+    <a href="dashboard.html" class="back-btn">
+      ← Dashboard
+    </a>
+  </header>
 
 
-async function loadPremiumResources() {
+  <main class="container">
 
-  const {
-    data: { session },
-    error: sessionError
-  } =
-    await supabaseClient.auth.getSession();
+    <div class="top-section">
 
-
-  if (sessionError || !session || !session.user) {
-
-    window.location.replace("index.html");
-
-    return;
-
-  }
-
-
-  const user = session.user;
-
-
-  const {
-    data: profile,
-    error
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select(`
-        full_name,
-        email,
-        membership,
-        membership_plan,
-        membership_status,
-        membership_expiry_date
-      `)
-      .eq("id", user.id)
-      .single();
-
-
-  if (error || !profile) {
-
-    document.body.innerHTML = `
-      <div style="
-        max-width:600px;
-        margin:100px auto;
-        padding:30px;
-        text-align:center;
-        font-family:Arial;
-      ">
-        <h2>Unable to load your account</h2>
-        <p>Please try again.</p>
+      <div class="eyebrow">
+        Premium Library
       </div>
-    `;
 
-    console.error(error);
+      <h1>
+        Premium Resources
+      </h1>
 
-    return;
+      <p class="intro">
+        Practical finance resources, research and tools designed
+        to help you understand markets, investments and financial
+        decision-making with greater clarity.
+      </p>
 
-  }
-
-
-  const plan =
-    profile.membership_plan ||
-    profile.membership ||
-    "Free";
-
-
-  const status =
-    profile.membership_status ||
-    "Active";
+    </div>
 
 
-  /*
-    Update membership display.
-    
-    Keep these IDs if they already exist
-    in your current premium-resources.html.
-  */
+    <div class="membership-box">
 
-  const membershipElement =
-    document.getElementById("membership");
+      <div>
+        <div class="membership-label">
+          Your Membership
+        </div>
 
-  if (membershipElement) {
+        <div id="membership">
+          Checking membership...
+        </div>
+      </div>
 
-    membershipElement.textContent =
-      plan === "Pro Plus"
-        ? "FinPortfolio Pro Plus"
-        : plan === "Pro"
-        ? "FinPortfolio Pro"
-        : "Free";
+      <div id="membershipStatus"></div>
 
-  }
+    </div>
 
 
-  const statusElement =
-    document.getElementById("membershipStatus");
+    <!-- PRO RESOURCES -->
 
-  if (statusElement) {
+    <h2 class="section-title">
+      Pro Resources
+    </h2>
 
-    statusElement.textContent =
-      plan !== "Free"
-        ? "● " + status
-        : "";
-
-  }
+    <div class="resource-grid">
 
 
-  /*
-    RESOURCE ACCESS
-  */
+      <div class="resource-card" data-plan="Pro">
 
-  const proResources =
-    document.querySelectorAll(
-      '[data-plan="Pro"]'
-    );
+        <div class="resource-type">
+          Premium Insight
+        </div>
+
+        <h3>
+          Premium Finance Insights
+        </h3>
+
+        <p>
+          Practical explanations and insights on finance,
+          investments and important financial concepts.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Read Resource →
+        </a>
+
+      </div>
 
 
-  const proPlusResources =
-    document.querySelectorAll(
-      '[data-plan="Pro Plus"]'
-    );
+      <div class="resource-card" data-plan="Pro">
+
+        <div class="resource-type">
+          Research
+        </div>
+
+        <h3>
+          Selected Research Reports
+        </h3>
+
+        <p>
+          Curated research material covering businesses,
+          markets, investments and financial topics.
+        </p>
+
+        <a href="#" class="resource-btn">
+          View Report →
+        </a>
+
+      </div>
 
 
-  proResources.forEach(function(resource) {
+      <div class="resource-card" data-plan="Pro">
 
-    if (
-      plan === "Pro" ||
-      plan === "Pro Plus"
-    ) {
+        <div class="resource-type">
+          Case Study
+        </div>
 
-      resource.classList.remove("locked");
+        <h3>
+          Premium Case Studies
+        </h3>
 
-    } else {
+        <p>
+          Real-world business and finance case studies
+          designed for practical learning.
+        </p>
 
-      resource.classList.add("locked");
+        <a href="#" class="resource-btn">
+          Open Case Study →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro">
+
+        <div class="resource-type">
+          Tools
+        </div>
+
+        <h3>
+          Finance Tools & Templates
+        </h3>
+
+        <p>
+          Useful finance templates and basic tools for
+          learning, analysis and financial planning.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Access Tools →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro">
+
+        <div class="resource-type">
+          Resources
+        </div>
+
+        <h3>
+          Premium Resource Library
+        </h3>
+
+        <p>
+          A growing collection of selected finance resources
+          available exclusively to members.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Explore Library →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro">
+
+        <div class="resource-type">
+          Learning
+        </div>
+
+        <h3>
+          Premium Learning Material
+        </h3>
+
+        <p>
+          Additional learning resources created to support
+          practical finance knowledge.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Start Learning →
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRO PLUS RESOURCES -->
+
+    <h2 class="section-title">
+      Pro Plus Resources
+    </h2>
+
+    <div class="resource-grid">
+
+
+      <div class="resource-card" data-plan="Pro Plus">
+
+        <div class="lock-label">
+          Pro Plus
+        </div>
+
+        <div class="resource-type">
+          Advanced Research
+        </div>
+
+        <h3>
+          Advanced Research Reports
+        </h3>
+
+        <p>
+          Deeper research material covering companies,
+          sectors, markets and financial themes.
+        </p>
+
+        <a href="#" class="resource-btn">
+          View Report →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro Plus">
+
+        <div class="lock-label">
+          Pro Plus
+        </div>
+
+        <div class="resource-type">
+          Market Insights
+        </div>
+
+        <h3>
+          Business & Market Insights
+        </h3>
+
+        <p>
+          Practical observations and analysis of business
+          and market developments.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Explore Insights →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro Plus">
+
+        <div class="lock-label">
+          Pro Plus
+        </div>
+
+        <div class="resource-type">
+          Excel
+        </div>
+
+        <h3>
+          Advanced Excel Templates
+        </h3>
+
+        <p>
+          More advanced spreadsheet resources for financial
+          analysis and practical work.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Access Templates →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro Plus">
+
+        <div class="lock-label">
+          Pro Plus
+        </div>
+
+        <div class="resource-type">
+          Financial Models
+        </div>
+
+        <h3>
+          Premium Financial Models
+        </h3>
+
+        <p>
+          Practical financial modelling resources for
+          analysis, learning and decision-making.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Open Models →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro Plus">
+
+        <div class="lock-label">
+          Pro Plus
+        </div>
+
+        <div class="resource-type">
+          Early Access
+        </div>
+
+        <h3>
+          Early Access Resources
+        </h3>
+
+        <p>
+          Get access to selected new FinPortfolio resources
+          before general availability.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Explore →
+        </a>
+
+      </div>
+
+
+      <div class="resource-card" data-plan="Pro Plus">
+
+        <div class="lock-label">
+          Pro Plus
+        </div>
+
+        <div class="resource-type">
+          Exclusive
+        </div>
+
+        <h3>
+          Pro Plus Library
+        </h3>
+
+        <p>
+          Exclusive resources created for members who want
+          deeper practical finance material.
+        </p>
+
+        <a href="#" class="resource-btn">
+          Open Library →
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+      <h2>
+        More resources are coming.
+      </h2>
+
+      <p>
+        FinPortfolio's premium library will continue to grow
+        with practical research, finance tools, case studies,
+        templates and learning resources.
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <footer>
+    © 2026 FinPortfolio — Where Finance Meets Clarity
+  </footer>
+
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        }
+      );
+
+
+    async function loadPremiumResources() {
+
+      const {
+        data: { session },
+        error: sessionError
+      } =
+        await supabaseClient.auth.getSession();
+
+
+      if (
+        sessionError ||
+        !session ||
+        !session.user
+      ) {
+
+        window.location.replace("index.html");
+
+        return;
+      }
+
+
+      const user = session.user;
+
+
+      const {
+        data: profile,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(`
+            full_name,
+            email,
+            membership,
+            membership_plan,
+            membership_status,
+            membership_expiry_date
+          `)
+          .eq("id", user.id)
+          .single();
+
+
+      if (error || !profile) {
+
+        document.body.innerHTML = `
+          <div style="
+            max-width:600px;
+            margin:100px auto;
+            padding:30px;
+            text-align:center;
+            font-family:Arial;
+          ">
+            <h2>Unable to load your account</h2>
+            <p>Please try again.</p>
+          </div>
+        `;
+
+        console.error(error);
+
+        return;
+      }
+
+
+      const plan =
+        profile.membership_plan ||
+        profile.membership ||
+        "Free";
+
+
+      const status =
+        profile.membership_status ||
+        "Active";
+
+
+      const membershipElement =
+        document.getElementById("membership");
+
+
+      if (membershipElement) {
+
+        membershipElement.textContent =
+          plan === "Pro Plus"
+            ? "FinPortfolio Pro Plus"
+            : plan === "Pro"
+            ? "FinPortfolio Pro"
+            : "Free";
+      }
+
+
+      const statusElement =
+        document.getElementById("membershipStatus");
+
+
+      if (statusElement) {
+
+        statusElement.textContent =
+          plan !== "Free"
+            ? "● " + status
+            : "Free Account";
+      }
+
+
+      const proResources =
+        document.querySelectorAll(
+          '[data-plan="Pro"]'
+        );
+
+
+      const proPlusResources =
+        document.querySelectorAll(
+          '[data-plan="Pro Plus"]'
+        );
+
+
+      proResources.forEach(function(resource) {
+
+        if (
+          plan === "Pro" ||
+          plan === "Pro Plus"
+        ) {
+
+          resource.classList.remove("locked");
+
+          const lock =
+            resource.querySelector(".lock-label");
+
+          if (lock) {
+            lock.remove();
+          }
+
+        } else {
+
+          resource.classList.add("locked");
+
+          if (
+            !resource.querySelector(".lock-label")
+          ) {
+
+            const lock =
+              document.createElement("div");
+
+            lock.className = "lock-label";
+
+            lock.textContent = "Pro";
+
+            resource.appendChild(lock);
+          }
+        }
+
+      });
+
+
+      proPlusResources.forEach(function(resource) {
+
+        if (plan === "Pro Plus") {
+
+          resource.classList.remove("locked");
+
+          const lock =
+            resource.querySelector(".lock-label");
+
+          if (lock) {
+            lock.remove();
+          }
+
+        } else {
+
+          resource.classList.add("locked");
+
+        }
+
+      });
 
     }
 
-  });
 
+    loadPremiumResources();
 
-  proPlusResources.forEach(function(resource) {
+  </script>
 
-    if (plan === "Pro Plus") {
-
-      resource.classList.remove("locked");
-
-    } else {
-
-      resource.classList.add("locked");
-
-    }
-
-  });
-
-}
-
-
-/*
-  START
-*/
-
-loadPremiumResources();
-
-</script>
+</body>
+</html>
