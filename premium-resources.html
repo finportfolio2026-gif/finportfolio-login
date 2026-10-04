@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinPortfolio — Premium Resources</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
+
+    .header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      border: 1px solid #777;
+      padding: 8px 14px;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .intro {
+      margin-bottom: 30px;
+    }
+
+    .intro h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .intro p {
+      color: #666;
+      margin: 0;
+    }
+
+    .membership {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .membership strong {
+      color: #8b1e2d;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .resource {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .resource h2 {
+      margin-top: 0;
+      font-size: 19px;
+    }
+
+    .resource p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 5px 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .pro {
+      background: #3157d5;
+      color: white;
+    }
+
+    .plus {
+      background: #8b1e2d;
+      color: white;
+    }
+
+    .access {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 9px 14px;
+      background: #202020;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .locked {
+      opacity: 0.65;
+    }
+
+    .locked .access {
+      background: #aaa;
+      pointer-events: none;
+    }
+
+    .status {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .intro h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo">FINPORTFOLIO</div>
+    <a href="dashboard.html" class="back">← Dashboard</a>
+  </div>
+
+
+  <div class="container">
+
+    <div class="intro">
+      <h1>Premium Resources</h1>
+      <p>Practical finance resources available through FinPortfolio membership.</p>
+    </div>
+
+
+    <div class="membership">
+      Your membership:
+      <strong id="membership">Loading...</strong>
+      <span id="membershipStatus"></span>
+    </div>
+
+
+    <div class="grid">
+
+
+      <!-- PRO RESOURCE 1 -->
+
+      <div class="resource" id="proResource1">
+
+        <span class="badge pro">PRO</span>
+
+        <h2>Premium Finance Insights</h2>
+
+        <p>
+          Practical finance insights covering markets, investments,
+          financial concepts and real-world applications.
+        </p>
+
+        <a href="#" class="access">
+          Access Resource →
+        </a>
+
+      </div>
+
+
+      <!-- PRO RESOURCE 2 -->
+
+      <div class="resource" id="proResource2">
+
+        <span class="badge pro">PRO</span>
+
+        <h2>Premium Case Studies</h2>
+
+        <p>
+          Real-world finance and business case studies designed
+          to improve practical understanding.
+        </p>
+
+        <a href="#" class="access">
+          Access Resource →
+        </a>
+
+      </div>
+
+
+      <!-- PRO PLUS RESOURCE 1 -->
+
+      <div class="resource" id="plusResource1">
+
+        <span class="badge plus">PRO PLUS</span>
+
+        <h2>Advanced Research Reports</h2>
+
+        <p>
+          Detailed research reports covering businesses,
+          industries, markets and financial topics.
+        </p>
+
+        <a href="#" class="access">
+          Access Resource →
+        </a>
+
+      </div>
+
+
+      <!-- PRO PLUS RESOURCE 2 -->
+
+      <div class="resource" id="plusResource2">
+
+        <span class="badge plus">PRO PLUS</span>
+
+        <h2>Financial Models & Excel Templates</h2>
+
+        <p>
+          Advanced Excel templates and practical financial
+          models for analysis and decision-making.
+        </p>
+
+        <a href="#" class="access">
+          Access Resource →
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="status" id="status">
+      Checking membership access...
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+
+    /*
+      Paste your existing working Supabase Publishable Key here.
+    */
+
+    const SUPABASE_KEY =
+      "YOUR_EXISTING_PUBLISHABLE_KEY";
+
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+    async function checkMembership() {
+
+      const {
+        data: { user },
+        error: userError
+      } = await supabaseClient.auth.getUser();
+
+
+      if (userError || !user) {
+
+        window.location.href = "index.html";
+
+        return;
+
+      }
+
+
+      const { data: profile, error } =
+        await supabaseClient
+          .from("profiles")
+          .select(`
+            membership,
+            membership_plan,
+            membership_status,
+            membership_expiry_date
+          `)
+          .eq("id", user.id)
+          .single();
+
+
+      if (error) {
+
+        document.getElementById("status").textContent =
+          "Unable to verify membership.";
+
+        return;
+
+      }
+
+
+      const plan =
+        profile.membership_plan ||
+        profile.membership ||
+        "Free";
+
+
+      document.getElementById("membership").textContent =
+        plan === "Pro Plus"
+          ? "FinPortfolio Pro Plus"
+          : plan === "Pro"
+          ? "FinPortfolio Pro"
+          : "Free";
+
+
+      document.getElementById("membershipStatus").textContent =
+        profile.membership_status === "Active"
+          ? " • Active"
+          : "";
+
+
+      const proResources = [
+        document.getElementById("proResource1"),
+        document.getElementById("proResource2")
+      ];
+
+
+      const plusResources = [
+        document.getElementById("plusResource1"),
+        document.getElementById("plusResource2")
+      ];
+
+
+      /*
+        FREE USER
+      */
+
+      if (plan === "Free") {
+
+        proResources.forEach(function(resource) {
+
+          resource.classList.add("locked");
+
+          resource.querySelector(".access").textContent =
+            "🔒 Pro Required";
+
+        });
+
+
+        plusResources.forEach(function(resource) {
+
+          resource.classList.add("locked");
+
+          resource.querySelector(".access").textContent =
+            "🔒 Pro Plus Required";
+
+        });
+
+
+        document.getElementById("status").textContent =
+          "Upgrade your membership to unlock premium resources.";
+
+      }
+
+
+      /*
+        PRO USER
+      */
+
+      else if (plan === "Pro") {
+
+        proResources.forEach(function(resource) {
+
+          resource.classList.remove("locked");
+
+        });
+
+
+        plusResources.forEach(function(resource) {
+
+          resource.classList.add("locked");
+
+          resource.querySelector(".access").textContent =
+            "🔒 Pro Plus Required";
+
+        });
+
+
+        document.getElementById("status").textContent =
+          "Pro resources are available. Upgrade to Pro Plus for advanced resources.";
+
+      }
+
+
+      /*
+        PRO PLUS USER
+      */
+
+      else if (plan === "Pro Plus") {
+
+        proResources.forEach(function(resource) {
+
+          resource.classList.remove("locked");
+
+        });
+
+
+        plusResources.forEach(function(resource) {
+
+          resource.classList.remove("locked");
+
+        });
+
+
+        document.getElementById("status").textContent =
+          "You have full access to premium resources.";
+
+      }
+
+    }
+
+
+    checkMembership();
+
+  </script>
+
+</body>
+</html>
