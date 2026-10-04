@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FinPortfolio Store</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .fin-red {
+      color: #8b1e2d;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: white;
+
+      border: 1px solid #777;
+
+      padding: 8px 14px;
+      border-radius: 5px;
+
+      font-size: 13px;
+    }
+
+    .back-btn:hover {
+      border-color: white;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      max-width: 1050px;
+      margin: 0 auto;
+
+      padding: 65px 25px 45px;
+    }
+
+    .eyebrow {
+      color: #8b1e2d;
+
+      font-size: 12px;
+      font-weight: bold;
+
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      margin: 0;
+
+      font-size: 42px;
+      line-height: 1.15;
+
+      max-width: 700px;
+    }
+
+    .hero p {
+      margin-top: 18px;
+
+      max-width: 650px;
+
+      color: #666;
+
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+
+    /* =========================
+       STORE
+    ========================= */
+
+    .store {
+      max-width: 1050px;
+      margin: 0 auto;
+
+      padding: 0 25px 70px;
+    }
+
+    .section-heading {
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 7px;
+
+      font-size: 24px;
+    }
+
+    .section-heading p {
+      margin: 0;
+
+      color: #777;
+      font-size: 14px;
+    }
+
+
+    /* =========================
+       PRODUCT GRID
+    ========================= */
+
+    .products {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 20px;
+    }
+
+
+    /* =========================
+       PRODUCT CARD
+    ========================= */
+
+    .product {
+
+      background: white;
+
+      border: 1px solid #ddd;
+
+      border-radius: 10px;
+
+      padding: 25px;
+
+      display: flex;
+      flex-direction: column;
+
+      min-height: 350px;
+
+      transition: 0.2s;
+    }
+
+    .product:hover {
+      transform: translateY(-3px);
+
+      border-color: #8b1e2d;
+    }
+
+
+    .product-tag {
+
+      display: inline-block;
+
+      width: fit-content;
+
+      background: #f7e8eb;
+
+      color: #8b1e2d;
+
+      font-size: 10px;
+
+      font-weight: bold;
+
+      letter-spacing: 1px;
+
+      padding: 5px 8px;
+
+      border-radius: 4px;
+
+      margin-bottom: 18px;
+    }
+
+    .product-tag.soon {
+
+      background: #f2f2f2;
+
+      color: #666;
+    }
+
+
+    .product h3 {
+
+      margin: 0 0 10px;
+
+      font-size: 20px;
+
+      line-height: 1.3;
+    }
+
+
+    .product-description {
+
+      color: #666;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+
+      margin: 0 0 18px;
+    }
+
+
+    .features {
+
+      padding: 0;
+
+      margin: 0 0 20px;
+
+      list-style: none;
+
+      color: #444;
+
+      font-size: 13px;
+
+      line-height: 1.8;
+    }
+
+    .features li::before {
+
+      content: "✓";
+
+      color: #8b1e2d;
+
+      font-weight: bold;
+
+      margin-right: 8px;
+    }
+
+
+    .price {
+
+      margin-top: auto;
+
+      font-size: 24px;
+
+      font-weight: bold;
+
+      color: #202020;
+    }
+
+    .price span {
+
+      font-size: 12px;
+
+      font-weight: normal;
+
+      color: #777;
+    }
+
+
+    .buy-btn {
+
+      display: block;
+
+      text-align: center;
+
+      text-decoration: none;
+
+      background: #8b1e2d;
+
+      color: white;
+
+      padding: 12px 15px;
+
+      border-radius: 5px;
+
+      margin-top: 15px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+    }
+
+    .buy-btn:hover {
+      background: #701722;
+    }
+
+
+    .disabled-btn {
+
+      display: block;
+
+      text-align: center;
+
+      background: #eee;
+
+      color: #888;
+
+      padding: 12px 15px;
+
+      border-radius: 5px;
+
+      margin-top: 15px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+    }
+
+
+    /* =========================
+       MEMBERSHIP CTA
+    ========================= */
+
+    .membership-box {
+
+      margin-top: 45px;
+
+      background: #202020;
+
+      color: white;
+
+      border-radius: 10px;
+
+      padding: 30px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 25px;
+    }
+
+    .membership-box h2 {
+
+      margin: 0 0 8px;
+
+      font-size: 22px;
+    }
+
+    .membership-box p {
+
+      margin: 0;
+
+      color: #cfcfcf;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+    }
+
+    .membership-btn {
+
+      flex-shrink: 0;
+
+      text-decoration: none;
+
+      background: white;
+
+      color: #202020;
+
+      padding: 11px 17px;
+
+      border-radius: 5px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+
+      border-top: 1px solid #ddd;
+
+      padding: 25px;
+
+      text-align: center;
+
+      color: #777;
+
+      font-size: 12px;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 850px) {
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .logo img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .back-btn {
+        font-size: 12px;
+        padding: 8px 11px;
+      }
+
+      .hero {
+        padding: 45px 18px 35px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .store {
+        padding: 0 18px 50px;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .product {
+        min-height: auto;
+      }
+
+      .membership-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .membership-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+
+    <div class="logo">
+
+      <img
+        src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
+        alt="FinPortfolio Logo"
+      >
+
+      <span>
+        <span class="fin-red">FIN</span>PORTFOLIO
+      </span>
+
+    </div>
+
+
+    <a
+      href="dashboard.html"
+      class="back-btn"
+    >
+      My Dashboard
+    </a>
+
+  </header>
+
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <section class="hero">
+
+    <div class="eyebrow">
+      FinPortfolio Store
+    </div>
+
+    <h1>
+      Practical finance tools,
+      built to be used.
+    </h1>
+
+    <p>
+      Download practical spreadsheets, templates and
+      research resources designed to make finance easier
+      to understand, analyse and apply.
+    </p>
+
+  </section>
+
+
+
+  <!-- =========================
+       PRODUCTS
+  ========================= -->
+
+  <section class="store">
+
+    <div class="section-heading">
+
+      <h2>
+        Finance Tools & Resources
+      </h2>
+
+      <p>
+        One-time purchases. Download and use whenever you need them.
+      </p>
+
+    </div>
+
+
+    <div class="products">
+
+
+      <!-- PRODUCT 1 -->
+
+      <div class="product">
+
+        <span class="product-tag">
+          AVAILABLE
+        </span>
+
+        <h3>
+          Investment Portfolio Tracker
+        </h3>
+
+        <p class="product-description">
+          A practical Excel tracker to monitor your
+          investments, portfolio value, profit/loss and
+          overall returns in one place.
+        </p>
+
+        <ul class="features">
+
+          <li>
+            Track up to 50 holdings
+          </li>
+
+          <li>
+            Stocks, Mutual Funds, ETF & more
+          </li>
+
+          <li>
+            Automatic P/L calculations
+          </li>
+
+          <li>
+            Portfolio allocation dashboard
+          </li>
+
+          <li>
+            Excel format
+          </li>
+
+        </ul>
+
+
+        <div class="price">
+          ₹99
+          <span>
+            one-time
+          </span>
+        </div>
+
+
+        <a
+          href="product-payment.html?product=portfolio-tracker"
+          class="buy-btn"
+        >
+          Get the Tracker →
+        </a>
+
+      </div>
+
+
+
+      <!-- PRODUCT 2 -->
+
+      <div class="product">
+
+        <span class="product-tag soon">
+          COMING SOON
+        </span>
+
+        <h3>
+          Personal Finance Planner
+        </h3>
+
+        <p class="product-description">
+          Organise your monthly income, expenses,
+          savings and financial goals with a simple
+          personal finance workbook.
+        </p>
+
+        <ul class="features">
+
+          <li>
+            Monthly budget tracking
+          </li>
+
+          <li>
+            Expense categorisation
+          </li>
+
+          <li>
+            Savings tracker
+          </li>
+
+          <li>
+            Financial goal planning
+          </li>
+
+        </ul>
+
+
+        <div class="price">
+          ₹79
+          <span>
+            planned
+          </span>
+        </div>
+
+
+        <div class="disabled-btn">
+          Coming Soon
+        </div>
+
+      </div>
+
+
+
+      <!-- PRODUCT 3 -->
+
+      <div class="product">
+
+        <span class="product-tag soon">
+          COMING SOON
+        </span>
+
+        <h3>
+          Mutual Fund Analysis Toolkit
+        </h3>
+
+        <p class="product-description">
+          A practical Excel toolkit for comparing mutual
+          funds and understanding key performance and
+          risk indicators.
+        </p>
+
+        <ul class="features">
+
+          <li>
+            Fund comparison
+          </li>
+
+          <li>
+            Return analysis
+          </li>
+
+          <li>
+            Risk indicators
+          </li>
+
+          <li>
+            Portfolio comparison
+          </li>
+
+        </ul>
+
+
+        <div class="price">
+          ₹149
+          <span>
+            planned
+          </span>
+        </div>
+
+
+        <div class="disabled-btn">
+          Coming Soon
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         MEMBERSHIP CTA
+    ========================= -->
+
+    <div class="membership-box">
+
+      <div>
+
+        <h2>
+          Looking for more than individual tools?
+        </h2>
+
+        <p>
+          Explore FinPortfolio membership for premium
+          insights, research reports, case studies and
+          advanced finance resources.
+        </p>
+
+      </div>
+
+
+      <a
+        href="payment.html?plan=pro"
+        class="membership-btn"
+      >
+        Explore Membership →
+      </a>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    © 2026 FinPortfolio.
+    Where Finance Meets Clarity.
+
+  </footer>
+
+
+</body>
+
+</html>
