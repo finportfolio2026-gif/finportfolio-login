@@ -6,7 +6,6 @@
 
   <title>FinPortfolio — Premium Resources</title>
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -172,22 +171,33 @@
       font-weight: 600;
       border-radius: 3px;
       text-align: center;
+      position: relative;
+      z-index: 2;
     }
 
     .resource-btn:hover {
       background: #711622;
     }
 
+    /* LOCKED CARD */
+
     .locked {
       opacity: 0.58;
     }
 
+    /*
+      Keep payment / upgrade buttons fully visible
+      even when the card is locked.
+    */
+
     .locked .resource-btn {
-      background: #999;
+      opacity: 1;
+      background: #8b1e2d;
+      color: white;
     }
 
     .locked .resource-btn:hover {
-      background: #777;
+      background: #711622;
     }
 
     .lock-label {
@@ -201,6 +211,7 @@
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
+      z-index: 1;
     }
 
     .info-box {
@@ -231,9 +242,11 @@
     }
 
     @media (max-width: 850px) {
+
       .resource-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
     }
 
     @media (max-width: 600px) {
@@ -267,9 +280,11 @@
         align-items: flex-start;
         flex-direction: column;
       }
+
     }
   </style>
 </head>
+
 
 <body>
 
@@ -932,11 +947,6 @@
             lock.remove();
           }
 
-
-          /*
-            Existing resource links stay active.
-          */
-
         }
 
 
@@ -948,10 +958,6 @@
 
           resource.classList.add("locked");
 
-
-          /*
-            Add Pro lock label.
-          */
 
           if (
             !resource.querySelector(".lock-label")
@@ -971,14 +977,29 @@
           }
 
 
-          /*
-            Send Free users to payment page.
-          */
-
           if (button) {
 
-            button.href =
-              "payment.html?plan=pro";
+            /*
+              Keep existing real resource links
+              unavailable for Free users.
+            */
+
+            if (
+              button.getAttribute("data-resource") ===
+              "premium-insights" ||
+              button.getAttribute("data-resource") ===
+              "selected-research"
+            ) {
+
+              button.href =
+                "payment.html?plan=pro";
+
+            } else {
+
+              button.href =
+                "payment.html?plan=pro";
+
+            }
 
             button.textContent =
               "Get Pro — ₹99 →";
@@ -1005,6 +1026,9 @@
         const button =
           resource.querySelector(".resource-btn");
 
+        const lock =
+          resource.querySelector(".lock-label");
+
 
         /*
           PRO PLUS USER
@@ -1013,11 +1037,6 @@
         if (plan === "Pro Plus") {
 
           resource.classList.remove("locked");
-
-
-          const lock =
-            resource.querySelector(".lock-label");
-
 
           if (lock) {
             lock.remove();
@@ -1034,22 +1053,12 @@
 
           resource.classList.add("locked");
 
-
-          const lock =
-            resource.querySelector(".lock-label");
-
-
           if (lock) {
 
             lock.textContent =
               "Upgrade";
 
           }
-
-
-          /*
-            Pro user can upgrade.
-          */
 
           if (button) {
 
@@ -1072,22 +1081,12 @@
 
           resource.classList.add("locked");
 
-
-          const lock =
-            resource.querySelector(".lock-label");
-
-
           if (lock) {
 
             lock.textContent =
               "Pro Plus";
 
           }
-
-
-          /*
-            Free user goes to Pro Plus payment.
-          */
 
           if (button) {
 
