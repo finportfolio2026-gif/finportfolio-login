@@ -1,508 +1,882 @@
-<script>
-const SUPABASE_URL =
-  "https://mxmxwosyhsfjaaocazdl.supabase.co";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const SUPABASE_KEY =
-  "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+  <title>FinPortfolio — Dashboard</title>
 
-let supabaseClient = null;
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-/* ================================
-   LOAD SUPABASE
-================================ */
-
-function loadSupabase() {
-  return new Promise((resolve, reject) => {
-
-    if (window.supabase) {
-      resolve();
-      return;
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    const script = document.createElement("script");
-
-    script.src =
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-    script.onload = () => resolve();
-
-    script.onerror = () =>
-      reject(new Error("Supabase library failed to load"));
-
-    document.head.appendChild(script);
-  });
-}
-
-
-/* ================================
-   INITIALIZE SUPABASE
-================================ */
-
-async function initializeSupabase() {
-
-  try {
-
-    await loadSupabase();
-
-    if (!window.supabase) {
-      throw new Error("Supabase library not available");
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+      min-height: 100vh;
     }
 
-    supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY,
-        {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-          }
-        }
-      );
-
-    await loadDashboard();
-
-  } catch (error) {
-
-    console.error(
-      "Supabase initialization error:",
-      error
-    );
-
-  }
-}
-
-
-/* ================================
-   OPEN PREMIUM RESOURCES
-================================ */
-
-function openPremiumResources() {
-
-  window.location.href =
-    "premium-resources.html";
-
-}
-
-
-/* ================================
-   LOAD DASHBOARD
-================================ */
-
-async function loadDashboard() {
-
-  if (!supabaseClient) {
-    console.error("Supabase client not initialized");
-    return;
-  }
-
-  try {
-
-    /* Get logged-in session */
-
-    const {
-      data: { session },
-      error: sessionError
-    } =
-      await supabaseClient.auth.getSession();
-
-
-    if (sessionError) {
-
-      console.error(
-        "Session error:",
-        sessionError
-      );
-
-      return;
+    .header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-
-    /* No login session */
-
-    if (!session || !session.user) {
-
-      window.location.replace("index.html");
-
-      return;
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
-
-    const user = session.user;
-
-
-    /* ================================
-       GET PROFILE
-    ================================= */
-
-    const {
-      data: profile,
-      error: profileError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(`
-          full_name,
-          email,
-          membership,
-          membership_plan,
-          membership_status,
-          membership_start_date,
-          membership_expiry_date
-        `)
-        .eq("id", user.id)
-        .single();
-
-
-    if (profileError) {
-
-      console.error(
-        "Profile loading error:",
-        profileError
-      );
-
-      return;
+    .logout {
+      background: transparent;
+      color: white;
+      border: 1px solid #777;
+      padding: 8px 14px;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
-
-    if (!profile) {
-
-      console.error(
-        "Profile not found"
-      );
-
-      return;
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
-
-    /* ================================
-       MEMBERSHIP
-    ================================= */
-
-    const plan =
-      profile.membership_plan ||
-      profile.membership ||
-      "Free";
-
-
-    const status =
-      profile.membership_status ||
-      "Active";
-
-
-    /* ================================
-       USER NAME
-    ================================= */
-
-    const userName =
-      document.getElementById("userName");
-
-    if (userName) {
-
-      userName.textContent =
-        profile.full_name ||
-        user.email ||
-        "User";
-
+    .welcome {
+      margin-bottom: 30px;
     }
 
-
-    /* ================================
-       PROFILE NAME
-    ================================= */
-
-    const profileName =
-      document.getElementById("profileName");
-
-    if (profileName) {
-
-      profileName.textContent =
-        profile.full_name ||
-        "User";
-
+    .welcome h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
     }
 
-
-    /* ================================
-       EMAIL
-    ================================= */
-
-    const profileEmail =
-      document.getElementById("profileEmail");
-
-    if (profileEmail) {
-
-      profileEmail.textContent =
-        profile.email ||
-        user.email ||
-        "";
-
+    .welcome p {
+      margin: 0;
+      color: #666;
     }
 
+    .card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
 
-    /* ================================
-       MEMBERSHIP DISPLAY
-    ================================= */
+    .card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
 
-    const membershipElement =
-      document.getElementById("membership");
+    .info {
+      margin: 12px 0;
+      font-size: 15px;
+    }
 
-    if (membershipElement) {
+    .membership {
+      display: inline-block;
+      background: #f7f3eb;
+      border: 1px solid #8b1e2d;
+      color: #8b1e2d;
+      padding: 7px 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
 
-      if (plan === "Pro Plus") {
+    .membership.proplus {
+      border-color: #b8860b;
+      color: #8a6500;
+    }
 
-        membershipElement.textContent =
-          "FinPortfolio Pro Plus";
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
 
-      } else if (plan === "Pro") {
+    .feature {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      background: #fff;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-        membershipElement.textContent =
-          "FinPortfolio Pro";
+    .feature:hover {
+      border-color: #8b1e2d;
+      transform: translateY(-2px);
+    }
 
-      } else {
+    .feature h3 {
+      margin-top: 0;
+      font-size: 16px;
+    }
 
-        membershipElement.textContent =
-          "Free";
+    .feature p {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+    }
 
+    .status {
+      text-align: center;
+      color: #777;
+      margin-top: 30px;
+      font-size: 13px;
+    }
+
+    .locked {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 4px 7px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .badge-pro {
+      background: #f7e8eb;
+      color: #8b1e2d;
+    }
+
+    .badge-plus {
+      background: #fff3c4;
+      color: #8a6500;
+    }
+
+    @media (max-width: 850px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
       }
 
+      .welcome h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+
+    <div class="logo">
+      FINPORTFOLIO
+    </div>
+
+    <button class="logout" id="logoutBtn">
+      Logout
+    </button>
+
+  </div>
+
+
+  <div class="container">
+
+    <div class="welcome">
+
+      <h1>
+        Welcome,
+        <span id="userName">User</span>
+      </h1>
+
+      <p>
+        Your personal FinPortfolio dashboard.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>My Account</h2>
+
+      <div class="info">
+        <strong>Name:</strong>
+        <span id="profileName">
+          Loading...
+        </span>
+      </div>
+
+      <div class="info">
+        <strong>Email:</strong>
+        <span id="profileEmail">
+          Loading...
+        </span>
+      </div>
+
+      <div class="info">
+
+        <strong>Membership:</strong>
+        <br>
+
+        <span
+          class="membership"
+          id="membership"
+        >
+          Loading...
+        </span>
+
+        <span
+          id="membershipStatus"
+          style="margin-left:8px;font-size:13px;color:#666;"
+        ></span>
+
+      </div>
+
+      <div
+        class="info"
+        id="membershipExpiryRow"
+        style="display:none;"
+      >
+        <strong>Valid Until:</strong>
+        <span id="membershipExpiry"></span>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        FinPortfolio Resources
+      </h2>
+
+      <div class="grid">
+
+
+        <!-- COURSES -->
+
+        <a
+          href="courses.html"
+          class="feature"
+        >
+
+          <h3>
+            Courses
+          </h3>
+
+          <p>
+            Access finance learning resources and courses.
+          </p>
+
+        </a>
+
+
+        <!-- FINANCE TOOLS -->
+
+        <div class="feature">
+
+          <h3>
+            Finance Tools
+          </h3>
+
+          <p>
+            Explore useful finance tools, calculators and templates.
+          </p>
+
+        </div>
+
+
+        <!-- RESEARCH -->
+
+        <div class="feature">
+
+          <h3>
+            Research
+          </h3>
+
+          <p>
+            Explore selected research reports and financial insights.
+          </p>
+
+        </div>
+
+
+        <!-- ISSUED CERTIFICATES -->
+
+        <a
+          href="issued-certificates.html"
+          class="feature"
+        >
+
+          <h3>
+            Issued Certificates
+          </h3>
+
+          <p>
+            View certificates you have earned through FinPortfolio courses.
+          </p>
+
+        </a>
+
+
+        <!-- PREMIUM INSIGHTS -->
+
+        <div
+          class="feature"
+          id="proResource"
+          data-plan="Pro"
+          onclick="openPremiumResources()"
+        >
+
+          <span class="badge badge-pro">
+            PRO
+          </span>
+
+          <h3>
+            Premium Insights
+          </h3>
+
+          <p>
+            Premium finance insights and selected research reports.
+          </p>
+
+        </div>
+
+
+        <!-- PREMIUM CASE STUDIES -->
+
+        <div
+          class="feature"
+          id="proCaseStudies"
+          data-plan="Pro"
+        >
+
+          <span class="badge badge-pro">
+            PRO
+          </span>
+
+          <h3>
+            Premium Case Studies
+          </h3>
+
+          <p>
+            Explore practical finance and business case studies.
+          </p>
+
+        </div>
+
+
+        <!-- ADVANCED RESEARCH -->
+
+        <div
+          class="feature"
+          id="proPlusResource"
+          data-plan="Pro Plus"
+        >
+
+          <span class="badge badge-plus">
+            PRO PLUS
+          </span>
+
+          <h3>
+            Advanced Research
+          </h3>
+
+          <p>
+            Advanced research and exclusive business insights.
+          </p>
+
+        </div>
+
+
+        <!-- FINANCIAL MODELS -->
+
+        <div
+          class="feature"
+          id="modelResource"
+          data-plan="Pro Plus"
+        >
+
+          <span class="badge badge-plus">
+            PRO PLUS
+          </span>
+
+          <h3>
+            Financial Models
+          </h3>
+
+          <p>
+            Access premium financial models and advanced templates.
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="status"
+      id="status"
+    >
+      Loading your account...
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+
+    const SUPABASE_KEY =
+      "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+
+
+    let supabaseClient = null;
+
+
+    /* ================================
+       OPEN PREMIUM RESOURCES
+    ================================= */
+
+    function openPremiumResources() {
+
+      window.location.href =
+        "premium-resources.html";
+
     }
 
 
     /* ================================
-       MEMBERSHIP STATUS
+       LOAD DASHBOARD
     ================================= */
 
-    const membershipStatus =
-      document.getElementById(
-        "membershipStatus"
-      );
+    async function loadDashboard() {
 
-    if (membershipStatus) {
+      try {
 
-      if (plan !== "Free") {
+        if (!window.supabase) {
 
-        membershipStatus.textContent =
-          "● " + status;
+          throw new Error(
+            "Supabase library not loaded"
+          );
 
-      } else {
+        }
 
-        membershipStatus.textContent =
+
+        supabaseClient =
+          window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY,
+            {
+              auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
+              }
+            }
+          );
+
+
+        /* Get current session */
+
+        const {
+          data: { session },
+          error: sessionError
+        } =
+          await supabaseClient.auth.getSession();
+
+
+        if (sessionError) {
+
+          console.error(
+            "Session error:",
+            sessionError
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !session ||
+          !session.user
+        ) {
+
+          window.location.replace(
+            "index.html"
+          );
+
+          return;
+
+        }
+
+
+        const user =
+          session.user;
+
+
+        /* Get profile */
+
+        const {
+          data: profile,
+          error: profileError
+        } =
+          await supabaseClient
+            .from("profiles")
+            .select(`
+              full_name,
+              email,
+              membership,
+              membership_plan,
+              membership_status,
+              membership_start_date,
+              membership_expiry_date
+            `)
+            .eq("id", user.id)
+            .single();
+
+
+        if (profileError) {
+
+          console.error(
+            "Profile error:",
+            profileError
+          );
+
+          document.getElementById(
+            "status"
+          ).textContent =
+            "Unable to load profile.";
+
+          return;
+
+        }
+
+
+        if (!profile) {
+
+          return;
+
+        }
+
+
+        /* ================================
+           NAME
+        ================================= */
+
+        document.getElementById(
+          "userName"
+        ).textContent =
+          profile.full_name ||
+          user.email ||
+          "User";
+
+
+        document.getElementById(
+          "profileName"
+        ).textContent =
+          profile.full_name ||
+          "Not available";
+
+
+        /* ================================
+           EMAIL
+        ================================= */
+
+        document.getElementById(
+          "profileEmail"
+        ).textContent =
+          profile.email ||
+          user.email ||
           "";
 
-      }
 
-    }
+        /* ================================
+           MEMBERSHIP
+        ================================= */
 
-
-    /* ================================
-       MEMBERSHIP PLAN BADGE
-    ================================= */
-
-    const planBadge =
-      document.getElementById("planBadge");
-
-    if (planBadge) {
-
-      planBadge.textContent =
-        plan === "Pro Plus"
-          ? "PRO PLUS"
-          : plan === "Pro"
-          ? "PRO"
-          : "FREE";
-
-    }
+        const plan =
+          profile.membership_plan ||
+          profile.membership ||
+          "Free";
 
 
-    /* ================================
-       EXPIRY DATE
-    ================================= */
+        const membershipElement =
+          document.getElementById(
+            "membership"
+          );
 
-    const expiryElement =
-      document.getElementById(
-        "membershipExpiry"
-      );
 
-    if (
-      expiryElement &&
-      profile.membership_expiry_date
-    ) {
+        membershipElement.textContent =
+          plan === "Pro Plus"
+            ? "FinPortfolio Pro Plus"
+            : plan === "Pro"
+            ? "FinPortfolio Pro"
+            : "Free";
 
-      const expiryDate =
-        new Date(
+
+        if (plan === "Pro Plus") {
+
+          membershipElement.classList.add(
+            "proplus"
+          );
+
+        }
+
+
+        /* ================================
+           MEMBERSHIP STATUS
+        ================================= */
+
+        const membershipStatus =
+          document.getElementById(
+            "membershipStatus"
+          );
+
+
+        if (plan !== "Free") {
+
+          membershipStatus.textContent =
+            "● " +
+            (
+              profile.membership_status ||
+              "Active"
+            );
+
+        } else {
+
+          membershipStatus.textContent =
+            "";
+
+        }
+
+
+        /* ================================
+           EXPIRY
+        ================================= */
+
+        if (
           profile.membership_expiry_date
-        );
+        ) {
 
-      expiryElement.textContent =
-        expiryDate.toLocaleDateString(
-          "en-IN",
-          {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
+          const expiryRow =
+            document.getElementById(
+              "membershipExpiryRow"
+            );
+
+          const expiryElement =
+            document.getElementById(
+              "membershipExpiry"
+            );
+
+
+          const expiryDate =
+            new Date(
+              profile.membership_expiry_date
+            );
+
+
+          expiryElement.textContent =
+            expiryDate.toLocaleDateString(
+              "en-IN",
+              {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+              }
+            );
+
+
+          expiryRow.style.display =
+            "block";
+
+        }
+
+
+        /* ================================
+           PRO RESOURCES
+        ================================= */
+
+        const proResources =
+          document.querySelectorAll(
+            '[data-plan="Pro"]'
+          );
+
+
+        proResources.forEach(
+          function(resource) {
+
+            if (
+              plan === "Pro" ||
+              plan === "Pro Plus"
+            ) {
+
+              resource.classList.remove(
+                "locked"
+              );
+
+            } else {
+
+              resource.classList.add(
+                "locked"
+              );
+
+            }
+
           }
         );
 
+
+        /* ================================
+           PRO PLUS RESOURCES
+        ================================= */
+
+        const proPlusResources =
+          document.querySelectorAll(
+            '[data-plan="Pro Plus"]'
+          );
+
+
+        proPlusResources.forEach(
+          function(resource) {
+
+            if (
+              plan === "Pro Plus"
+            ) {
+
+              resource.classList.remove(
+                "locked"
+              );
+
+            } else {
+
+              resource.classList.add(
+                "locked"
+              );
+
+            }
+
+          }
+        );
+
+
+        /* ================================
+           STATUS
+        ================================= */
+
+        document.getElementById(
+          "status"
+        ).textContent =
+          "Your account is active.";
+
+
+        console.log(
+          "Dashboard loaded successfully"
+        );
+
+
+        console.log(
+          "Membership:",
+          plan
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Dashboard error:",
+          error
+        );
+
+      }
+
     }
 
 
     /* ================================
-       RESOURCE ACCESS
+       LOGOUT
     ================================= */
 
-    const proResources =
-      document.querySelectorAll(
-        '[data-plan="Pro"]'
-      );
+    async function logoutUser() {
 
+      try {
 
-    const proPlusResources =
-      document.querySelectorAll(
-        '[data-plan="Pro Plus"]'
-      );
+        if (supabaseClient) {
 
-
-    /* PRO ACCESS */
-
-    proResources.forEach(
-      function(resource) {
-
-        if (
-          plan === "Pro" ||
-          plan === "Pro Plus"
-        ) {
-
-          resource.classList.remove(
-            "locked"
-          );
-
-        } else {
-
-          resource.classList.add(
-            "locked"
-          );
+          await supabaseClient.auth.signOut();
 
         }
 
-      }
-    );
+        window.location.replace(
+          "index.html"
+        );
 
+      } catch (error) {
 
-    /* PRO PLUS ACCESS */
-
-    proPlusResources.forEach(
-      function(resource) {
-
-        if (
-          plan === "Pro Plus"
-        ) {
-
-          resource.classList.remove(
-            "locked"
-          );
-
-        } else {
-
-          resource.classList.add(
-            "locked"
-          );
-
-        }
+        console.error(
+          "Logout error:",
+          error
+        );
 
       }
-    );
-
-
-    console.log(
-      "Dashboard loaded successfully"
-    );
-
-    console.log(
-      "Membership:",
-      plan
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Dashboard error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ================================
-   LOGOUT
-================================ */
-
-async function logoutUser() {
-
-  if (!supabaseClient) {
-    return;
-  }
-
-  try {
-
-    const { error } =
-      await supabaseClient.auth.signOut();
-
-    if (error) {
-
-      console.error(
-        "Logout error:",
-        error
-      );
-
-      return;
-    }
-
-    window.location.replace(
-      "index.html"
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Logout failed:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ================================
-   PAGE LOAD
-================================ */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    /* Logout button */
-
-    const logoutButton =
-      document.getElementById("logoutBtn");
-
-    if (logoutButton) {
-
-      logoutButton.addEventListener(
-        "click",
-        logoutUser
-      );
 
     }
 
 
-    /* Start Supabase */
+    /* ================================
+       PAGE LOAD
+    ================================= */
 
-    initializeSupabase();
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
 
-  }
-);
-</script>
+        const logoutBtn =
+          document.getElementById(
+            "logoutBtn"
+          );
+
+
+        if (logoutBtn) {
+
+          logoutBtn.addEventListener(
+            "click",
+            logoutUser
+          );
+
+        }
+
+
+        loadDashboard();
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
