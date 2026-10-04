@@ -30,9 +30,24 @@
     }
 
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
       font-size: 20px;
       font-weight: 700;
       letter-spacing: 1.5px;
+      color: white;
+    }
+
+    .logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .fin-red {
+      color: #8b1e2d;
     }
 
     .back-btn {
@@ -259,6 +274,11 @@
         font-size: 17px;
       }
 
+      .logo img {
+        width: 28px;
+        height: 28px;
+      }
+
       .back-btn {
         font-size: 12px;
         padding: 8px 11px;
@@ -291,7 +311,16 @@
   <header>
 
     <div class="logo">
-      FINPORTFOLIO
+
+      <img
+        src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
+        alt="FinPortfolio Logo"
+      >
+
+      <span>
+        <span class="fin-red">FIN</span>PORTFOLIO
+      </span>
+
     </div>
 
     <a href="dashboard.html" class="back-btn">
