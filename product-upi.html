@@ -402,6 +402,39 @@
       background: #701722;
     }
 
+    .submit-btn:disabled {
+      background: #999;
+
+      cursor: not-allowed;
+    }
+
+
+    /* =========================
+       SUCCESS MESSAGE
+    ========================= */
+
+    .success-message {
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 14px;
+
+      background: #f3f7f3;
+
+      border: 1px solid #cfdccf;
+
+      border-radius: 6px;
+
+      color: #38543b;
+
+      font-size: 12px;
+
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
 
     /* =========================
        NOTICE
@@ -702,74 +735,123 @@
         </h2>
 
 
-        <div class="form-group">
+        <!--
+          Google Form Submission
+        -->
 
-          <label for="email">
-            Email Address
-          </label>
-
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            required
-          >
-
-          <div class="input-note">
-            Use the email where you want your product
-            access details to be sent.
-          </div>
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label for="utr">
-            UTR / Transaction ID
-          </label>
-
-          <input
-            type="text"
-            id="utr"
-            name="utr"
-            placeholder="Enter your UTR / transaction ID"
-            required
-          >
-
-          <div class="input-note">
-            Usually available in your UPI payment
-            confirmation or transaction history.
-          </div>
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label for="name">
-            Full Name
-          </label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your full name"
-            required
-          >
-
-        </div>
-
-
-        <button
-          type="button"
-          class="submit-btn"
-          onclick="submitPayment()"
+        <form
+          action="https://docs.google.com/forms/d/e/1FAIpQLSdMQZH3rYLwaX_3UIMwsGQ8iX6idtQTmYzlZAJivZ6I5gIUgQ/formResponse"
+          method="POST"
+          target="hidden_iframe"
+          id="paymentForm"
+          onsubmit="handleSubmit()"
         >
-          Submit Payment Details →
-        </button>
+
+
+          <div class="form-group">
+
+            <label for="email">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="entry.1569911513"
+              placeholder="Enter your email"
+              required
+            >
+
+            <div class="input-note">
+              Use the email where you want your product
+              access details to be sent.
+            </div>
+
+          </div>
+
+
+
+          <div class="form-group">
+
+            <label for="utr">
+              UTR / Transaction ID
+            </label>
+
+            <input
+              type="text"
+              id="utr"
+              name="entry.1981342252"
+              placeholder="Enter your UTR / transaction ID"
+              required
+            >
+
+            <div class="input-note">
+              Usually available in your UPI payment
+              confirmation or transaction history.
+            </div>
+
+          </div>
+
+
+
+          <div class="form-group">
+
+            <label for="name">
+              Full Name
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              name="entry.218278593"
+              placeholder="Enter your full name"
+              required
+            >
+
+          </div>
+
+
+
+          <!--
+            Product is automatically submitted
+            to Google Forms.
+          -->
+
+          <input
+            type="hidden"
+            name="entry.489983549"
+            value="Investment Portfolio Tracker"
+          >
+
+
+
+          <button
+            type="submit"
+            class="submit-btn"
+            id="submitBtn"
+          >
+            Submit Payment Details →
+          </button>
+
+
+        </form>
+
+
+
+        <div
+          class="success-message"
+          id="successMessage"
+        >
+
+          <strong>Payment details submitted.</strong>
+          <br>
+
+          Your transaction will be verified before
+          access to the Investment Portfolio Tracker
+          is provided.
+
+        </div>
+
 
 
         <div class="verification-note">
@@ -800,6 +882,18 @@
 
 
   <!-- =========================
+       HIDDEN GOOGLE FORM FRAME
+  ========================= -->
+
+  <iframe
+    name="hidden_iframe"
+    id="hidden_iframe"
+    style="display:none;"
+  ></iframe>
+
+
+
+  <!-- =========================
        FOOTER
   ========================= -->
 
@@ -813,37 +907,36 @@
 
 
   <!-- =========================
-       TEMPORARY SUBMISSION
-    ========================= -->
+       GOOGLE FORM SUBMISSION
+  ========================= -->
 
   <script>
 
-    function submitPayment() {
+    function handleSubmit() {
 
-      const email =
-        document.getElementById("email").value.trim();
+      const submitBtn =
+        document.getElementById("submitBtn");
 
-      const utr =
-        document.getElementById("utr").value.trim();
+      const successMessage =
+        document.getElementById("successMessage");
 
-      const name =
-        document.getElementById("name").value.trim();
+      submitBtn.disabled = true;
 
-
-      if (!name || !email || !utr) {
-
-        alert(
-          "Please fill in your Full Name, Email Address and UTR / Transaction ID."
-        );
-
-        return;
-
-      }
+      submitBtn.innerText =
+        "Submitting...";
 
 
-      alert(
-        "Payment details received. Your transaction will be verified before product access is provided."
-      );
+      setTimeout(function () {
+
+        document
+          .getElementById("paymentForm")
+          .style.display = "none";
+
+
+        successMessage.style.display = "block";
+
+
+      }, 1200);
 
     }
 
