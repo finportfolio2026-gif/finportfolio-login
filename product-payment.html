@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Investment Portfolio Tracker | FinPortfolio</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .fin-red {
+      color: #8b1e2d;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: white;
+
+      border: 1px solid #777;
+
+      padding: 8px 14px;
+      border-radius: 5px;
+
+      font-size: 13px;
+    }
+
+    .back-btn:hover {
+      border-color: white;
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+
+      padding: 55px 25px 75px;
+    }
+
+
+    /* =========================
+       BREADCRUMB
+    ========================= */
+
+    .breadcrumb {
+      font-size: 12px;
+      color: #777;
+
+      margin-bottom: 25px;
+    }
+
+    .breadcrumb a {
+      color: #8b1e2d;
+      text-decoration: none;
+    }
+
+
+    /* =========================
+       CHECKOUT LAYOUT
+    ========================= */
+
+    .checkout {
+      display: grid;
+
+      grid-template-columns: 1fr 360px;
+
+      gap: 35px;
+
+      align-items: start;
+    }
+
+
+    /* =========================
+       PRODUCT INFORMATION
+    ========================= */
+
+    .product-info {
+      background: white;
+
+      border: 1px solid #ddd;
+      border-radius: 10px;
+
+      padding: 32px;
+    }
+
+    .product-tag {
+      display: inline-block;
+
+      background: #f7e8eb;
+      color: #8b1e2d;
+
+      font-size: 10px;
+      font-weight: bold;
+
+      letter-spacing: 1px;
+
+      padding: 5px 8px;
+      border-radius: 4px;
+
+      margin-bottom: 17px;
+    }
+
+    .product-info h1 {
+      margin: 0 0 15px;
+
+      font-size: 31px;
+      line-height: 1.2;
+    }
+
+    .description {
+      color: #666;
+
+      font-size: 14px;
+      line-height: 1.7;
+
+      margin-bottom: 25px;
+    }
+
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .features-title {
+      font-size: 15px;
+      font-weight: bold;
+
+      margin-bottom: 12px;
+    }
+
+    .features {
+      list-style: none;
+
+      padding: 0;
+      margin: 0;
+    }
+
+    .features li {
+      font-size: 13px;
+      color: #444;
+
+      margin-bottom: 10px;
+    }
+
+    .features li::before {
+      content: "✓";
+
+      color: #8b1e2d;
+
+      font-weight: bold;
+
+      margin-right: 9px;
+    }
+
+
+    /* =========================
+       PAYMENT CARD
+    ========================= */
+
+    .payment-card {
+      background: white;
+
+      border: 1px solid #ddd;
+      border-radius: 10px;
+
+      padding: 28px;
+
+      position: sticky;
+      top: 20px;
+    }
+
+    .payment-card h2 {
+      margin: 0 0 5px;
+
+      font-size: 21px;
+    }
+
+    .payment-subtitle {
+      color: #777;
+
+      font-size: 12px;
+
+      margin: 0 0 20px;
+    }
+
+
+    /* =========================
+       PRICE
+    ========================= */
+
+    .price-box {
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+
+      padding: 17px 0;
+
+      margin-bottom: 20px;
+    }
+
+    .price-label {
+      font-size: 12px;
+      color: #777;
+
+      margin-bottom: 5px;
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .one-time {
+      font-size: 12px;
+      font-weight: normal;
+
+      color: #777;
+      margin-left: 5px;
+    }
+
+
+    /* =========================
+       PAYMENT NOTICE
+    ========================= */
+
+    .payment-notice {
+      background: #faf8f3;
+
+      border: 1px solid #e6e0d5;
+
+      border-radius: 7px;
+
+      padding: 14px;
+
+      margin-bottom: 20px;
+    }
+
+    .payment-notice strong {
+      display: block;
+
+      font-size: 13px;
+
+      margin-bottom: 6px;
+    }
+
+    .payment-notice p {
+      margin: 0;
+
+      color: #666;
+
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+
+    /* =========================
+       CONTINUE BUTTON
+    ========================= */
+
+    .continue-btn {
+      display: block;
+
+      width: 100%;
+
+      background: #8b1e2d;
+      color: white;
+
+      padding: 13px 15px;
+
+      border-radius: 5px;
+
+      font-size: 13px;
+      font-weight: bold;
+
+      text-align: center;
+
+      text-decoration: none;
+
+      cursor: pointer;
+    }
+
+    .continue-btn:hover {
+      background: #701722;
+    }
+
+
+    /* =========================
+       SECURITY NOTE
+    ========================= */
+
+    .secure-note {
+      text-align: center;
+
+      color: #888;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+
+      margin-top: 14px;
+    }
+
+
+    /* =========================
+       DELIVERY INFO
+    ========================= */
+
+    .delivery {
+      margin-top: 22px;
+
+      padding-top: 20px;
+
+      border-top: 1px solid #eee;
+    }
+
+    .delivery h3 {
+      font-size: 14px;
+
+      margin: 0 0 10px;
+    }
+
+    .delivery p {
+      margin: 0;
+
+      color: #666;
+
+      font-size: 12px;
+
+      line-height: 1.6;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid #ddd;
+
+      padding: 25px;
+
+      text-align: center;
+
+      color: #777;
+
+      font-size: 12px;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 750px) {
+
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .logo img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .back-btn {
+        font-size: 12px;
+        padding: 8px 11px;
+      }
+
+      .page {
+        padding: 35px 18px 55px;
+      }
+
+      .checkout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .payment-card {
+        position: static;
+      }
+
+      .product-info {
+        padding: 25px;
+      }
+
+      .product-info h1 {
+        font-size: 27px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+
+    <div class="logo">
+
+      <img
+        src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
+        alt="FinPortfolio Logo"
+      >
+
+      <span>
+        <span class="fin-red">FIN</span>PORTFOLIO
+      </span>
+
+    </div>
+
+
+    <a
+      href="store.html"
+      class="back-btn"
+    >
+      Back to Store
+    </a>
+
+  </header>
+
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main class="page">
+
+
+    <div class="breadcrumb">
+
+      <a href="store.html">Store</a>
+
+      &nbsp; / &nbsp;
+
+      Investment Portfolio Tracker
+
+    </div>
+
+
+    <div class="checkout">
+
+
+      <!-- =========================
+           PRODUCT INFORMATION
+      ========================= -->
+
+      <section class="product-info">
+
+        <span class="product-tag">
+          DIGITAL PRODUCT
+        </span>
+
+
+        <h1>
+          Investment Portfolio Tracker
+        </h1>
+
+
+        <p class="description">
+
+          A practical Excel-based portfolio tracker designed
+          to help you monitor your investments, portfolio value,
+          profit/loss and overall returns in one place.
+
+        </p>
+
+
+        <div class="features-title">
+          What's included
+        </div>
+
+
+        <ul class="features">
+
+          <li>
+            Track up to 50 investment holdings
+          </li>
+
+          <li>
+            Stocks, Mutual Funds, ETFs & more
+          </li>
+
+          <li>
+            Automatic profit/loss calculations
+          </li>
+
+          <li>
+            Portfolio allocation overview
+          </li>
+
+          <li>
+            Easy-to-use Excel format
+          </li>
+
+          <li>
+            Designed for personal investment tracking
+          </li>
+
+        </ul>
+
+
+      </section>
+
+
+
+      <!-- =========================
+           PAYMENT
+      ========================= -->
+
+      <aside class="payment-card">
+
+        <h2>
+          Complete Your Purchase
+        </h2>
+
+        <p class="payment-subtitle">
+          One-time purchase
+        </p>
+
+
+        <div class="price-box">
+
+          <div class="price-label">
+            Total
+          </div>
+
+          <div class="price">
+
+            ₹99
+
+            <span class="one-time">
+              one-time
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="payment-notice">
+
+          <strong>
+            Payment method
+          </strong>
+
+          <p>
+            You will be redirected to the FinPortfolio
+            payment page to complete the UPI payment
+            and submit your transaction details.
+          </p>
+
+        </div>
+
+
+        <a
+          href="product-upi.html?product=portfolio-tracker"
+          class="continue-btn"
+        >
+          Continue to Payment →
+        </a>
+
+
+        <div class="secure-note">
+
+          Digital product • One-time payment<br>
+
+          Payment verification required before access
+
+        </div>
+
+
+        <div class="delivery">
+
+          <h3>
+            After payment
+          </h3>
+
+          <p>
+            Once your payment is verified, access to the
+            Investment Portfolio Tracker will be provided
+            through your FinPortfolio account/dashboard.
+          </p>
+
+        </div>
+
+      </aside>
+
+
+    </div>
+
+  </main>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    © 2026 FinPortfolio.
+    Where Finance Meets Clarity.
+
+  </footer>
+
+
+</body>
+
+</html>
