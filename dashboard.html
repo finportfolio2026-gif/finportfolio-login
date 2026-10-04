@@ -84,13 +84,36 @@
 
     .membership {
       display: inline-block;
-      background: #f7f3eb;
-      border: 1px solid #8b1e2d;
-      color: #8b1e2d;
       padding: 7px 12px;
       border-radius: 5px;
       font-weight: bold;
       margin-top: 5px;
+    }
+
+    .membership.free {
+      background: #f3f3f3;
+      border: 1px solid #aaa;
+      color: #555;
+    }
+
+    .membership.pro {
+      background: #eef4ff;
+      border: 1px solid #3157d5;
+      color: #3157d5;
+    }
+
+    .membership.proplus {
+      background: #fff4f4;
+      border: 1px solid #8b1e2d;
+      color: #8b1e2d;
+    }
+
+    .membership-status {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #228b45;
     }
 
     .grid {
@@ -112,7 +135,7 @@
     }
 
     .feature:hover {
-      border-color: #8b1e2d;
+      border-color: #3157d5;
       transform: translateY(-2px);
     }
 
@@ -125,6 +148,57 @@
       color: #666;
       font-size: 13px;
       line-height: 1.5;
+    }
+
+    .premium {
+      border: 1px solid #3157d5;
+      background: #f8faff;
+    }
+
+    .premium-plus {
+      border: 1px solid #8b1e2d;
+      background: #fffafa;
+    }
+
+    .locked {
+      opacity: 0.75;
+      cursor: default;
+    }
+
+    .locked:hover {
+      transform: none;
+      border-color: #ddd;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 4px 7px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .badge-pro {
+      background: #3157d5;
+      color: white;
+    }
+
+    .badge-plus {
+      background: #8b1e2d;
+      color: white;
+    }
+
+    .upgrade {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 9px 13px;
+      background: #3157d5;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: bold;
     }
 
     .status {
@@ -159,14 +233,21 @@
     <button class="logout" id="logoutBtn">Logout</button>
   </div>
 
+
   <div class="container">
+
+    <!-- WELCOME -->
 
     <div class="welcome">
       <h1>Welcome, <span id="userName">User</span></h1>
       <p>Your personal FinPortfolio dashboard.</p>
     </div>
 
+
+    <!-- ACCOUNT -->
+
     <div class="card">
+
       <h2>My Account</h2>
 
       <div class="info">
@@ -181,56 +262,149 @@
 
       <div class="info">
         <strong>Membership:</strong><br>
-        <span class="membership" id="membership">Loading...</span>
+
+        <span class="membership free" id="membership">
+          Loading...
+        </span>
+
+        <span class="membership-status" id="membershipStatus"></span>
       </div>
+
     </div>
 
+
+    <!-- RESOURCES -->
+
     <div class="card">
+
       <h2>FinPortfolio Resources</h2>
 
       <div class="grid">
 
-        <!-- COURSES -->
+
+        <!-- FREE COURSE -->
 
         <a href="courses.html" class="feature">
-          <h3>Courses</h3>
+
+          <h3>📚 Courses</h3>
+
           <p>
             Access finance learning resources and courses.
           </p>
+
         </a>
 
 
         <!-- FINANCE TOOLS -->
 
         <div class="feature">
-          <h3>Finance Tools</h3>
+
+          <h3>🧮 Finance Tools</h3>
+
           <p>
             Explore useful finance tools, calculators and templates.
           </p>
+
         </div>
 
 
-        <!-- RESEARCH -->
+        <!-- FREE RESEARCH -->
 
         <div class="feature">
-          <h3>Research</h3>
+
+          <h3>📄 Research</h3>
+
           <p>
             Explore selected research reports and financial insights.
           </p>
+
         </div>
 
 
-        <!-- ISSUED CERTIFICATES -->
+        <!-- CERTIFICATES -->
 
         <a href="issued-certificates.html" class="feature">
-          <h3>Issued Certificates</h3>
+
+          <h3>🎓 Issued Certificates</h3>
+
           <p>
             View certificates you have earned through FinPortfolio courses.
           </p>
+
         </a>
 
+
+        <!-- PRO RESOURCE -->
+
+        <div class="feature premium" id="proResource">
+
+          <span class="badge badge-pro">
+            PRO
+          </span>
+
+          <h3>📊 Premium Insights</h3>
+
+          <p id="proText">
+            Premium finance insights and selected reports.
+          </p>
+
+        </div>
+
+
+        <!-- PRO CASE STUDIES -->
+
+        <div class="feature premium" id="proCaseStudies">
+
+          <span class="badge badge-pro">
+            PRO
+          </span>
+
+          <h3>📁 Premium Case Studies</h3>
+
+          <p>
+            Access selected premium finance and business case studies.
+          </p>
+
+        </div>
+
+
+        <!-- PRO PLUS -->
+
+        <div class="feature premium-plus" id="proPlusResource">
+
+          <span class="badge badge-plus">
+            PRO PLUS
+          </span>
+
+          <h3>📈 Advanced Research</h3>
+
+          <p id="proPlusText">
+            Advanced research reports and business & market insights.
+          </p>
+
+        </div>
+
+
+        <!-- FINANCIAL MODELS -->
+
+        <div class="feature premium-plus" id="modelResource">
+
+          <span class="badge badge-plus">
+            PRO PLUS
+          </span>
+
+          <h3>📊 Financial Models</h3>
+
+          <p>
+            Premium financial models and advanced Excel resources.
+          </p>
+
+        </div>
+
       </div>
+
     </div>
+
 
     <div class="status" id="status">
       Loading your account...
@@ -238,10 +412,18 @@
 
   </div>
 
+
   <script>
 
     const SUPABASE_URL =
       "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+
+    /*
+      IMPORTANT:
+      Paste your existing working Supabase Publishable Key below.
+      Do not use the Secret / service_role key.
+    */
 
     const SUPABASE_KEY =
       "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
@@ -270,10 +452,22 @@
       }
 
 
+      /*
+        Get profile + membership information
+      */
+
       const { data: profile, error: profileError } =
         await supabaseClient
           .from("profiles")
-          .select("full_name, email, membership")
+          .select(`
+            full_name,
+            email,
+            membership,
+            membership_plan,
+            membership_status,
+            membership_start_date,
+            membership_expiry_date
+          `)
           .eq("id", user.id)
           .single();
 
@@ -283,10 +477,16 @@
         document.getElementById("status").textContent =
           "Unable to load profile.";
 
+        console.error(profileError);
+
         return;
 
       }
 
+
+      /*
+        Basic profile information
+      */
 
       document.getElementById("userName").textContent =
         profile.full_name || "User";
@@ -300,8 +500,187 @@
         profile.email || user.email;
 
 
-      document.getElementById("membership").textContent =
-        profile.membership || "Free";
+      /*
+        Membership
+      */
+
+      const plan =
+        profile.membership_plan ||
+        profile.membership ||
+        "Free";
+
+
+      const membershipElement =
+        document.getElementById("membership");
+
+
+      const statusElement =
+        document.getElementById("membershipStatus");
+
+
+      membershipElement.textContent =
+        plan === "Pro Plus"
+          ? "FinPortfolio Pro Plus"
+          : plan === "Pro"
+          ? "FinPortfolio Pro"
+          : "Free";
+
+
+      /*
+        Membership colour
+      */
+
+      membershipElement.className =
+        "membership " +
+        (
+          plan === "Pro Plus"
+            ? "proplus"
+            : plan === "Pro"
+            ? "pro"
+            : "free"
+        );
+
+
+      /*
+        Membership status
+      */
+
+      if (plan !== "Free") {
+
+        statusElement.textContent =
+          profile.membership_status === "Active"
+            ? "● Active"
+            : "● " + (profile.membership_status || "Inactive");
+
+      } else {
+
+        statusElement.textContent = "";
+
+      }
+
+
+      /*
+        RESOURCE ACCESS
+      */
+
+      const proResources = [
+        document.getElementById("proResource"),
+        document.getElementById("proCaseStudies")
+      ];
+
+
+      const proPlusResources = [
+        document.getElementById("proPlusResource"),
+        document.getElementById("modelResource")
+      ];
+
+
+      /*
+        FREE USER
+      */
+
+      if (plan === "Free") {
+
+        proResources.forEach(function(resource) {
+
+          resource.classList.add("locked");
+
+          resource.innerHTML = `
+            <span class="badge badge-pro">🔒 PRO</span>
+            <h3>📊 Premium Insights</h3>
+            <p>
+              Premium finance insights and selected reports.
+              Upgrade your membership to access this resource.
+            </p>
+            <a href="#" class="upgrade">
+              Upgrade to Pro →
+            </a>
+          `;
+
+        });
+
+
+        proPlusResources.forEach(function(resource) {
+
+          resource.classList.add("locked");
+
+          resource.innerHTML = `
+            <span class="badge badge-plus">🔒 PRO PLUS</span>
+            <h3>📈 Advanced Research</h3>
+            <p>
+              Advanced research, financial models and market insights.
+              Available with Pro Plus membership.
+            </p>
+            <a href="#" class="upgrade">
+              View Pro Plus →
+            </a>
+          `;
+
+        });
+
+      }
+
+
+      /*
+        PRO USER
+      */
+
+      else if (plan === "Pro") {
+
+        proResources.forEach(function(resource) {
+
+          resource.classList.remove("locked");
+
+          resource.style.cursor = "pointer";
+
+        });
+
+
+        proPlusResources.forEach(function(resource) {
+
+          resource.classList.add("locked");
+
+          resource.innerHTML = `
+            <span class="badge badge-plus">🔒 PRO PLUS</span>
+            <h3>📈 Advanced Research</h3>
+            <p>
+              Advanced research, financial models and market insights.
+              Upgrade to Pro Plus to unlock these resources.
+            </p>
+            <a href="#" class="upgrade">
+              Upgrade to Pro Plus →
+            </a>
+          `;
+
+        });
+
+      }
+
+
+      /*
+        PRO PLUS USER
+      */
+
+      else if (plan === "Pro Plus") {
+
+        proResources.forEach(function(resource) {
+
+          resource.classList.remove("locked");
+
+          resource.style.cursor = "pointer";
+
+        });
+
+
+        proPlusResources.forEach(function(resource) {
+
+          resource.classList.remove("locked");
+
+          resource.style.cursor = "pointer";
+
+        });
+
+      }
 
 
       document.getElementById("status").textContent =
@@ -309,6 +688,10 @@
 
     }
 
+
+    /*
+      LOGOUT
+    */
 
     document.getElementById("logoutBtn").addEventListener(
       "click",
