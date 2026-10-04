@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FinPortfolio — Payment</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
+
+    header {
+      background: #202020;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      border: 1px solid #777;
+      padding: 9px 14px;
+      border-radius: 5px;
+    }
+
+    .back-btn:hover {
+      background: #333;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 45px auto;
+      padding: 0 20px;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .intro h1 {
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    .intro p {
+      color: #666;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .payment-box {
+      background: white;
+      border-radius: 12px;
+      padding: 35px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 35px;
+    }
+
+    .plan {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 22px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .plan:hover {
+      border-color: #8b1e2d;
+    }
+
+    .plan.selected {
+      border: 2px solid #8b1e2d;
+      background: #fffafa;
+    }
+
+    .plan h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .price {
+      font-size: 27px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .plan p {
+      color: #666;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .qr-section {
+      text-align: center;
+      border-top: 1px solid #eee;
+      padding-top: 30px;
+    }
+
+    .qr-section h2 {
+      margin-bottom: 8px;
+    }
+
+    .qr-section p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .qr-image {
+      width: 280px;
+      max-width: 85%;
+      margin: 20px auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .amount-box {
+      display: inline-block;
+      background: #f7f3eb;
+      padding: 12px 22px;
+      border-radius: 7px;
+      margin: 5px 0 20px;
+      font-weight: 700;
+    }
+
+    .steps {
+      text-align: left;
+      max-width: 560px;
+      margin: 20px auto 30px;
+      background: #faf8f3;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .steps strong {
+      color: #8b1e2d;
+    }
+
+    .steps ol {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    .steps li {
+      margin-bottom: 9px;
+      line-height: 1.5;
+    }
+
+    .form-section {
+      border-top: 1px solid #eee;
+      padding-top: 30px;
+      margin-top: 30px;
+    }
+
+    .form-section h2 {
+      margin-bottom: 8px;
+    }
+
+    .form-section p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      background: white;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #8b1e2d;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      background: #8b1e2d;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #741824;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff8e6;
+      border-left: 4px solid #f4c542;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .success {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .success h2 {
+      color: #8b1e2d;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      padding: 30px 15px;
+    }
+
+    @media (max-width: 650px) {
+
+      header {
+        padding: 15px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .back-btn {
+        font-size: 12px;
+        padding: 8px 10px;
+      }
+
+      .container {
+        margin: 25px auto;
+        padding: 0 12px;
+      }
+
+      .intro h1 {
+        font-size: 26px;
+      }
+
+      .payment-box {
+        padding: 22px 17px;
+      }
+
+      .plans {
+        grid-template-columns: 1fr;
+      }
+
+      .qr-image {
+        width: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">FINPORTFOLIO</div>
+
+  <a href="dashboard.html" class="back-btn">
+    ← Dashboard
+  </a>
+</header>
+
+
+<div class="container">
+
+  <div class="intro">
+    <h1>Complete Your Payment</h1>
+
+    <p>
+      Choose your FinPortfolio membership plan and complete the payment
+      using the QR code below.
+    </p>
+  </div>
+
+
+  <div class="payment-box">
+
+    <!-- PLANS -->
+
+    <div class="plans">
+
+      <div class="plan selected" data-plan="Pro" data-price="99"
+           onclick="selectPlan(this)">
+
+        <h2>FinPortfolio Pro</h2>
+
+        <div class="price">₹99</div>
+
+        <p>Monthly membership</p>
+
+      </div>
+
+
+      <div class="plan" data-plan="Pro Plus" data-price="149"
+           onclick="selectPlan(this)">
+
+        <h2>FinPortfolio Pro Plus</h2>
+
+        <div class="price">₹149</div>
+
+        <p>Monthly membership</p>
+
+      </div>
+
+    </div>
+
+
+    <!-- QR PAYMENT -->
+
+    <div class="qr-section">
+
+      <h2>Scan & Pay</h2>
+
+      <p>
+        Open your UPI app and scan the QR code below.
+      </p>
+
+      <div class="amount-box">
+        Pay ₹<span id="amount">99</span>
+      </div>
+
+      <img
+        src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/10/scanner.jpeg"
+        alt="FinPortfolio Payment QR Code"
+        class="qr-image"
+      >
+
+
+      <div class="steps">
+
+        <strong>Payment Steps</strong>
+
+        <ol>
+          <li>Select your membership plan above.</li>
+          <li>Scan the QR code using your UPI app.</li>
+          <li>Pay the exact amount shown above.</li>
+          <li>Complete the payment.</li>
+          <li>Enter your payment details below.</li>
+        </ol>
+
+      </div>
+
+    </div>
+
+
+    <!-- PAYMENT DETAILS -->
+
+    <div class="form-section">
+
+      <h2>Submit Payment Details</h2>
+
+      <p>
+        After completing the payment, enter the details below.
+        Your membership will be activated after payment verification.
+      </p>
+
+
+      <form id="paymentForm">
+
+        <label for="name">
+          Full Name
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your full name"
+          required
+        >
+
+
+        <label for="email">
+          Email Address
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your account email"
+          required
+        >
+
+
+        <label for="utr">
+          UTR / Transaction ID
+        </label>
+
+        <input
+          type="text"
+          id="utr"
+          placeholder="Enter your UTR / Transaction ID"
+          required
+        >
+
+
+        <button
+          type="submit"
+          class="submit-btn"
+        >
+          Submit Payment Details
+        </button>
+
+      </form>
+
+
+      <div class="notice">
+        <strong>Note:</strong>
+        Membership access is activated only after the payment
+        is successfully verified. Please make sure the UTR / Transaction
+        ID is entered correctly.
+      </div>
+
+
+      <div class="success" id="successMessage">
+
+        <h2>Payment Details Submitted</h2>
+
+        <p>
+          Thank you. Your payment details have been recorded.
+          Your membership will be activated after verification.
+        </p>
+
+        <a href="dashboard.html" class="back-btn"
+           style="display:inline-block; margin-top:15px; color:#202020; border-color:#202020;">
+          Return to Dashboard
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<footer>
+  © 2026 FinPortfolio. All rights reserved.
+</footer>
+
+
+<script>
+
+  let selectedPlan = "Pro";
+  let selectedPrice = "99";
+
+
+  function selectPlan(element) {
+
+    document.querySelectorAll(".plan").forEach(function(plan) {
+      plan.classList.remove("selected");
+    });
+
+    element.classList.add("selected");
+
+    selectedPlan = element.getAttribute("data-plan");
+    selectedPrice = element.getAttribute("data-price");
+
+    document.getElementById("amount").textContent = selectedPrice;
+  }
+
+
+  document.getElementById("paymentForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name =
+      document.getElementById("name").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const utr =
+      document.getElementById("utr").value.trim();
+
+
+    if (!name || !email || !utr) {
+      alert("Please fill in all payment details.");
+      return;
+    }
+
+
+    /*
+      Temporary manual-verification flow.
+
+      The payment details are currently shown as a confirmation.
+      Supabase payment-submission storage can be connected later.
+    */
+
+    console.log({
+      name: name,
+      email: email,
+      plan: selectedPlan,
+      amount: selectedPrice,
+      utr: utr
+    });
+
+
+    document.getElementById("paymentForm").style.display = "none";
+
+    document.getElementById("successMessage").style.display = "block";
+
+  });
+
+</script>
+
+</body>
+</html>
