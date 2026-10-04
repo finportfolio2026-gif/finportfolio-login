@@ -8,7 +8,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -225,19 +227,12 @@
       "https://mxmxwosyhsfjaaocazdl.supabase.co";
 
     const SUPABASE_KEY =
-      "YOUR_EXISTING_PUBLISHABLE_KEY";
+      "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
 
     const supabaseClient =
       window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_KEY,
-        {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-          }
-        }
+        SUPABASE_KEY
       );
 
 
@@ -257,29 +252,6 @@
       document.getElementById("message");
 
 
-    /*
-      IF ALREADY LOGGED IN
-    */
-
-    async function checkExistingSession() {
-
-      const {
-        data: { session }
-      } = await supabaseClient.auth.getSession();
-
-      if (session) {
-        window.location.replace("dashboard.html");
-      }
-
-    }
-
-    checkExistingSession();
-
-
-    /*
-      LOGIN TAB
-    */
-
     loginTab.addEventListener("click", () => {
 
       loginTab.classList.add("active");
@@ -292,10 +264,6 @@
 
     });
 
-
-    /*
-      SIGNUP TAB
-    */
 
     signupTab.addEventListener("click", () => {
 
@@ -310,10 +278,6 @@
     });
 
 
-    /*
-      CREATE ACCOUNT
-    */
-
     signupForm.addEventListener("submit", async (e) => {
 
       e.preventDefault();
@@ -327,7 +291,6 @@
       const password =
         document.getElementById("signupPassword").value;
 
-
       message.textContent =
         "Creating your account...";
 
@@ -335,8 +298,8 @@
       const { data, error } =
         await supabaseClient.auth.signUp({
 
-          email,
-          password,
+          email: email,
+          password: password,
 
           options: {
             data: {
@@ -359,7 +322,8 @@
 
       if (data.session) {
 
-        window.location.replace("dashboard.html");
+        window.location.href =
+          "dashboard.html";
 
         return;
 
@@ -374,21 +338,15 @@
     });
 
 
-    /*
-      LOGIN
-    */
-
     loginForm.addEventListener("submit", async (e) => {
 
       e.preventDefault();
-
 
       const email =
         document.getElementById("loginEmail").value.trim();
 
       const password =
         document.getElementById("loginPassword").value;
-
 
       message.textContent =
         "Logging in...";
@@ -397,8 +355,8 @@
       const { data, error } =
         await supabaseClient.auth.signInWithPassword({
 
-          email,
-          password
+          email: email,
+          password: password
 
         });
 
@@ -416,18 +374,15 @@
       if (!data.session) {
 
         message.textContent =
-          "Login session could not be created. Please try again.";
+          "Login session could not be created.";
 
         return;
 
       }
 
 
-      message.textContent =
-        "Login successful...";
-
-
-      window.location.replace("dashboard.html");
+      window.location.href =
+        "dashboard.html";
 
     });
 
