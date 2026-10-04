@@ -1,4 +1,3 @@
-
 <script>
 
 const SUPABASE_URL =
@@ -8,19 +7,123 @@ const SUPABASE_KEY =
   "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
 
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
-    }
-  );
+/*
+  LOAD SUPABASE LIBRARY FIRST
+*/
 
+function loadSupabase() {
+
+  return new Promise(function(resolve, reject) {
+
+    if (
+      window.supabase &&
+      typeof window.supabase.createClient === "function"
+    ) {
+
+      resolve();
+
+      return;
+
+    }
+
+
+    const script =
+      document.createElement("script");
+
+    script.src =
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+    script.onload = function() {
+
+      if (
+        window.supabase &&
+        typeof window.supabase.createClient === "function"
+      ) {
+
+        resolve();
+
+      } else {
+
+        reject(
+          new Error("Supabase library failed to load.")
+        );
+
+      }
+
+    };
+
+
+    script.onerror = function() {
+
+      reject(
+        new Error("Unable to load Supabase library.")
+      );
+
+    };
+
+
+    document.head.appendChild(script);
+
+  });
+
+}
+
+
+let supabaseClient;
+
+
+/*
+  INITIALIZE SUPABASE
+*/
+
+async function initializeSupabase() {
+
+  try {
+
+    await loadSupabase();
+
+
+    supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        }
+      );
+
+
+    await loadDashboard();
+
+  } catch (error) {
+
+    console.error(
+      "Supabase initialization error:",
+      error
+    );
+
+    const status =
+      document.getElementById("status");
+
+    if (status) {
+
+      status.textContent =
+        "Unable to connect to your account.";
+
+    }
+
+  }
+
+}
+
+
+/*
+  OPEN PREMIUM RESOURCES
+*/
 
 function openPremiumResources() {
 
@@ -37,7 +140,7 @@ function openPremiumResources() {
 async function loadDashboard() {
 
   /*
-    First restore the saved session.
+    RESTORE SAVED SESSION
   */
 
   const {
@@ -59,7 +162,7 @@ async function loadDashboard() {
 
 
   /*
-    No session = genuinely logged out.
+    NO SESSION
   */
 
   if (!session || !session.user) {
@@ -71,11 +174,12 @@ async function loadDashboard() {
   }
 
 
-  const user = session.user;
+  const user =
+    session.user;
 
 
   /*
-    Get profile
+    GET PROFILE
   */
 
   const {
@@ -99,8 +203,15 @@ async function loadDashboard() {
 
   if (profileError) {
 
-    document.getElementById("status").textContent =
-      "Unable to load profile.";
+    const status =
+      document.getElementById("status");
+
+    if (status) {
+
+      status.textContent =
+        "Unable to load profile.";
+
+    }
 
     console.error(profileError);
 
@@ -116,8 +227,10 @@ async function loadDashboard() {
   document.getElementById("userName").textContent =
     profile.full_name || "User";
 
+
   document.getElementById("profileName").textContent =
     profile.full_name || "Not available";
+
 
   document.getElementById("profileEmail").textContent =
     profile.email || user.email;
@@ -135,6 +248,7 @@ async function loadDashboard() {
 
   const membershipElement =
     document.getElementById("membership");
+
 
   const statusElement =
     document.getElementById("membershipStatus");
@@ -165,7 +279,10 @@ async function loadDashboard() {
       profile.membership_status === "Active"
         ? "● Active"
         : "● " +
-          (profile.membership_status || "Inactive");
+          (
+            profile.membership_status ||
+            "Inactive"
+          );
 
   } else {
 
@@ -184,7 +301,7 @@ async function loadDashboard() {
 
     document.getElementById("proCaseStudies")
 
-  ];
+  ].filter(Boolean);
 
 
   const proPlusResources = [
@@ -193,7 +310,7 @@ async function loadDashboard() {
 
     document.getElementById("modelResource")
 
-  ];
+  ].filter(Boolean);
 
 
   /*
@@ -334,8 +451,15 @@ async function loadDashboard() {
   }
 
 
-  document.getElementById("status").textContent =
-    "Your account is active.";
+  const status =
+    document.getElementById("status");
+
+  if (status) {
+
+    status.textContent =
+      "Your account is active.";
+
+  }
 
 }
 
@@ -344,25 +468,39 @@ async function loadDashboard() {
   LOGOUT
 */
 
-document
-  .getElementById("logoutBtn")
-  .addEventListener(
-    "click",
-    async () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
 
-      await supabaseClient.auth.signOut();
+    const logoutBtn =
+      document.getElementById("logoutBtn");
 
-      window.location.replace("index.html");
+
+    if (logoutBtn) {
+
+      logoutBtn.addEventListener(
+        "click",
+        async function() {
+
+          await supabaseClient.auth.signOut();
+
+          window.location.replace(
+            "index.html"
+          );
+
+        }
+      );
 
     }
-  );
 
 
-/*
-  START
-*/
+    /*
+      START
+    */
 
-loadDashboard();
+    initializeSupabase();
+
+  }
+);
 
 </script>
-
