@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Complete Payment | FinPortfolio</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f3eb;
+      color: #202020;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      background: #202020;
+      color: white;
+
+      padding: 18px 25px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      font-size: 20px;
+      font-weight: 700;
+
+      letter-spacing: 1.5px;
+    }
+
+    .logo img {
+      width: 30px;
+      height: 30px;
+
+      object-fit: contain;
+      display: block;
+    }
+
+    .fin-red {
+      color: #8b1e2d;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: white;
+
+      border: 1px solid #777;
+
+      padding: 8px 14px;
+
+      border-radius: 5px;
+
+      font-size: 13px;
+    }
+
+    .back-btn:hover {
+      border-color: white;
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .page {
+      max-width: 900px;
+
+      margin: 0 auto;
+
+      padding: 50px 25px 70px;
+    }
+
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    .eyebrow {
+      color: #8b1e2d;
+
+      font-size: 11px;
+      font-weight: bold;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 10px;
+    }
+
+    .page-title {
+      margin: 0 0 10px;
+
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .page-subtitle {
+      margin: 0 0 30px;
+
+      color: #666;
+
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+
+    /* =========================
+       PAYMENT LAYOUT
+    ========================= */
+
+    .payment-layout {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 25px;
+
+      align-items: start;
+    }
+
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .card {
+      background: white;
+
+      border: 1px solid #ddd;
+
+      border-radius: 10px;
+
+      padding: 28px;
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+
+      font-size: 20px;
+    }
+
+
+    /* =========================
+       ORDER SUMMARY
+    ========================= */
+
+    .order-box {
+      background: #faf8f3;
+
+      border: 1px solid #e6e0d5;
+
+      border-radius: 7px;
+
+      padding: 16px;
+
+      margin-bottom: 20px;
+    }
+
+    .order-label {
+      color: #777;
+
+      font-size: 11px;
+
+      margin-bottom: 6px;
+    }
+
+    .order-product {
+      font-size: 14px;
+
+      font-weight: bold;
+
+      line-height: 1.4;
+    }
+
+    .order-price {
+      margin-top: 10px;
+
+      font-size: 22px;
+
+      font-weight: bold;
+    }
+
+
+    /* =========================
+       QR SECTION
+    ========================= */
+
+    .qr-section {
+      text-align: center;
+    }
+
+    .qr-section p {
+      color: #666;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+      margin: 0 0 18px;
+    }
+
+    .qr-image {
+      width: 210px;
+      height: 210px;
+
+      object-fit: contain;
+
+      display: block;
+
+      margin: 0 auto 18px;
+
+      border: 1px solid #ddd;
+
+      padding: 8px;
+
+      border-radius: 8px;
+
+      background: white;
+    }
+
+
+    /* =========================
+       UPI ID
+    ========================= */
+
+    .upi-box {
+      background: #f7f3eb;
+
+      border: 1px solid #ddd;
+
+      border-radius: 6px;
+
+      padding: 12px;
+
+      text-align: center;
+    }
+
+    .upi-label {
+      display: block;
+
+      color: #777;
+
+      font-size: 10px;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 5px;
+    }
+
+    .upi-id {
+      font-size: 14px;
+
+      font-weight: bold;
+
+      color: #202020;
+
+      word-break: break-all;
+    }
+
+
+    /* =========================
+       STEPS
+    ========================= */
+
+    .steps {
+      margin-top: 22px;
+    }
+
+    .step {
+      display: flex;
+
+      gap: 12px;
+
+      margin-bottom: 14px;
+    }
+
+    .step-number {
+      width: 24px;
+      height: 24px;
+
+      flex-shrink: 0;
+
+      background: #8b1e2d;
+
+      color: white;
+
+      border-radius: 50%;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .step-text {
+      font-size: 12px;
+
+      color: #555;
+
+      line-height: 1.5;
+    }
+
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    .form-group label {
+      display: block;
+
+      font-size: 12px;
+
+      font-weight: bold;
+
+      margin-bottom: 7px;
+    }
+
+    .form-group input {
+      width: 100%;
+
+      padding: 12px;
+
+      border: 1px solid #ccc;
+
+      border-radius: 5px;
+
+      font-size: 13px;
+
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #8b1e2d;
+    }
+
+    .input-note {
+      color: #888;
+
+      font-size: 10px;
+
+      margin-top: 5px;
+
+      line-height: 1.4;
+    }
+
+
+    /* =========================
+       SUBMIT BUTTON
+    ========================= */
+
+    .submit-btn {
+      width: 100%;
+
+      border: none;
+
+      background: #8b1e2d;
+
+      color: white;
+
+      padding: 13px 15px;
+
+      border-radius: 5px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #701722;
+    }
+
+
+    /* =========================
+       NOTICE
+    ========================= */
+
+    .verification-note {
+      margin-top: 15px;
+
+      padding: 13px;
+
+      background: #faf8f3;
+
+      border: 1px solid #e6e0d5;
+
+      border-radius: 6px;
+
+      color: #666;
+
+      font-size: 11px;
+
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+
+    /* =========================
+       SECURITY
+    ========================= */
+
+    .security {
+      margin-top: 25px;
+
+      text-align: center;
+
+      color: #888;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid #ddd;
+
+      padding: 25px;
+
+      text-align: center;
+
+      color: #777;
+
+      font-size: 12px;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .logo img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .back-btn {
+        font-size: 12px;
+
+        padding: 8px 11px;
+      }
+
+      .page {
+        padding: 35px 18px 55px;
+      }
+
+      .page-title {
+        font-size: 28px;
+      }
+
+      .payment-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 23px;
+      }
+
+      .qr-image {
+        width: 190px;
+        height: 190px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+
+    <div class="logo">
+
+      <img
+        src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
+        alt="FinPortfolio Logo"
+      >
+
+      <span>
+
+        <span class="fin-red">FIN</span>PORTFOLIO
+
+      </span>
+
+    </div>
+
+
+    <a
+      href="store.html"
+      class="back-btn"
+    >
+      Back to Store
+    </a>
+
+  </header>
+
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main class="page">
+
+
+    <div class="eyebrow">
+      FinPortfolio Store
+    </div>
+
+
+    <h1 class="page-title">
+      Complete Your Payment
+    </h1>
+
+
+    <p class="page-subtitle">
+
+      Pay ₹99 using UPI and submit your transaction
+      details below. Your purchase will be verified
+      before the product is made available.
+
+    </p>
+
+
+
+    <div class="payment-layout">
+
+
+      <!-- =========================
+           LEFT — PAYMENT
+      ========================= -->
+
+      <section class="card">
+
+
+        <h2>
+          1. Make Payment
+        </h2>
+
+
+        <div class="order-box">
+
+          <div class="order-label">
+            PRODUCT
+          </div>
+
+          <div class="order-product">
+            Investment Portfolio Tracker
+          </div>
+
+          <div class="order-price">
+            ₹99
+          </div>
+
+        </div>
+
+
+        <div class="qr-section">
+
+          <p>
+            Scan the QR code using any supported
+            UPI app and pay exactly ₹99.
+          </p>
+
+
+          <img
+            src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/10/scanner.jpeg"
+            alt="FinPortfolio UPI QR Code"
+            class="qr-image"
+          >
+
+
+          <div class="upi-box">
+
+            <span class="upi-label">
+              UPI ID
+            </span>
+
+            <span class="upi-id">
+              7033273883@ybl
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="steps">
+
+
+          <div class="step">
+
+            <div class="step-number">
+              1
+            </div>
+
+            <div class="step-text">
+              Scan the QR code or use the UPI ID.
+            </div>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              2
+            </div>
+
+            <div class="step-text">
+              Pay exactly ₹99 from your UPI app.
+            </div>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              3
+            </div>
+
+            <div class="step-text">
+              After successful payment, note your UTR /
+              transaction reference number.
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+      </section>
+
+
+
+      <!-- =========================
+           RIGHT — PAYMENT DETAILS
+      ========================= -->
+
+      <section class="card">
+
+
+        <h2>
+          2. Submit Payment Details
+        </h2>
+
+
+        <div class="form-group">
+
+          <label for="email">
+            Email Address
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          >
+
+          <div class="input-note">
+            Use the email where you want your product
+            access details to be sent.
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="utr">
+            UTR / Transaction ID
+          </label>
+
+          <input
+            type="text"
+            id="utr"
+            name="utr"
+            placeholder="Enter your UTR / transaction ID"
+            required
+          >
+
+          <div class="input-note">
+            Usually available in your UPI payment
+            confirmation or transaction history.
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="name">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your full name"
+            required
+          >
+
+        </div>
+
+
+        <button
+          type="button"
+          class="submit-btn"
+          onclick="submitPayment()"
+        >
+          Submit Payment Details →
+        </button>
+
+
+        <div class="verification-note">
+
+          Your payment details will be reviewed before
+          access to the Investment Portfolio Tracker
+          is provided.
+
+        </div>
+
+
+        <div class="security">
+
+          Please make sure the UTR is entered correctly.
+          <br>
+          Do not submit the same transaction more than once.
+
+        </div>
+
+
+      </section>
+
+
+    </div>
+
+  </main>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    © 2026 FinPortfolio.
+    Where Finance Meets Clarity.
+
+  </footer>
+
+
+
+  <!-- =========================
+       TEMPORARY SUBMISSION
+    ========================= -->
+
+  <script>
+
+    function submitPayment() {
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const utr =
+        document.getElementById("utr").value.trim();
+
+      const name =
+        document.getElementById("name").value.trim();
+
+
+      if (!name || !email || !utr) {
+
+        alert(
+          "Please fill in your Full Name, Email Address and UTR / Transaction ID."
+        );
+
+        return;
+
+      }
+
+
+      alert(
+        "Payment details received. Your transaction will be verified before product access is provided."
+      );
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>
