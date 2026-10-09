@@ -1,0 +1,1030 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171717">
+<meta name="description" content="Explore financial research, regional economic analysis, investment studies and research publications by FinPortfolio.">
+<title>Research & Publications | FinPortfolio</title>
+
+<style>
+:root {
+  --bg: #f5f1e9;
+  --paper: #fffdf8;
+  --ink: #202020;
+  --muted: #77736c;
+  --red: #8b1e2d;
+  --red-dark: #641522;
+  --line: #e6dfd3;
+  --gold: #bd9650;
+  --dark: #171717;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button, input, select { font: inherit; }
+
+.top-strip {
+  background: var(--red);
+  color: #fff;
+  padding: 9px 6%;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+header {
+  padding: 20px 6%;
+  background: var(--dark);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid #343434;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.brand img {
+  width: 150px;
+  max-height: 55px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.brand-copy {
+  border-left: 1px solid #555;
+  padding-left: 13px;
+  color: #c9c1b5;
+  font-size: 10px;
+  letter-spacing: 1.7px;
+  line-height: 1.7;
+}
+
+nav {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #ded8ce;
+  font-size: 12px;
+  transition: color .2s;
+}
+
+nav a:hover { color: white; }
+
+.nav-cta {
+  padding: 11px 16px;
+  background: var(--red);
+  color: white;
+  border-radius: 4px;
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(139,30,45,.32), transparent 35%),
+    linear-gradient(125deg, #171717 0%, #252321 68%, #3a2022 100%);
+  color: white;
+  padding: 75px 7% 62px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "RESEARCH";
+  position: absolute;
+  right: -20px;
+  bottom: -52px;
+  font-size: clamp(75px, 15vw, 210px);
+  font-weight: 900;
+  letter-spacing: -8px;
+  color: rgba(255,255,255,.035);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1120px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #d5b77c;
+  font-size: 11px;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.hero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 1.05;
+  font-weight: 500;
+  max-width: 800px;
+  margin: 24px 0 18px;
+  letter-spacing: -1.8px;
+}
+
+.hero h1 span { color: #d5b77c; font-style: italic; }
+
+.hero p {
+  max-width: 640px;
+  color: #c7c2bb;
+  line-height: 1.85;
+  font-size: 15px;
+  margin: 0;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  transition: .2s ease;
+}
+
+.btn-primary { background: var(--red); color: white; }
+.btn-primary:hover { background: #a52b3d; transform: translateY(-2px); }
+
+.btn-outline { border-color: #625c54; color: white; }
+.btn-outline:hover { border-color: #d5b77c; }
+
+.hero-note {
+  margin-top: 44px;
+  padding-top: 18px;
+  border-top: 1px solid #49433e;
+  color: #a9a39a;
+  font-size: 11px;
+  letter-spacing: .6px;
+}
+
+main {
+  max-width: 1180px;
+  margin: auto;
+  padding: 0 24px 80px;
+}
+
+.location-intro {
+  padding: 48px 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+}
+
+.section-kicker {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h2.section-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-size: clamp(29px, 4vw, 42px);
+  margin: 9px 0;
+  letter-spacing: -.8px;
+}
+
+.section-description {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 640px;
+  margin: 0;
+}
+
+.location-stamp {
+  flex-shrink: 0;
+  border: 1px solid #d7cbb8;
+  padding: 12px 16px;
+  color: var(--red);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.featured {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  box-shadow: 0 12px 36px rgba(37,30,20,.05);
+}
+
+.featured-copy { padding: 36px; }
+
+.featured-art {
+  min-height: 300px;
+  background:
+    radial-gradient(circle at 70% 25%, rgba(188,150,80,.24), transparent 30%),
+    linear-gradient(145deg, #282321, #171717);
+  color: white;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-art::before {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(213,183,124,.28);
+  border-radius: 50%;
+  right: -60px;
+  top: 30px;
+  box-shadow: 0 0 0 30px rgba(213,183,124,.035),
+              0 0 0 60px rgba(213,183,124,.025);
+}
+
+.art-label, .art-bottom, .art-title { position: relative; z-index: 1; }
+
+.art-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #d5b77c;
+  text-transform: uppercase;
+}
+
+.art-title {
+  font-family: Georgia, serif;
+  font-size: clamp(34px, 4vw, 53px);
+  line-height: 1.05;
+  max-width: 360px;
+}
+
+.art-bottom {
+  color: #c5bdb2;
+  font-size: 11px;
+  letter-spacing: 1px;
+  line-height: 1.8;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 17px;
+}
+
+.tag {
+  background: #f0e8db;
+  color: #6c4c2d;
+  border-radius: 2px;
+  padding: 6px 9px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+}
+
+.tag.red { background: #f5e5e6; color: var(--red); }
+
+.featured h3 {
+  font-family: Georgia, serif;
+  font-size: clamp(24px, 3vw, 33px);
+  line-height: 1.2;
+  font-weight: 500;
+  margin: 0 0 14px;
+}
+
+.featured-copy p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  color: #777168;
+  font-size: 11px;
+  margin: 22px 0;
+}
+
+.read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--red);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 3px;
+  transition: .2s;
+}
+
+.read-link:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+.search-area {
+  margin-top: 58px;
+  padding: 28px;
+  background: #ebe4d8;
+  border: 1px solid #e0d6c6;
+  border-radius: 6px;
+}
+
+.search-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.search-top h2 {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.search-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-controls input, .search-controls select {
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid #d8cdbd;
+  border-radius: 3px;
+  padding: 12px;
+  outline: none;
+  min-width: 190px;
+  font-size: 12px;
+}
+
+.search-controls input:focus, .search-controls select:focus {
+  border-color: var(--red);
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.filter-btn {
+  border: 1px solid #d6cbbd;
+  background: transparent;
+  color: #5f584f;
+  padding: 9px 13px;
+  border-radius: 30px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--dark);
+  border-color: var(--dark);
+  color: white;
+}
+
+.results-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 11px;
+  margin: 32px 0 16px;
+}
+
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.paper-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 25px;
+  border-radius: 5px;
+  min-width: 0;
+  transition: transform .22s, box-shadow .22s, border-color .22s;
+}
+
+.paper-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(37,30,20,.07);
+  border-color: #c9b8a0;
+}
+
+.paper-card.featured-local {
+  border-top: 3px solid var(--red);
+}
+
+.paper-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+
+.paper-type {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--red);
+  font-weight: 800;
+}
+
+.paper-number {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  color: #d7cbb8;
+}
+
+.paper-card h3 {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+
+.paper-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.85;
+  margin: 0 0 18px;
+}
+
+.paper-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding: 15px 0 18px;
+  border-top: 1px solid #eee7dc;
+  color: #777168;
+  font-size: 10px;
+}
+
+.paper-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #eee7dc;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--red);
+}
+
+.paper-action span:last-child { font-size: 18px; }
+
+.empty {
+  display: none;
+  background: var(--paper);
+  border: 1px dashed #cfc3b3;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+  font-size: 13px;
+  grid-column: 1 / -1;
+}
+
+.note {
+  margin-top: 30px;
+  padding: 20px 22px;
+  border-left: 3px solid var(--gold);
+  background: #eee6d8;
+  color: #655c50;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.cta {
+  margin-top: 65px;
+  padding: 36px;
+  border-radius: 5px;
+  background: var(--dark);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.cta h2 {
+  font-family: Georgia, serif;
+  font-size: 29px;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.cta p {
+  color: #bdb6ab;
+  font-size: 12px;
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0;
+}
+
+footer {
+  background: #111;
+  color: #a9a39a;
+  padding: 27px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+footer strong { color: #f4eee4; }
+
+footer a { color: #d5b77c; }
+
+@media (max-width: 760px) {
+  header { padding: 17px 5%; align-items: flex-start; flex-direction: column; }
+  nav { gap: 14px; }
+  .brand img { width: 125px; }
+  .brand-copy { font-size: 9px; }
+  .hero { padding: 55px 6% 42px; }
+  .hero h1 { letter-spacing: -1px; }
+  main { padding-left: 16px; padding-right: 16px; }
+  .location-intro { align-items: flex-start; flex-direction: column; padding-top: 38px; }
+  .featured { grid-template-columns: 1fr; }
+  .featured-copy { padding: 25px; }
+  .featured-art { min-height: 220px; }
+  .search-area { padding: 20px; }
+  .search-controls { width: 100%; }
+  .search-controls input, .search-controls select { min-width: 0; width: 100%; }
+  .research-grid { grid-template-columns: 1fr; }
+  .paper-card { padding: 22px; }
+  .cta { padding: 27px 23px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-strip">
+  <span>FinPortfolio Research & Insights</span>
+  <span>Where Finance Meets Clarity</span>
+</div>
+
+<header>
+  <a class="brand" href="index.html" aria-label="FinPortfolio Home">
+    <img
+      src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
+      alt="FinPortfolio"
+      onerror="this.style.display='none';">
+    <div class="brand-copy">RESEARCH<br>AND INSIGHTS</div>
+  </a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="store.html">Store</a>
+    <a class="nav-cta" href="#research-library">Explore Research ↗</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Independent Finance Research</div>
+    <h1>Research that connects<br><span>finance with reality.</span></h1>
+    <p>
+      Explore regional economic studies, financial analysis and investment
+      research. From Jharkhand's economic potential to practical finance,
+      our focus is on making research useful, understandable and accessible.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#featured-research">Read Featured Study ↗</a>
+      <a class="btn btn-outline" href="#research-library">Browse Research Library ↓</a>
+    </div>
+    <div class="hero-note">
+      REGIONAL ECONOMICS &nbsp; / &nbsp; FINANCIAL ANALYSIS &nbsp; / &nbsp; INVESTMENT RESEARCH
+    </div>
+  </div>
+</section>
+
+<main>
+  <section class="location-intro">
+    <div>
+      <div class="section-kicker">Research with a regional perspective</div>
+      <h2 class="section-title">Rooted in Jharkhand. Focused on finance.</h2>
+      <p class="section-description">
+        Jharkhand's industrial centres tell different economic stories.
+        This collection puts the state's financial and development questions
+        first, with Jamshedpur and Dhanbad at the forefront.
+      </p>
+    </div>
+    <div class="location-stamp">JHARKHAND<br>INDIA · RESEARCH</div>
+  </section>
+
+  <section class="featured" id="featured-research">
+    <div class="featured-copy">
+      <div class="tags">
+        <span class="tag red">Featured Research</span>
+        <span class="tag">Jharkhand</span>
+        <span class="tag">Regional Economics</span>
+      </div>
+      <h3>Economic and Financial Analysis of Jharkhand: Opportunities and Challenges</h3>
+      <p>
+        An analysis of Jharkhand's economic structure, mineral wealth,
+        public finances, industrial base and development challenges.
+        The study considers how the state's resources and industrial centres
+        can contribute to more inclusive and sustainable economic progress.
+      </p>
+      <div class="meta">
+        <span>✍ Yash Rathod</span>
+        <span>📄 Research paper</span>
+        <span>↗ Available on SSRN</span>
+      </div>
+      <a class="read-link"
+         href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6560163"
+         target="_blank" rel="noopener noreferrer">
+        Read Paper on SSRN <span>↗</span>
+      </a>
+    </div>
+
+    <div class="featured-art">
+      <div class="art-label">FinPortfolio · Research Series 01</div>
+      <div class="art-title">The Economics<br>of Jharkhand.</div>
+      <div class="art-bottom">
+        RESOURCES. INDUSTRY. DEVELOPMENT.<br>
+        A REGIONAL FINANCIAL PERSPECTIVE.
+      </div>
+    </div>
+  </section>
+
+  <section class="search-area" id="research-library">
+    <div class="search-top">
+      <div>
+        <div class="section-kicker">The Research Desk</div>
+        <h2>Explore the library</h2>
+      </div>
+      <div class="search-controls">
+        <input id="searchInput" type="search"
+          placeholder="Search topic, city or keyword..."
+          aria-label="Search research papers">
+        <select id="sortSelect" aria-label="Sort research papers">
+          <option value="priority">Recommended order</option>
+          <option value="title">Title A–Z</option>
+          <option value="city">Regional studies first</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="filters" aria-label="Research categories">
+      <button class="filter-btn active" data-filter="all">All Research</button>
+      <button class="filter-btn" data-filter="jharkhand">Jharkhand</button>
+      <button class="filter-btn" data-filter="jamshedpur">Jamshedpur</button>
+      <button class="filter-btn" data-filter="dhanbad">Dhanbad</button>
+      <button class="filter-btn" data-filter="investment">Investment & Finance</button>
+    </div>
+  </section>
+
+  <div class="results-line">
+    <span id="resultsCount">Research collection</span>
+    <span>FinPortfolio Research & Insights</span>
+  </div>
+
+  <section class="research-grid" id="researchGrid">
+
+    <article class="paper-card featured-local"
+      data-priority="1"
+      data-category="jharkhand"
+      data-city="jharkhand"
+      data-title="economic and financial analysis of jharkhand opportunities and challenges"
+      data-keywords="state economy public finance minerals industrial development regional economics">
+      <div class="paper-top">
+        <span class="paper-type">Regional Economics · Featured</span>
+        <span class="paper-number">01</span>
+      </div>
+      <h3>Economic and Financial Analysis of Jharkhand: Opportunities and Challenges</h3>
+      <p>
+        A state-level study of industrial activity, natural resources,
+        fiscal challenges and development opportunities across Jharkhand.
+        It discusses major industrial centres, including Jamshedpur and Dhanbad.
+      </p>
+      <div class="paper-meta">
+        <span>AUTHOR · YASH RATHOD</span>
+        <span>PLATFORM · SSRN</span>
+      </div>
+      <a class="paper-action"
+         href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6560163"
+         target="_blank" rel="noopener noreferrer">
+        <span>Read published listing</span><span>↗</span>
+      </a>
+    </article>
+
+    <article class="paper-card featured-local"
+      data-priority="2"
+      data-category="jamshedpur investment"
+      data-city="jamshedpur"
+      data-title="impact of risk and return on investment decision of investors investing in tata mutual fund in jamshedpur"
+      data-keywords="mutual funds investor behaviour risk return investment decisions tata mutual fund">
+      <div class="paper-top">
+        <span class="paper-type">Jamshedpur · Mutual Funds</span>
+        <span class="paper-number">02</span>
+      </div>
+      <h3>Impact of Risk and Return on Investment Decisions in Tata Mutual Fund, Jamshedpur</h3>
+      <p>
+        A research topic focused on the relationship between investment risk,
+        expected returns and investor decision-making in the Jamshedpur context.
+      </p>
+      <div class="paper-meta">
+        <span>AREA · INVESTMENT MANAGEMENT</span>
+        <span>REGION · JAMSHEDPUR</span>
+      </div>
+      <a class="paper-action"
+         href="https://scholar.google.com/scholar?q=Impact+of+Risk+and+Return+on+Investment+Decision+of+Investors+Investing+in+Tata+Mutual+Fund+in+Jamshedpur"
+         target="_blank" rel="noopener noreferrer">
+        <span>Search research title</span><span>↗</span>
+      </a>
+    </article>
+
+    <article class="paper-card featured-local"
+      data-priority="3"
+      data-category="dhanbad jharkhand"
+      data-city="dhanbad"
+      data-title="dhanbad regional economy coal mining finance development"
+      data-keywords="dhanbad coal mining regional development local economy public finance">
+      <div class="paper-top">
+        <span class="paper-type">Dhanbad · Regional Focus</span>
+        <span class="paper-number">03</span>
+      </div>
+      <h3>Dhanbad: Mining, Regional Economic Activity and Development</h3>
+      <p>
+        A regional research theme exploring the relationship between coal
+        mining, local economic activity, employment and long-term development
+        in and around Dhanbad.
+      </p>
+      <div class="paper-meta">
+        <span>AREA · REGIONAL ECONOMICS</span>
+        <span>REGION · DHANBAD</span>
+      </div>
+      <a class="paper-action"
+         href="https://scholar.google.com/scholar?q=Dhanbad+coal+mining+regional+economic+development"
+         target="_blank" rel="noopener noreferrer">
+        <span>Explore related research</span><span>↗</span>
+      </a>
+    </article>
+
+    <article class="paper-card"
+      data-priority="4"
+      data-category="investment"
+      data-city="india"
+      data-title="inflation and its impact on household purchasing power and financial decisions"
+      data-keywords="inflation prices purchasing power savings household finance india">
+      <div class="paper-top">
+        <span class="paper-type">Economic Case Study</span>
+        <span class="paper-number">04</span>
+      </div>
+      <h3>Inflation and Its Impact on Purchasing Power and Financial Decisions</h3>
+      <p>
+        A case-study theme examining how rising prices affect purchasing power,
+        household budgets, savings and everyday financial decisions.
+      </p>
+      <div class="paper-meta">
+        <span>AREA · INFLATION</span>
+        <span>FORMAT · CASE STUDY</span>
+      </div>
+      <a class="paper-action"
+         href="https://doi.org/10.5281/zenodo.19415533"
+         target="_blank" rel="noopener noreferrer">
+        <span>View Zenodo record</span><span>↗</span>
+      </a>
+    </article>
+
+    <article class="paper-card"
+      data-priority="5"
+      data-category="investment"
+      data-city="india"
+      data-title="mutual fund investing risk return sip investor awareness"
+      data-keywords="mutual funds sip risk return investment awareness financial literacy">
+      <div class="paper-top">
+        <span class="paper-type">Investment Research</span>
+        <span class="paper-number">05</span>
+      </div>
+      <h3>Mutual Funds, Risk and Return: Understanding Investor Decisions</h3>
+      <p>
+        Explore research on mutual fund selection, investor expectations,
+        risk tolerance, systematic investment plans and financial awareness.
+      </p>
+      <div class="paper-meta">
+        <span>AREA · MUTUAL FUNDS</span>
+        <span>TOPIC · INVESTOR BEHAVIOUR</span>
+      </div>
+      <a class="paper-action"
+         href="https://scholar.google.com/scholar?q=mutual+fund+risk+return+investor+decision+making+India"
+         target="_blank" rel="noopener noreferrer">
+        <span>Explore related research</span><span>↗</span>
+      </a>
+    </article>
+
+    <div class="empty" id="emptyState">
+      <strong>No matching research found.</strong>
+      <p>Try another keyword or select a different category.</p>
+    </div>
+
+  </section>
+
+  <div class="note">
+    <strong>Research transparency:</strong> The Jharkhand paper links to its
+    SSRN listing. The Jamshedpur mutual fund title is presented as a research
+    topic, and the Dhanbad entry is a regional research theme. Search links
+    lead to external scholarly results; they are not claims that separate
+    papers have been published under those exact titles. Always check the
+    linked record for publication and availability details.
+  </div>
+
+  <section class="cta">
+    <div>
+      <h2>Have a finance research idea?</h2>
+      <p>
+        FinPortfolio welcomes ideas and contributions related to finance,
+        economics, investment awareness and regional development.
+      </p>
+    </div>
+    <a class="btn btn-primary"
+       href="mailto:finportfolio2026@gmail.com?subject=FinPortfolio%20Research%20Enquiry">
+      Contact FinPortfolio ↗
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div>
+    <strong>FinPortfolio</strong><br>
+    Where Finance Meets Clarity
+  </div>
+  <div>© 2026 FinPortfolio · Research & Insights</div>
+  <div><a href="index.html">Back to Home ↑</a></div>
+</footer>
+
+<script>
+(function () {
+  const searchInput = document.getElementById("searchInput");
+  const sortSelect = document.getElementById("sortSelect");
+  const grid = document.getElementById("researchGrid");
+  const count = document.getElementById("resultsCount");
+  const empty = document.getElementById("emptyState");
+  const filterButtons = document.querySelectorAll(".filter-btn");
+
+  const cards = Array.from(grid.querySelectorAll(".paper-card"));
+  let activeFilter = "all";
+
+  function updateResults() {
+    const query = searchInput.value.trim().toLowerCase();
+    const sortMode = sortSelect.value;
+
+    cards.sort(function (a, b) {
+      if (sortMode === "title") {
+        return a.dataset.title.localeCompare(b.dataset.title);
+      }
+
+      if (sortMode === "city") {
+        const aRegional = /jamshedpur|dhanbad|jharkhand/.test(
+          a.dataset.category + " " + a.dataset.city
+        ) ? 0 : 1;
+        const bRegional = /jamshedpur|dhanbad|jharkhand/.test(
+          b.dataset.category + " " + b.dataset.city
+        ) ? 0 : 1;
+        return aRegional - bRegional ||
+          Number(a.dataset.priority) - Number(b.dataset.priority);
+      }
+
+      return Number(a.dataset.priority) - Number(b.dataset.priority);
+    });
+
+    cards.forEach(function (card) {
+      grid.insertBefore(card, empty);
+    });
+
+    let visible = 0;
+
+    cards.forEach(function (card) {
+      const text = (
+        card.dataset.title + " " +
+        card.dataset.category + " " +
+        card.dataset.city + " " +
+        card.dataset.keywords + " " +
+        card.innerText
+      ).toLowerCase();
+
+      const matchesSearch = !query || text.includes(query);
+      const categories = card.dataset.category.split(" ");
+      const matchesFilter =
+        activeFilter === "all" || categories.includes(activeFilter);
+
+      const show = matchesSearch && matchesFilter;
+      card.style.display = show ? "flex" : "none";
+
+      if (show) visible++;
+    });
+
+    empty.style.display = visible === 0 ? "block" : "none";
+    count.textContent = visible + (visible === 1
+      ? " research entry shown"
+      : " research entries shown");
+  }
+
+  filterButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      activeFilter = button.dataset.filter;
+
+      filterButtons.forEach(function (item) {
+        const active = item === button;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+
+      updateResults();
+    });
+
+    button.setAttribute(
+      "aria-pressed",
+      String(button.classList.contains("active"))
+    );
+  });
+
+  searchInput.addEventListener("input", updateResults);
+  sortSelect.addEventListener("change", updateResults);
+
+  updateResults();
+})();
+</script>
+
+</body>
+</html>
