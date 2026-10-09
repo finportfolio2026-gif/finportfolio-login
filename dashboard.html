@@ -4,147 +4,507 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>FinPortfolio — Dashboard</title>
+  <title>FinPortfolio — My Workspace</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     :root {
-      --cream: #f7f3eb;
-      --charcoal: #202020;
-      --burgundy: #8b1e2d;
-      --border: #e5e1da;
+      --bg: #f5f2ec;
+      --paper: #fffefa;
+      --ink: #202020;
+      --muted: #77736d;
+      --red: #8b1e2d;
+      --red-light: #f7e8eb;
+      --gold: #c5a15b;
+      --line: #e7e0d5;
+      --green: #34734a;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--cream);
-      color: var(--charcoal);
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
       min-height: 100vh;
     }
+
+    a { color: inherit; }
+
+    button, input { font: inherit; }
 
     /* HEADER */
 
     .header {
-      background: var(--charcoal);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(32,32,32,.97);
       color: white;
-      padding: 18px 25px;
+      padding: 0 5%;
+      min-height: 74px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(12px);
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 9px;
-      font-size: 20px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      color: white;
+      gap: 10px;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+      text-decoration: none;
+      white-space: nowrap;
     }
 
     .logo img {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       object-fit: contain;
-      display: block;
     }
 
-    .fin-red {
-      color: #d96b79;
+    .fin-red { color: #df8791; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-label {
+      font-size: 12px;
+      color: #c8c5c0;
     }
 
     .logout {
-      background: transparent;
+      border: 1px solid #626262;
       color: white;
-      border: 1px solid #777;
-      padding: 8px 14px;
-      border-radius: 5px;
+      background: transparent;
+      padding: 9px 15px;
+      border-radius: 7px;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
+      transition: .2s;
     }
 
     .logout:hover {
-      background: #383838;
-      border-color: #bbb;
+      background: white;
+      color: var(--ink);
     }
 
-    /* MAIN LAYOUT */
+    /* PAGE */
 
     .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 22px;
+      max-width: 1220px;
+      padding: 32px 24px 50px;
+      margin: auto;
     }
 
-    .welcome {
-      margin-bottom: 30px;
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
-    .welcome h1 {
-      margin: 0 0 8px;
-      font-size: 30px;
-      letter-spacing: -0.5px;
+    .eyebrow::before {
+      content: "";
+      width: 19px;
+      height: 2px;
+      background: var(--red);
     }
 
-    .welcome p {
+    /* HERO */
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      border-radius: 18px;
+      background:
+        radial-gradient(ellipse at 93% 8%, rgba(197,161,91,.24), transparent 33%),
+        radial-gradient(ellipse at 72% 110%, rgba(139,30,45,.45), transparent 48%),
+        linear-gradient(115deg, #202020 0%, #292324 55%, #40272a 100%);
+      color: white;
+      padding: 38px 40px;
+      margin-bottom: 25px;
+      min-height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      box-shadow: 0 12px 30px rgba(40,25,25,.10);
+    }
+
+    .hero-content {
+      max-width: 650px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero .eyebrow { color: #e3c98f; }
+
+    .hero .eyebrow::before { background: #e3c98f; }
+
+    .hero h1 {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.12;
+      letter-spacing: -1.4px;
+      margin: 18px 0 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .hero h1 span { color: #e8c982; }
+
+    .hero p {
+      max-width: 510px;
+      color: #d1ccca;
+      font-size: 14px;
+      line-height: 1.8;
       margin: 0;
-      color: #666;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 11px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      text-decoration: none;
+      padding: 12px 17px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: transform .2s, background .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-light {
+      background: #f8f2e8;
+      color: #262321;
+    }
+
+    .btn-light:hover { background: white; }
+
+    .btn-outline {
+      border: 1px solid #827779;
+      color: white;
+    }
+
+    .btn-outline:hover { background: rgba(255,255,255,.08); }
+
+    .hero-art {
+      position: relative;
+      flex: 0 0 190px;
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(232,201,130,.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      z-index: 1;
+    }
+
+    .hero-art::before,
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(232,201,130,.25);
+      border-radius: 50%;
+    }
+
+    .hero-art::before { inset: 15px; }
+    .hero-art::after { inset: -15px; }
+
+    .art-inner {
+      width: 118px;
+      height: 118px;
+      border-radius: 30px;
+      transform: rotate(-8deg);
+      background: linear-gradient(145deg, #b18a4b, #ead5a0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 40px rgba(0,0,0,.24);
+    }
+
+    .art-inner svg {
+      width: 67px;
+      height: 67px;
+      stroke: #35281b;
+    }
+
+    .hero-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e8c982;
+      box-shadow: 0 0 18px rgba(232,201,130,.7);
+    }
+
+    .dot-one { top: 8px; right: 27px; }
+    .dot-two { bottom: 20px; left: 0; }
+
+    /* SECTION HEADERS */
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 31px 0 16px;
+    }
+
+    .section-heading h2 {
+      margin: 7px 0 0;
+      font-size: 21px;
+      letter-spacing: -.45px;
+    }
+
+    .section-heading p {
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: var(--muted);
       line-height: 1.6;
     }
 
-    /* ACCOUNT CARD */
+    .text-link {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
 
-    .card {
-      background: #fffefa;
-      border: 1px solid #e5dfd5;
+    .text-link:hover { text-decoration: underline; }
+
+    /* OVERVIEW PANELS */
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 15px;
+    }
+
+    .overview-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 19px;
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 24px;
-      box-shadow: 0 3px 12px rgba(32, 32, 32, 0.025);
+      transition: transform .2s, box-shadow .2s;
     }
 
-    .card h2 {
-      margin-top: 0;
+    .overview-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(35,28,20,.05);
+    }
+
+    .overview-icon {
+      flex: 0 0 45px;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
       font-size: 20px;
-      margin-bottom: 22px;
+      font-weight: 700;
     }
 
-    .info {
-      margin: 14px 0;
+    .icon-red { background: #f7e8eb; color: #8b1e2d; }
+    .icon-gold { background: #fbf0d7; color: #8c691c; }
+    .icon-green { background: #e9f3e9; color: #34734a; }
+
+    .overview-copy { min-width: 0; }
+
+    .overview-label {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .overview-value {
       font-size: 15px;
-      line-height: 1.6;
+      font-weight: 800;
+      overflow-wrap: anywhere;
     }
 
-    .membership {
-      display: inline-block;
-      background: #f7e8eb;
-      border: 1px solid #d9aab2;
-      color: #8b1e2d;
-      padding: 7px 12px;
-      border-radius: 6px;
-      font-weight: bold;
+    .overview-note {
+      font-size: 11px;
+      color: #858078;
       margin-top: 5px;
+      line-height: 1.5;
     }
 
-    .membership.proplus {
-      background: #fff3ce;
-      border-color: #e2c36e;
+    /* ACCOUNT PANEL */
+
+    .account-panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      overflow: hidden;
+    }
+
+    .account-top {
+      padding: 19px 22px;
+      border-bottom: 1px solid #eee8df;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .account-top h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .account-top p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .account-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 20px;
+      background: #eaf5eb;
+      color: #34734a;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .account-status::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #399154;
+    }
+
+    .account-details {
+      padding: 19px 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 20px;
+    }
+
+    .detail-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #89837b;
+      margin-bottom: 7px;
+    }
+
+    .detail-value {
+      font-size: 13px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .membership-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--red-light);
+      color: var(--red);
+      border: 1px solid #ebcbd1;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .membership-pill.proplus {
+      background: #fbf0d7;
       color: #805c00;
+      border-color: #e9d59f;
+    }
+
+    /* SEARCH BAR */
+
+    .resource-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 18px 0;
+    }
+
+    .search-wrap {
+      position: relative;
+      width: min(100%, 330px);
+    }
+
+    .search-wrap span {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8c867d;
+      font-size: 17px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      border: 1px solid #e2dbd0;
+      background: #fffefa;
+      color: var(--ink);
+      padding: 12px 13px 12px 39px;
+      border-radius: 8px;
+      outline: none;
+      font-size: 12px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(139,30,45,.08);
+    }
+
+    .resource-count {
+      color: var(--muted);
+      font-size: 11px;
     }
 
     /* RESOURCE GRID */
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 17px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
     }
 
     .feature {
@@ -153,59 +513,116 @@
       --edge: #e5e1da;
 
       position: relative;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       min-width: 0;
-      min-height: 172px;
+      min-height: 205px;
+      overflow: hidden;
+      padding: 21px;
       border: 1px solid var(--edge);
-      border-radius: 11px;
-      padding: 22px 20px;
+      border-radius: 12px;
       background: var(--surface);
-      color: #202020;
+      color: var(--ink);
       text-decoration: none;
-      display: block;
       cursor: pointer;
-      transition:
-        transform 0.22s ease,
-        box-shadow 0.22s ease,
-        border-color 0.22s ease;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
     }
-
-    /* LEFT ACCENT */
 
     .feature::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
-      bottom: 0;
-      width: 4px;
+      width: 100%;
+      height: 3px;
       background: var(--accent);
-      border-radius: 11px 0 0 11px;
+      opacity: .95;
     }
 
     .feature:hover {
+      transform: translateY(-4px);
       border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 9px 22px rgba(32, 32, 32, 0.075);
+      box-shadow: 0 12px 25px rgba(35,28,20,.07);
     }
 
+    .feature-head {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .feature-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 43px;
+      height: 43px;
+      border-radius: 11px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(50,40,30,.06);
+      color: var(--accent);
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .feature-arrow {
+      font-size: 19px;
+      color: var(--accent);
+      opacity: .65;
+      transition: transform .2s;
+    }
+
+    .feature:hover .feature-arrow { transform: translate(3px,-2px); }
+
     .feature h3 {
-      margin: 0 0 11px;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.4;
-      color: #252525;
+      margin: 0 0 8px;
+      overflow-wrap: anywhere;
     }
 
     .feature p {
+      color: #6d6963;
+      font-size: 12px;
+      line-height: 1.7;
       margin: 0;
-      color: #646464;
-      font-size: 13px;
-      line-height: 1.65;
     }
 
-    /* INDIVIDUAL CARD COLOURS */
+    .feature-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      margin-top: auto;
+      padding-top: 18px;
+    }
 
-    /* Courses — Burgundy */
+    .feature-category {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .feature-tag {
+      padding: 5px 7px;
+      border-radius: 4px;
+      font-size: 9px;
+      letter-spacing: .4px;
+      font-weight: 800;
+    }
+
+    .tag-pro { background: #f5dfe4; color: #8b1e2d; }
+    .tag-plus { background: #f8eab8; color: #805c00; }
+    .tag-store { background: #f4e5c5; color: #7e5c1b; }
+
+    /* CARD COLOURS */
 
     .course-card {
       --accent: #8b1e2d;
@@ -213,29 +630,11 @@
       --edge: #ead1d4;
     }
 
-    /* Store — Champagne Gold */
-
     .store-card {
-      --accent: #a47723;
-      --surface: #fff6e5;
-      --edge: #e8d5ac;
+      --accent: #9a701e;
+      --surface: #fff5df;
+      --edge: #e8d4a5;
     }
-
-    .store-card .store-label {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 1.2px;
-      color: #8a6418;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-
-    .store-card h3 {
-      margin-top: 0;
-    }
-
-    /* Finance Tools — Green */
 
     .tools-card {
       --accent: #34734a;
@@ -243,15 +642,11 @@
       --edge: #d1e4d4;
     }
 
-    /* Research — Blue */
-
     .research-card {
       --accent: #315b91;
       --surface: #edf3fb;
       --edge: #d1deef;
     }
-
-    /* Certificates — Purple */
 
     .certificate-card {
       --accent: #72539a;
@@ -259,15 +654,11 @@
       --edge: #e0d5ef;
     }
 
-    /* Premium Insights — Rose */
-
     .insights-card {
       --accent: #a33248;
       --surface: #fbedf0;
       --edge: #ebd0d7;
     }
-
-    /* Case Studies — Teal */
 
     .case-studies-card {
       --accent: #28766f;
@@ -275,15 +666,11 @@
       --edge: #cbe5df;
     }
 
-    /* Advanced Research — Gold */
-
     .advanced-card {
       --accent: #96700b;
       --surface: #fff6d9;
       --edge: #ecdda6;
     }
-
-    /* Financial Models — Slate Blue */
 
     .models-card {
       --accent: #50677f;
@@ -291,111 +678,194 @@
       --edge: #d4dce7;
     }
 
-    /* MEMBERSHIP BADGES */
+    /* NEXT STEP BANNER */
 
-    .badge {
-      display: inline-block;
+    .next-step {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: #282526;
+      color: white;
+      border-radius: 13px;
+      padding: 23px 25px;
+      margin-top: 25px;
+    }
+
+    .next-step::after {
+      content: "FP";
+      position: absolute;
+      right: 95px;
+      top: -25px;
+      font-size: 105px;
+      font-weight: 900;
+      color: rgba(255,255,255,.035);
+      pointer-events: none;
+    }
+
+    .next-step-copy { position: relative; z-index: 1; }
+
+    .next-step-label {
+      color: #e1c68a;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .next-step h3 {
+      font-size: 17px;
+      margin: 8px 0;
+    }
+
+    .next-step p {
+      font-size: 12px;
+      color: #c8c2c1;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .next-step .btn {
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      margin-top: 34px;
+      padding: 19px 0 5px;
+      border-top: 1px solid #e3dcd1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #888178;
       font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-      padding: 5px 8px;
-      border-radius: 4px;
-      margin-bottom: 12px;
+      line-height: 1.7;
     }
 
-    .badge-pro {
-      background: #f5dfe4;
-      color: #8b1e2d;
+    .footer-brand {
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #5b554e;
     }
 
-    .badge-plus {
-      background: #f8eab8;
-      color: #805c00;
-    }
-
-    /* LOCKED RESOURCES */
-
-    .locked {
-      opacity: 0.78;
-    }
-
-    .locked:hover {
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* FOOTER STATUS */
-
-    .status {
+    .page-status {
       text-align: center;
-      color: #777;
-      margin: 30px 0;
+      color: #77736d;
+      font-size: 11px;
+      margin-top: 23px;
+      min-height: 15px;
+    }
+
+    .empty-search {
+      display: none;
+      padding: 30px 15px;
+      border: 1px dashed #d8cfc2;
+      border-radius: 10px;
+      text-align: center;
+      color: var(--muted);
       font-size: 13px;
+      margin-top: 12px;
     }
 
     /* RESPONSIVE */
 
-    @media (max-width: 850px) {
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media (max-width: 900px) {
+      .hero { padding: 32px; }
+      .hero-art {
+        flex-basis: 145px;
+        width: 145px;
+        height: 145px;
+        margin-right: 5px;
       }
-
-      .container {
-        margin-top: 30px;
-      }
+      .art-inner { width: 90px; height: 90px; }
+      .art-inner svg { width: 54px; height: 54px; }
+      .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
 
-    @media (max-width: 600px) {
-      .grid {
+    @media (max-width: 620px) {
+      .header { min-height: 65px; padding: 0 16px; }
+      .logo { font-size: 15px; gap: 7px; letter-spacing: .7px; }
+      .logo img { width: 27px; height: 27px; }
+      .header-label { display: none; }
+      .header-right { gap: 8px; }
+      .logout { padding: 8px 10px; font-size: 11px; }
+
+      .container { padding: 22px 15px 35px; }
+
+      .hero {
+        padding: 27px 23px;
+        min-height: auto;
+        border-radius: 14px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+        letter-spacing: -.7px;
+      }
+
+      .hero p { font-size: 12px; }
+      .hero-art { display: none; }
+
+      .hero-actions { gap: 8px; }
+      .btn { padding: 11px 13px; font-size: 11px; }
+
+      .overview { grid-template-columns: 1fr; gap: 10px; }
+      .overview-card { padding: 15px; }
+
+      .section-heading { align-items: flex-start; }
+      .section-heading h2 { font-size: 19px; }
+
+      .account-top {
+        padding: 16px;
+        align-items: flex-start;
+      }
+
+      .account-details {
+        padding: 17px 16px;
         grid-template-columns: 1fr;
-        gap: 13px;
+        gap: 16px;
       }
 
-      .container {
-        margin: 25px auto;
-        padding: 0 16px;
+      .resource-toolbar {
+        align-items: stretch;
+        flex-direction: column;
       }
 
-      .welcome h1 {
-        font-size: 25px;
-      }
+      .search-wrap { width: 100%; }
 
-      .header {
-        padding: 16px 18px;
-      }
-
-      .logo {
-        font-size: 17px;
-        gap: 7px;
-      }
-
-      .logo img {
-        width: 27px;
-        height: 27px;
-      }
-
-      .logout {
-        padding: 7px 11px;
-      }
-
-      .card {
-        padding: 20px 17px;
-      }
+      .grid { grid-template-columns: 1fr; gap: 12px; }
 
       .feature {
-        min-height: auto;
-        padding: 21px 19px;
+        min-height: 0;
+        padding: 19px;
+      }
+
+      .feature-head { margin-bottom: 13px; }
+
+      .feature-bottom { padding-top: 14px; }
+
+      .next-step {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 21px;
+      }
+
+      .footer {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .feature,
-      .logout {
-        transition: none;
-      }
-
-      .feature:hover {
-        transform: none;
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
       }
     }
   </style>
@@ -403,469 +873,663 @@
 
 <body>
 
-  <header class="header">
+<header class="header">
+  <a href="dashboard.html" class="logo">
+    <img
+      src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
+      alt="FinPortfolio Logo"
+    >
+    <span><span class="fin-red">FIN</span>PORTFOLIO</span>
+  </a>
 
-    <div class="logo">
-      <img
-        src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
-        alt="FinPortfolio Logo"
-      >
+  <div class="header-right">
+    <span class="header-label">YOUR FINANCE WORKSPACE</span>
+    <button class="logout" id="logoutBtn" type="button">Logout ↗</button>
+  </div>
+</header>
 
-      <span>
-        <span class="fin-red">FIN</span>PORTFOLIO
+<main class="container">
+
+  <!-- HERO -->
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">YOUR PERSONAL WORKSPACE</div>
+
+      <h1>
+        Think Finance.<br>
+        <span>Build Your Future.</span>
+      </h1>
+
+      <p>
+        Welcome back, <strong id="userName">there</strong>.
+        Explore finance learning, practical tools, research and resources
+        designed to support your financial knowledge.
+      </p>
+
+      <div class="hero-actions">
+        <a href="store.html" class="btn btn-light">
+          Explore the Store <span>↗</span>
+        </a>
+
+        <a href="#resources" class="btn btn-outline">
+          Explore Resources ↓
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <span class="hero-dot dot-one"></span>
+      <span class="hero-dot dot-two"></span>
+
+      <div class="art-inner">
+        <svg viewBox="0 0 64 64" fill="none"
+             stroke-width="2.5" stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="M9 53V11"/>
+          <path d="M9 53H57"/>
+          <path d="M15 43L27 31L36 37L53 16"/>
+          <path d="M41 16H53V28"/>
+          <circle cx="27" cy="31" r="2.5" fill="#35281b"/>
+          <circle cx="36" cy="37" r="2.5" fill="#35281b"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">AT A GLANCE</div>
+      <h2>Your Workspace</h2>
+      <p>A quick overview of your FinPortfolio account.</p>
+    </div>
+  </div>
+
+  <section class="overview">
+
+    <div class="overview-card">
+      <div class="overview-icon icon-red">♙</div>
+      <div class="overview-copy">
+        <div class="overview-label">ACCOUNT HOLDER</div>
+        <div class="overview-value" id="overviewName">Loading...</div>
+        <div class="overview-note">Your personal account</div>
+      </div>
+    </div>
+
+    <div class="overview-card">
+      <div class="overview-icon icon-gold">✦</div>
+      <div class="overview-copy">
+        <div class="overview-label">YOUR MEMBERSHIP</div>
+        <div class="overview-value" id="overviewPlan">Loading...</div>
+        <div class="overview-note" id="overviewPlanNote">
+          Membership details
+        </div>
+      </div>
+    </div>
+
+    <div class="overview-card">
+      <div class="overview-icon icon-green">↗</div>
+      <div class="overview-copy">
+        <div class="overview-label">YOUR NEXT STEP</div>
+        <div class="overview-value">Keep Exploring</div>
+        <div class="overview-note">Discover tools and learning resources</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ACCOUNT DETAILS -->
+
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">ACCOUNT DETAILS</div>
+      <h2>My Account</h2>
+    </div>
+  </div>
+
+  <section class="account-panel">
+
+    <div class="account-top">
+      <div>
+        <h3>Personal Information</h3>
+        <p>Your registered account details.</p>
+      </div>
+
+      <span class="account-status" id="accountStatus">
+        ACCOUNT ACTIVE
       </span>
     </div>
 
-    <button class="logout" id="logoutBtn" type="button">
-      Logout
-    </button>
+    <div class="account-details">
 
-  </header>
-
-  <main class="container">
-
-    <section class="welcome">
-      <h1>
-        Welcome,
-        <span id="userName">User</span>
-      </h1>
-
-      <p>Your personal FinPortfolio dashboard.</p>
-    </section>
-
-    <!-- MY ACCOUNT -->
-
-    <section class="card">
-
-      <h2>My Account</h2>
-
-      <div class="info">
-        <strong>Name:</strong>
-        <span id="profileName">Loading...</span>
+      <div>
+        <div class="detail-label">Full Name</div>
+        <div class="detail-value" id="profileName">Loading...</div>
       </div>
 
-      <div class="info">
-        <strong>Email:</strong>
-        <span id="profileEmail">Loading...</span>
+      <div>
+        <div class="detail-label">Email Address</div>
+        <div class="detail-value" id="profileEmail">Loading...</div>
       </div>
 
-      <div class="info">
-        <strong>Membership:</strong>
-        <br>
-
-        <span class="membership" id="membership">
-          Loading...
-        </span>
-
-        <span
-          id="membershipStatus"
-          style="margin-left:8px;font-size:13px;color:#666;"
-        ></span>
-      </div>
-
-      <div
-        class="info"
-        id="membershipExpiryRow"
-        style="display:none;"
-      >
-        <strong>Valid Until:</strong>
-        <span id="membershipExpiry"></span>
-      </div>
-
-    </section>
-
-    <!-- RESOURCES -->
-
-    <section class="card">
-
-      <h2>FinPortfolio Resources</h2>
-
-      <div class="grid">
-
-        <!-- COURSES -->
-
-        <a href="courses.html" class="feature course-card">
-
-          <h3>Courses</h3>
-
-          <p>
-            Access finance learning resources and courses.
-          </p>
-
-        </a>
-
-        <!-- STORE -->
-
-        <a href="store.html" class="feature store-card">
-
-          <span class="store-label">
-            FINPORTFOLIO STORE
+      <div>
+        <div class="detail-label">Membership Plan</div>
+        <div>
+          <span class="membership-pill" id="membership">
+            Loading...
           </span>
-
-          <h3>Finance Tools &amp; Resources</h3>
-
-          <p>
-            Purchase practical finance tools,
-            templates and digital resources.
-          </p>
-
-        </a>
-
-        <!-- FINANCE TOOLS -->
-
-        <div class="feature tools-card">
-
-          <h3>Finance Tools</h3>
-
-          <p>
-            Explore useful finance tools, calculators and templates.
-          </p>
-
+          <span id="membershipStatus"
+                style="display:block;margin-top:7px;font-size:11px;color:#777">
+          </span>
         </div>
-
-        <!-- RESEARCH -->
-
-        <div class="feature research-card">
-
-          <h3>Research</h3>
-
-          <p>
-            Explore selected research reports and financial insights.
-          </p>
-
-        </div>
-
-        <!-- CERTIFICATES -->
-
-        <a
-          href="issued-certificates.html"
-          class="feature certificate-card"
-        >
-
-          <h3>Issued Certificates</h3>
-
-          <p>
-            View certificates you have earned through FinPortfolio courses.
-          </p>
-
-        </a>
-
-        <!-- PREMIUM INSIGHTS -->
-
-        <div
-          class="feature insights-card"
-          id="proResource"
-          data-plan="Pro"
-          onclick="openPremiumResources()"
-        >
-
-          <span class="badge badge-pro">PRO</span>
-
-          <h3>Premium Insights</h3>
-
-          <p>
-            Premium finance insights and selected research reports.
-          </p>
-
-        </div>
-
-        <!-- PREMIUM CASE STUDIES -->
-
-        <div
-          class="feature case-studies-card"
-          id="proCaseStudies"
-          data-plan="Pro"
-        >
-
-          <span class="badge badge-pro">PRO</span>
-
-          <h3>Premium Case Studies</h3>
-
-          <p>
-            Explore practical finance and business case studies.
-          </p>
-
-        </div>
-
-        <!-- ADVANCED RESEARCH -->
-
-        <div
-          class="feature advanced-card"
-          id="proPlusResource"
-          data-plan="Pro Plus"
-        >
-
-          <span class="badge badge-plus">PRO PLUS</span>
-
-          <h3>Advanced Research</h3>
-
-          <p>
-            Advanced research and exclusive business insights.
-          </p>
-
-        </div>
-
-        <!-- FINANCIAL MODELS -->
-
-        <div
-          class="feature models-card"
-          id="modelResource"
-          data-plan="Pro Plus"
-        >
-
-          <span class="badge badge-plus">PRO PLUS</span>
-
-          <h3>Financial Models</h3>
-
-          <p>
-            Access premium financial models and advanced templates.
-          </p>
-
-        </div>
-
       </div>
 
-    </section>
+      <div id="membershipExpiryRow" style="display:none;">
+        <div class="detail-label">Membership Valid Until</div>
+        <div class="detail-value" id="membershipExpiry"></div>
+      </div>
 
-    <div class="status" id="status" role="status" aria-live="polite">
-      Loading your account...
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+
+  <section id="resources">
+
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">LEARN · ANALYSE · GROW</div>
+        <h2>Explore Your Resources</h2>
+        <p>Your gateway to finance education, research and practical tools.</p>
+      </div>
     </div>
 
-  </main>
+    <div class="resource-toolbar">
+      <div class="search-wrap">
+        <span aria-hidden="true">⌕</span>
+        <input
+          type="search"
+          class="search-input"
+          id="resourceSearch"
+          placeholder="Search courses, research, tools..."
+          aria-label="Search dashboard resources"
+        >
+      </div>
 
-  <script>
-    const SUPABASE_URL =
-      "https://mxmxwosyhsfjaaocazdl.supabase.co";
+      <div class="resource-count" id="resourceCount">
+        Explore your workspace
+      </div>
+    </div>
 
-    const SUPABASE_KEY =
-      "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+    <div class="grid" id="resourceGrid">
 
-    let supabaseClient = null;
+      <!-- COURSES -->
 
-    /* OPEN PREMIUM RESOURCES */
+      <a href="courses.html"
+         class="feature course-card"
+         data-search="courses learning education finance lessons">
 
-    function openPremiumResources() {
-      window.location.href = "premium-resources.html";
-    }
+        <div class="feature-head">
+          <div class="feature-icon">▤</div>
+          <span class="feature-arrow">↗</span>
+        </div>
 
-    /* LOAD DASHBOARD */
+        <h3>Courses & Learning</h3>
+        <p>Build your understanding of finance through structured learning resources.</p>
 
-    async function loadDashboard() {
-      try {
-        if (!window.supabase) {
-          throw new Error("Supabase library not loaded");
-        }
+        <div class="feature-bottom">
+          <span class="feature-category">LEARN</span>
+        </div>
+      </a>
 
-        supabaseClient = window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_KEY,
-          {
-            auth: {
-              persistSession: true,
-              autoRefreshToken: true,
-              detectSessionInUrl: true
-            }
+      <!-- STORE -->
+
+      <a href="store.html"
+         class="feature store-card"
+         data-search="store shop products templates investment tracker finance tools purchase">
+
+        <div class="feature-head">
+          <div class="feature-icon">◇</div>
+          <span class="feature-tag tag-store">STORE</span>
+        </div>
+
+        <h3>FinPortfolio Store</h3>
+        <p>Discover practical finance templates, investment tools and digital resources.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">TOOLS & PRODUCTS</span>
+          <span class="feature-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- FINANCE TOOLS -->
+
+      <a href="store.html"
+         class="feature tools-card"
+         data-search="finance tools calculator templates planner">
+
+        <div class="feature-head">
+          <div class="feature-icon">⌘</div>
+          <span class="feature-arrow">↗</span>
+        </div>
+
+        <h3>Finance Tools</h3>
+        <p>Explore useful calculators, trackers and templates for financial learning.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">PRACTICAL TOOLS</span>
+        </div>
+      </a>
+
+      <!-- RESEARCH -->
+
+      <a href="research.html"
+         class="feature research-card"
+         data-search="research reports papers financial insights analysis">
+
+        <div class="feature-head">
+          <div class="feature-icon">⌕</div>
+          <span class="feature-arrow">↗</span>
+        </div>
+
+        <h3>Research & Insights</h3>
+        <p>Explore financial research, reports and evidence-based analysis.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">DISCOVER</span>
+        </div>
+      </a>
+
+      <!-- CERTIFICATES -->
+
+      <a href="issued-certificates.html"
+         class="feature certificate-card"
+         data-search="certificates achievements issued courses completion">
+
+        <div class="feature-head">
+          <div class="feature-icon">♧</div>
+          <span class="feature-arrow">↗</span>
+        </div>
+
+        <h3>Issued Certificates</h3>
+        <p>View certificates issued to you through FinPortfolio learning activities.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">ACHIEVEMENTS</span>
+        </div>
+      </a>
+
+      <!-- PREMIUM INSIGHTS -->
+
+      <a href="premium-resources.html"
+         class="feature insights-card"
+         id="proResource"
+         data-plan="Pro"
+         data-search="premium insights reports exclusive pro finance">
+
+        <div class="feature-head">
+          <div class="feature-icon">✧</div>
+          <span class="feature-tag tag-pro">PRO</span>
+        </div>
+
+        <h3>Premium Insights</h3>
+        <p>Access premium finance insights and selected research reports.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">PREMIUM</span>
+          <span class="feature-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- CASE STUDIES -->
+
+      <a href="premium-resources.html"
+         class="feature case-studies-card"
+         id="proCaseStudies"
+         data-plan="Pro"
+         data-search="premium case studies business finance examples pro">
+
+        <div class="feature-head">
+          <div class="feature-icon">▧</div>
+          <span class="feature-tag tag-pro">PRO</span>
+        </div>
+
+        <h3>Premium Case Studies</h3>
+        <p>Explore practical business and finance cases to strengthen your analysis.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">CASE STUDIES</span>
+          <span class="feature-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- ADVANCED RESEARCH -->
+
+      <a href="premium-resources.html"
+         class="feature advanced-card"
+         id="proPlusResource"
+         data-plan="Pro Plus"
+         data-search="advanced research exclusive business analysis pro plus">
+
+        <div class="feature-head">
+          <div class="feature-icon">⌁</div>
+          <span class="feature-tag tag-plus">PRO PLUS</span>
+        </div>
+
+        <h3>Advanced Research</h3>
+        <p>Explore advanced research and exclusive business analysis resources.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">ADVANCED</span>
+          <span class="feature-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- FINANCIAL MODELS -->
+
+      <a href="premium-resources.html"
+         class="feature models-card"
+         id="modelResource"
+         data-plan="Pro Plus"
+         data-search="financial models valuation analysis spreadsheets templates pro plus">
+
+        <div class="feature-head">
+          <div class="feature-icon">▥</div>
+          <span class="feature-tag tag-plus">PRO PLUS</span>
+        </div>
+
+        <h3>Financial Models</h3>
+        <p>Explore financial models and advanced analytical templates.</p>
+
+        <div class="feature-bottom">
+          <span class="feature-category">MODELLING</span>
+          <span class="feature-arrow">↗</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="empty-search" id="emptySearch">
+      No resources found. Try a different search term.
+    </div>
+
+  </section>
+
+  <!-- CALL TO ACTION -->
+
+  <section class="next-step">
+    <div class="next-step-copy">
+      <div class="next-step-label">YOUR NEXT MOVE</div>
+      <h3>Put financial knowledge into practice.</h3>
+      <p>Explore the FinPortfolio Store for practical tools and templates.</p>
+    </div>
+
+    <a href="store.html" class="btn btn-light">
+      Explore Store ↗
+    </a>
+  </section>
+
+  <div class="page-status" id="status" role="status" aria-live="polite">
+    Loading your account...
+  </div>
+
+  <footer class="footer">
+    <div>
+      <div class="footer-brand">FINPORTFOLIO</div>
+      <div>Where Finance Meets Clarity.</div>
+    </div>
+
+    <div>Learn thoughtfully. Analyse clearly. Grow continuously.</div>
+  </footer>
+
+</main>
+
+<script>
+  const SUPABASE_URL =
+    "https://mxmxwosyhsfjaaocazdl.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
+
+  let supabaseClient = null;
+
+  /* RESOURCE SEARCH */
+
+  const resourceSearch = document.getElementById("resourceSearch");
+
+  resourceSearch.addEventListener("input", function() {
+    const query = this.value.trim().toLowerCase();
+    const cards = Array.from(
+      document.querySelectorAll("#resourceGrid .feature")
+    );
+
+    let visible = 0;
+
+    cards.forEach(function(card) {
+      const searchableText =
+        (card.innerText + " " + (card.dataset.search || "")).toLowerCase();
+
+      const matches = searchableText.includes(query);
+
+      card.style.display = matches ? "" : "none";
+
+      if (matches) visible++;
+    });
+
+    document.getElementById("emptySearch").style.display =
+      visible === 0 ? "block" : "none";
+
+    document.getElementById("resourceCount").textContent =
+      query
+        ? visible + (visible === 1 ? " resource found" : " resources found")
+        : "Explore your workspace";
+  });
+
+  /* LOAD DASHBOARD */
+
+  async function loadDashboard() {
+    const pageStatus = document.getElementById("status");
+
+    try {
+      if (!window.supabase) {
+        throw new Error("Supabase library not loaded");
+      }
+
+      supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
           }
-        );
-
-        const {
-          data: { session },
-          error: sessionError
-        } = await supabaseClient.auth.getSession();
-
-        if (sessionError) {
-          console.error("Session error:", sessionError);
-
-          document.getElementById("status").textContent =
-            "Unable to check your session. Please refresh the page.";
-
-          return;
         }
+      );
 
-        if (!session || !session.user) {
-          window.location.replace("index.html");
-          return;
-        }
+      const {
+        data: { session },
+        error: sessionError
+      } = await supabaseClient.auth.getSession();
 
-        const user = session.user;
+      if (sessionError) throw sessionError;
 
-        const {
-          data: profile,
-          error: profileError
-        } = await supabaseClient
-          .from("profiles")
-          .select(`
-            full_name,
-            email,
-            membership,
-            membership_plan,
-            membership_status,
-            membership_start_date,
-            membership_expiry_date
-          `)
-          .eq("id", user.id)
-          .single();
+      if (!session || !session.user) {
+        window.location.replace("index.html");
+        return;
+      }
 
-        if (profileError) {
-          console.error("Profile error:", profileError);
+      const user = session.user;
 
-          document.getElementById("status").textContent =
-            "Unable to load your profile.";
+      const {
+        data: profile,
+        error: profileError
+      } = await supabaseClient
+        .from("profiles")
+        .select(`
+          full_name,
+          email,
+          membership,
+          membership_plan,
+          membership_status,
+          membership_start_date,
+          membership_expiry_date
+        `)
+        .eq("id", user.id)
+        .single();
 
-          return;
-        }
+      if (profileError) throw profileError;
 
-        if (!profile) {
-          document.getElementById("status").textContent =
-            "Your profile could not be found.";
+      if (!profile) {
+        pageStatus.textContent = "Your profile could not be found.";
+        return;
+      }
 
-          return;
-        }
+      /* NAME */
 
-        /* NAME */
+      const fullName = profile.full_name || user.email || "there";
 
-        document.getElementById("userName").textContent =
-          profile.full_name || user.email || "User";
+      document.getElementById("userName").textContent = fullName;
+      document.getElementById("profileName").textContent =
+        profile.full_name || "Not available";
+      document.getElementById("overviewName").textContent =
+        profile.full_name || "Account holder";
 
-        document.getElementById("profileName").textContent =
-          profile.full_name || "Not available";
+      /* EMAIL */
 
-        /* EMAIL */
+      document.getElementById("profileEmail").textContent =
+        profile.email || user.email || "Not available";
 
-        document.getElementById("profileEmail").textContent =
-          profile.email || user.email || "";
+      /* MEMBERSHIP */
 
-        /* MEMBERSHIP */
+      const plan =
+        profile.membership_plan ||
+        profile.membership ||
+        "Free";
 
-        const plan =
-          profile.membership_plan ||
-          profile.membership ||
-          "Free";
+      const membershipElement =
+        document.getElementById("membership");
 
-        const membershipElement =
-          document.getElementById("membership");
+      const membershipName =
+        plan === "Pro Plus"
+          ? "FinPortfolio Pro Plus"
+          : plan === "Pro"
+          ? "FinPortfolio Pro"
+          : "Free";
 
-        membershipElement.textContent =
-          plan === "Pro Plus"
-            ? "FinPortfolio Pro Plus"
-            : plan === "Pro"
-            ? "FinPortfolio Pro"
-            : "Free";
+      membershipElement.textContent = membershipName;
+      document.getElementById("overviewPlan").textContent = membershipName;
 
-        if (plan === "Pro Plus") {
-          membershipElement.classList.add("proplus");
-        }
+      document.getElementById("overviewPlanNote").textContent =
+        plan === "Pro Plus"
+          ? "Pro Plus plan"
+          : plan === "Pro"
+          ? "Pro plan"
+          : "Free membership";
 
-        /* MEMBERSHIP STATUS */
+      if (plan === "Pro Plus") {
+        membershipElement.classList.add("proplus");
+      }
 
-        const membershipStatus =
-          document.getElementById("membershipStatus");
+      /* MEMBERSHIP STATUS */
 
-        if (plan !== "Free") {
-          membershipStatus.textContent =
-            "● " + (profile.membership_status || "Active");
-        } else {
-          membershipStatus.textContent = "";
-        }
+      const membershipStatus =
+        document.getElementById("membershipStatus");
 
-        /* MEMBERSHIP EXPIRY */
+      if (plan !== "Free") {
+        membershipStatus.textContent =
+          profile.membership_status || "Membership status unavailable";
+      } else {
+        membershipStatus.textContent = "Basic account";
+      }
 
-        if (profile.membership_expiry_date) {
-          const expiryRow =
-            document.getElementById("membershipExpiryRow");
+      /* MEMBERSHIP EXPIRY */
 
-          const expiryElement =
-            document.getElementById("membershipExpiry");
+      if (profile.membership_expiry_date) {
+        const expiryDate = new Date(profile.membership_expiry_date);
 
-          const expiryDate =
-            new Date(profile.membership_expiry_date);
-
-          expiryElement.textContent =
+        if (!Number.isNaN(expiryDate.getTime())) {
+          document.getElementById("membershipExpiry").textContent =
             expiryDate.toLocaleDateString("en-IN", {
               day: "2-digit",
               month: "short",
               year: "numeric"
             });
 
-          expiryRow.style.display = "block";
+          document.getElementById("membershipExpiryRow").style.display =
+            "block";
         }
-
-        /* PRO RESOURCES */
-
-        const proResources =
-          document.querySelectorAll('[data-plan="Pro"]');
-
-        proResources.forEach(function(resource) {
-          if (plan === "Pro" || plan === "Pro Plus") {
-            resource.classList.remove("locked");
-          } else {
-            resource.classList.add("locked");
-          }
-        });
-
-        /* PRO PLUS RESOURCES */
-
-        const proPlusResources =
-          document.querySelectorAll('[data-plan="Pro Plus"]');
-
-        proPlusResources.forEach(function(resource) {
-          if (plan === "Pro Plus") {
-            resource.classList.remove("locked");
-          } else {
-            resource.classList.add("locked");
-          }
-        });
-
-        /* STATUS */
-
-        document.getElementById("status").textContent =
-          "Your account is active.";
-
-        console.log("Dashboard loaded successfully");
-        console.log("Membership:", plan);
-
-      } catch (error) {
-        console.error("Dashboard error:", error);
-
-        document.getElementById("status").textContent =
-          "Something went wrong while loading your account.";
       }
+
+      /* PLAN VISUALS */
+
+      const proResources =
+        document.querySelectorAll('[data-plan="Pro"]');
+
+      proResources.forEach(function(resource) {
+        const allowed = plan === "Pro" || plan === "Pro Plus";
+
+        resource.classList.toggle("locked", !allowed);
+        resource.setAttribute("aria-label",
+          allowed
+            ? resource.querySelector("h3").textContent
+            : resource.querySelector("h3").textContent + " — Pro membership"
+        );
+      });
+
+      const proPlusResources =
+        document.querySelectorAll('[data-plan="Pro Plus"]');
+
+      proPlusResources.forEach(function(resource) {
+        const allowed = plan === "Pro Plus";
+
+        resource.classList.toggle("locked", !allowed);
+        resource.setAttribute("aria-label",
+          allowed
+            ? resource.querySelector("h3").textContent
+            : resource.querySelector("h3").textContent + " — Pro Plus membership"
+        );
+      });
+
+      document.getElementById("accountStatus").textContent = "ACCOUNT ACTIVE";
+      pageStatus.textContent = "You're all set. Welcome to your workspace.";
+
+      console.log("Dashboard loaded successfully.");
+      console.log("Membership:", plan);
+
+    } catch (error) {
+      console.error("Dashboard error:", error);
+      pageStatus.textContent =
+        "Unable to load all account details. Please refresh the page.";
     }
+  }
 
-    /* LOGOUT */
+  /* LOGOUT */
 
-    async function logoutUser() {
-      try {
-        if (supabaseClient) {
-          const { error } = await supabaseClient.auth.signOut();
-
-          if (error) {
-            throw error;
-          }
-        }
-
-        window.location.replace("index.html");
-
-      } catch (error) {
-        console.error("Logout error:", error);
-
-        document.getElementById("status").textContent =
-          "Unable to log out. Please try again.";
+  async function logoutUser() {
+    try {
+      if (supabaseClient) {
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) throw error;
       }
+
+      window.location.replace("index.html");
+
+    } catch (error) {
+      console.error("Logout error:", error);
+
+      document.getElementById("status").textContent =
+        "Unable to log out. Please try again.";
     }
+  }
 
-    /* PAGE LOAD */
+  document.getElementById("logoutBtn")
+    .addEventListener("click", logoutUser);
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const logoutBtn = document.getElementById("logoutBtn");
-
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", logoutUser);
-      }
-
-      loadDashboard();
-    });
-  </script>
+  document.addEventListener("DOMContentLoaded", loadDashboard);
+</script>
 
 </body>
 </html>
