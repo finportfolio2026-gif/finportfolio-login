@@ -13,16 +13,25 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --cream: #f7f3eb;
+      --charcoal: #202020;
+      --burgundy: #8b1e2d;
+      --border: #e5e1da;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f7f3eb;
-      color: #202020;
+      background: var(--cream);
+      color: var(--charcoal);
       min-height: 100vh;
     }
 
+    /* HEADER */
+
     .header {
-      background: #202020;
+      background: var(--charcoal);
       color: white;
       padding: 18px 25px;
       display: flex;
@@ -48,7 +57,7 @@
     }
 
     .fin-red {
-      color: #8b1e2d;
+      color: #d96b79;
     }
 
     .logout {
@@ -58,12 +67,20 @@
       padding: 8px 14px;
       border-radius: 5px;
       cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
     }
 
+    .logout:hover {
+      background: #383838;
+      border-color: #bbb;
+    }
+
+    /* MAIN LAYOUT */
+
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 40px auto;
-      padding: 0 20px;
+      padding: 0 22px;
     }
 
     .welcome {
@@ -73,128 +90,144 @@
     .welcome h1 {
       margin: 0 0 8px;
       font-size: 30px;
+      letter-spacing: -0.5px;
     }
 
     .welcome p {
       margin: 0;
       color: #666;
+      line-height: 1.6;
     }
 
+    /* ACCOUNT CARD */
+
     .card {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      background: #fffefa;
+      border: 1px solid #e5dfd5;
+      border-radius: 12px;
       padding: 25px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 3px 12px rgba(32, 32, 32, 0.025);
     }
 
     .card h2 {
       margin-top: 0;
       font-size: 20px;
+      margin-bottom: 22px;
     }
 
     .info {
-      margin: 12px 0;
+      margin: 14px 0;
       font-size: 15px;
+      line-height: 1.6;
     }
 
     .membership {
       display: inline-block;
-      background: #f7f3eb;
-      border: 1px solid #8b1e2d;
+      background: #f7e8eb;
+      border: 1px solid #d9aab2;
       color: #8b1e2d;
       padding: 7px 12px;
-      border-radius: 5px;
+      border-radius: 6px;
       font-weight: bold;
       margin-top: 5px;
     }
 
     .membership.proplus {
-      border-color: #b8860b;
-      color: #8a6500;
+      background: #fff3ce;
+      border-color: #e2c36e;
+      color: #805c00;
     }
+
+    /* RESOURCE GRID */
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
     }
 
     .feature {
-      border: 1px solid #ddd;
-      padding: 20px;
-      border-radius: 8px;
-      background: #fff;
+      --accent: #8b1e2d;
+      --surface: #fff;
+      --edge: #e5e1da;
+
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+      min-height: 172px;
+      border: 1px solid var(--edge);
+      border-radius: 11px;
+      padding: 22px 20px;
+      background: var(--surface);
+      color: #202020;
       text-decoration: none;
-      color: inherit;
       display: block;
       cursor: pointer;
-      transition: 0.2s;
+      transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
+    }
+
+    /* LEFT ACCENT */
+
+    .feature::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent);
+      border-radius: 11px 0 0 11px;
     }
 
     .feature:hover {
-      border-color: #8b1e2d;
-      transform: translateY(-2px);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 9px 22px rgba(32, 32, 32, 0.075);
     }
 
     .feature h3 {
-      margin-top: 0;
+      margin: 0 0 11px;
       font-size: 16px;
+      line-height: 1.4;
+      color: #252525;
     }
 
     .feature p {
-      color: #666;
+      margin: 0;
+      color: #646464;
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.65;
     }
 
-    .status {
-      text-align: center;
-      color: #777;
-      margin-top: 30px;
-      font-size: 13px;
+    /* INDIVIDUAL CARD COLOURS */
+
+    /* Courses — Burgundy */
+
+    .course-card {
+      --accent: #8b1e2d;
+      --surface: #fcf0f0;
+      --edge: #ead1d4;
     }
 
-    .locked {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: bold;
-      padding: 4px 7px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-
-    .badge-pro {
-      background: #f7e8eb;
-      color: #8b1e2d;
-    }
-
-    .badge-plus {
-      background: #fff3c4;
-      color: #8a6500;
-    }
-
-    /* ================================
-       STORE CARD
-    ================================= */
+    /* Store — Champagne Gold */
 
     .store-card {
-      border-color: #8b1e2d;
-      background: #fffdf9;
+      --accent: #a47723;
+      --surface: #fff6e5;
+      --edge: #e8d5ac;
     }
 
     .store-card .store-label {
       display: inline-block;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
-      letter-spacing: 1px;
-      color: #8b1e2d;
-      margin-bottom: 10px;
+      letter-spacing: 1.2px;
+      color: #8a6418;
+      margin-bottom: 12px;
       text-transform: uppercase;
     }
 
@@ -202,15 +235,125 @@
       margin-top: 0;
     }
 
+    /* Finance Tools — Green */
+
+    .tools-card {
+      --accent: #34734a;
+      --surface: #eef6ef;
+      --edge: #d1e4d4;
+    }
+
+    /* Research — Blue */
+
+    .research-card {
+      --accent: #315b91;
+      --surface: #edf3fb;
+      --edge: #d1deef;
+    }
+
+    /* Certificates — Purple */
+
+    .certificate-card {
+      --accent: #72539a;
+      --surface: #f4effa;
+      --edge: #e0d5ef;
+    }
+
+    /* Premium Insights — Rose */
+
+    .insights-card {
+      --accent: #a33248;
+      --surface: #fbedf0;
+      --edge: #ebd0d7;
+    }
+
+    /* Case Studies — Teal */
+
+    .case-studies-card {
+      --accent: #28766f;
+      --surface: #eaf6f3;
+      --edge: #cbe5df;
+    }
+
+    /* Advanced Research — Gold */
+
+    .advanced-card {
+      --accent: #96700b;
+      --surface: #fff6d9;
+      --edge: #ecdda6;
+    }
+
+    /* Financial Models — Slate Blue */
+
+    .models-card {
+      --accent: #50677f;
+      --surface: #edf1f6;
+      --edge: #d4dce7;
+    }
+
+    /* MEMBERSHIP BADGES */
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .badge-pro {
+      background: #f5dfe4;
+      color: #8b1e2d;
+    }
+
+    .badge-plus {
+      background: #f8eab8;
+      color: #805c00;
+    }
+
+    /* LOCKED RESOURCES */
+
+    .locked {
+      opacity: 0.78;
+    }
+
+    .locked:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* FOOTER STATUS */
+
+    .status {
+      text-align: center;
+      color: #777;
+      margin: 30px 0;
+      font-size: 13px;
+    }
+
+    /* RESPONSIVE */
+
     @media (max-width: 850px) {
       .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .container {
+        margin-top: 30px;
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 600px) {
       .grid {
         grid-template-columns: 1fr;
+        gap: 13px;
+      }
+
+      .container {
+        margin: 25px auto;
+        padding: 0 16px;
       }
 
       .welcome h1 {
@@ -222,12 +365,37 @@
       }
 
       .logo {
-        font-size: 18px;
+        font-size: 17px;
+        gap: 7px;
       }
 
       .logo img {
-        width: 28px;
-        height: 28px;
+        width: 27px;
+        height: 27px;
+      }
+
+      .logout {
+        padding: 7px 11px;
+      }
+
+      .card {
+        padding: 20px 17px;
+      }
+
+      .feature {
+        min-height: auto;
+        padding: 21px 19px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feature,
+      .logout {
+        transition: none;
+      }
+
+      .feature:hover {
+        transform: none;
       }
     }
   </style>
@@ -235,7 +403,7 @@
 
 <body>
 
-  <div class="header">
+  <header class="header">
 
     <div class="logo">
       <img
@@ -248,56 +416,44 @@
       </span>
     </div>
 
-    <button class="logout" id="logoutBtn">
+    <button class="logout" id="logoutBtn" type="button">
       Logout
     </button>
 
-  </div>
+  </header>
 
+  <main class="container">
 
-  <div class="container">
-
-    <div class="welcome">
-
+    <section class="welcome">
       <h1>
         Welcome,
         <span id="userName">User</span>
       </h1>
 
-      <p>
-        Your personal FinPortfolio dashboard.
-      </p>
+      <p>Your personal FinPortfolio dashboard.</p>
+    </section>
 
-    </div>
+    <!-- MY ACCOUNT -->
 
-
-    <div class="card">
+    <section class="card">
 
       <h2>My Account</h2>
 
       <div class="info">
         <strong>Name:</strong>
-        <span id="profileName">
-          Loading...
-        </span>
+        <span id="profileName">Loading...</span>
       </div>
 
       <div class="info">
         <strong>Email:</strong>
-        <span id="profileEmail">
-          Loading...
-        </span>
+        <span id="profileEmail">Loading...</span>
       </div>
 
       <div class="info">
-
         <strong>Membership:</strong>
         <br>
 
-        <span
-          class="membership"
-          id="membership"
-        >
+        <span class="membership" id="membership">
           Loading...
         </span>
 
@@ -305,7 +461,6 @@
           id="membershipStatus"
           style="margin-left:8px;font-size:13px;color:#666;"
         ></span>
-
       </div>
 
       <div
@@ -317,28 +472,21 @@
         <span id="membershipExpiry"></span>
       </div>
 
-    </div>
+    </section>
 
+    <!-- RESOURCES -->
 
-    <div class="card">
+    <section class="card">
 
-      <h2>
-        FinPortfolio Resources
-      </h2>
+      <h2>FinPortfolio Resources</h2>
 
       <div class="grid">
 
-
         <!-- COURSES -->
 
-        <a
-          href="courses.html"
-          class="feature"
-        >
+        <a href="courses.html" class="feature course-card">
 
-          <h3>
-            Courses
-          </h3>
+          <h3>Courses</h3>
 
           <p>
             Access finance learning resources and courses.
@@ -346,21 +494,15 @@
 
         </a>
 
+        <!-- STORE -->
 
-        <!-- FINPORTFOLIO STORE -->
-
-        <a
-          href="store.html"
-          class="feature store-card"
-        >
+        <a href="store.html" class="feature store-card">
 
           <span class="store-label">
             FINPORTFOLIO STORE
           </span>
 
-          <h3>
-            Finance Tools & Resources
-          </h3>
+          <h3>Finance Tools &amp; Resources</h3>
 
           <p>
             Purchase practical finance tools,
@@ -369,14 +511,11 @@
 
         </a>
 
-
         <!-- FINANCE TOOLS -->
 
-        <div class="feature">
+        <div class="feature tools-card">
 
-          <h3>
-            Finance Tools
-          </h3>
+          <h3>Finance Tools</h3>
 
           <p>
             Explore useful finance tools, calculators and templates.
@@ -384,14 +523,11 @@
 
         </div>
 
-
         <!-- RESEARCH -->
 
-        <div class="feature">
+        <div class="feature research-card">
 
-          <h3>
-            Research
-          </h3>
+          <h3>Research</h3>
 
           <p>
             Explore selected research reports and financial insights.
@@ -399,17 +535,14 @@
 
         </div>
 
-
-        <!-- ISSUED CERTIFICATES -->
+        <!-- CERTIFICATES -->
 
         <a
           href="issued-certificates.html"
-          class="feature"
+          class="feature certificate-card"
         >
 
-          <h3>
-            Issued Certificates
-          </h3>
+          <h3>Issued Certificates</h3>
 
           <p>
             View certificates you have earned through FinPortfolio courses.
@@ -417,23 +550,18 @@
 
         </a>
 
-
         <!-- PREMIUM INSIGHTS -->
 
         <div
-          class="feature"
+          class="feature insights-card"
           id="proResource"
           data-plan="Pro"
           onclick="openPremiumResources()"
         >
 
-          <span class="badge badge-pro">
-            PRO
-          </span>
+          <span class="badge badge-pro">PRO</span>
 
-          <h3>
-            Premium Insights
-          </h3>
+          <h3>Premium Insights</h3>
 
           <p>
             Premium finance insights and selected research reports.
@@ -441,22 +569,17 @@
 
         </div>
 
-
         <!-- PREMIUM CASE STUDIES -->
 
         <div
-          class="feature"
+          class="feature case-studies-card"
           id="proCaseStudies"
           data-plan="Pro"
         >
 
-          <span class="badge badge-pro">
-            PRO
-          </span>
+          <span class="badge badge-pro">PRO</span>
 
-          <h3>
-            Premium Case Studies
-          </h3>
+          <h3>Premium Case Studies</h3>
 
           <p>
             Explore practical finance and business case studies.
@@ -464,22 +587,17 @@
 
         </div>
 
-
         <!-- ADVANCED RESEARCH -->
 
         <div
-          class="feature"
+          class="feature advanced-card"
           id="proPlusResource"
           data-plan="Pro Plus"
         >
 
-          <span class="badge badge-plus">
-            PRO PLUS
-          </span>
+          <span class="badge badge-plus">PRO PLUS</span>
 
-          <h3>
-            Advanced Research
-          </h3>
+          <h3>Advanced Research</h3>
 
           <p>
             Advanced research and exclusive business insights.
@@ -487,22 +605,17 @@
 
         </div>
 
-
         <!-- FINANCIAL MODELS -->
 
         <div
-          class="feature"
+          class="feature models-card"
           id="modelResource"
           data-plan="Pro Plus"
         >
 
-          <span class="badge badge-plus">
-            PRO PLUS
-          </span>
+          <span class="badge badge-plus">PRO PLUS</span>
 
-          <h3>
-            Financial Models
-          </h3>
+          <h3>Financial Models</h3>
 
           <p>
             Access premium financial models and advanced templates.
@@ -510,208 +623,127 @@
 
         </div>
 
-
       </div>
 
-    </div>
+    </section>
 
-
-    <div
-      class="status"
-      id="status"
-    >
+    <div class="status" id="status" role="status" aria-live="polite">
       Loading your account...
     </div>
 
-  </div>
-
+  </main>
 
   <script>
-
     const SUPABASE_URL =
       "https://mxmxwosyhsfjaaocazdl.supabase.co";
-
 
     const SUPABASE_KEY =
       "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
 
-
     let supabaseClient = null;
 
-
-    /* ================================
-       OPEN PREMIUM RESOURCES
-    ================================= */
+    /* OPEN PREMIUM RESOURCES */
 
     function openPremiumResources() {
-
-      window.location.href =
-        "premium-resources.html";
-
+      window.location.href = "premium-resources.html";
     }
 
-
-    /* ================================
-       LOAD DASHBOARD
-    ================================= */
+    /* LOAD DASHBOARD */
 
     async function loadDashboard() {
-
       try {
-
         if (!window.supabase) {
-
-          throw new Error(
-            "Supabase library not loaded"
-          );
-
+          throw new Error("Supabase library not loaded");
         }
 
-
-        supabaseClient =
-          window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY,
-            {
-              auth: {
-                persistSession: true,
-                autoRefreshToken: true,
-                detectSessionInUrl: true
-              }
+        supabaseClient = window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY,
+          {
+            auth: {
+              persistSession: true,
+              autoRefreshToken: true,
+              detectSessionInUrl: true
             }
-          );
-
-
-        /* Get current session */
+          }
+        );
 
         const {
           data: { session },
           error: sessionError
-        } =
-          await supabaseClient.auth.getSession();
-
+        } = await supabaseClient.auth.getSession();
 
         if (sessionError) {
+          console.error("Session error:", sessionError);
 
-          console.error(
-            "Session error:",
-            sessionError
-          );
-
-          return;
-
-        }
-
-
-        if (
-          !session ||
-          !session.user
-        ) {
-
-          window.location.replace(
-            "index.html"
-          );
+          document.getElementById("status").textContent =
+            "Unable to check your session. Please refresh the page.";
 
           return;
-
         }
 
+        if (!session || !session.user) {
+          window.location.replace("index.html");
+          return;
+        }
 
-        const user =
-          session.user;
-
-
-        /* Get profile */
+        const user = session.user;
 
         const {
           data: profile,
           error: profileError
-        } =
-          await supabaseClient
-            .from("profiles")
-            .select(`
-              full_name,
-              email,
-              membership,
-              membership_plan,
-              membership_status,
-              membership_start_date,
-              membership_expiry_date
-            `)
-            .eq("id", user.id)
-            .single();
-
+        } = await supabaseClient
+          .from("profiles")
+          .select(`
+            full_name,
+            email,
+            membership,
+            membership_plan,
+            membership_status,
+            membership_start_date,
+            membership_expiry_date
+          `)
+          .eq("id", user.id)
+          .single();
 
         if (profileError) {
+          console.error("Profile error:", profileError);
 
-          console.error(
-            "Profile error:",
-            profileError
-          );
-
-          document.getElementById(
-            "status"
-          ).textContent =
-            "Unable to load profile.";
+          document.getElementById("status").textContent =
+            "Unable to load your profile.";
 
           return;
-
         }
-
 
         if (!profile) {
+          document.getElementById("status").textContent =
+            "Your profile could not be found.";
 
           return;
-
         }
 
+        /* NAME */
 
-        /* ================================
-           NAME
-        ================================= */
+        document.getElementById("userName").textContent =
+          profile.full_name || user.email || "User";
 
-        document.getElementById(
-          "userName"
-        ).textContent =
-          profile.full_name ||
-          user.email ||
-          "User";
+        document.getElementById("profileName").textContent =
+          profile.full_name || "Not available";
 
+        /* EMAIL */
 
-        document.getElementById(
-          "profileName"
-        ).textContent =
-          profile.full_name ||
-          "Not available";
+        document.getElementById("profileEmail").textContent =
+          profile.email || user.email || "";
 
-
-        /* ================================
-           EMAIL
-        ================================= */
-
-        document.getElementById(
-          "profileEmail"
-        ).textContent =
-          profile.email ||
-          user.email ||
-          "";
-
-
-        /* ================================
-           MEMBERSHIP
-        ================================= */
+        /* MEMBERSHIP */
 
         const plan =
           profile.membership_plan ||
           profile.membership ||
           "Free";
 
-
         const membershipElement =
-          document.getElementById(
-            "membership"
-          );
-
+          document.getElementById("membership");
 
         membershipElement.textContent =
           plan === "Pro Plus"
@@ -720,243 +752,119 @@
             ? "FinPortfolio Pro"
             : "Free";
 
-
         if (plan === "Pro Plus") {
-
-          membershipElement.classList.add(
-            "proplus"
-          );
-
+          membershipElement.classList.add("proplus");
         }
 
-
-        /* ================================
-           MEMBERSHIP STATUS
-        ================================= */
+        /* MEMBERSHIP STATUS */
 
         const membershipStatus =
-          document.getElementById(
-            "membershipStatus"
-          );
-
+          document.getElementById("membershipStatus");
 
         if (plan !== "Free") {
-
           membershipStatus.textContent =
-            "● " +
-            (
-              profile.membership_status ||
-              "Active"
-            );
-
+            "● " + (profile.membership_status || "Active");
         } else {
-
-          membershipStatus.textContent =
-            "";
-
+          membershipStatus.textContent = "";
         }
 
+        /* MEMBERSHIP EXPIRY */
 
-        /* ================================
-           EXPIRY
-        ================================= */
-
-        if (
-          profile.membership_expiry_date
-        ) {
-
+        if (profile.membership_expiry_date) {
           const expiryRow =
-            document.getElementById(
-              "membershipExpiryRow"
-            );
+            document.getElementById("membershipExpiryRow");
 
           const expiryElement =
-            document.getElementById(
-              "membershipExpiry"
-            );
-
+            document.getElementById("membershipExpiry");
 
           const expiryDate =
-            new Date(
-              profile.membership_expiry_date
-            );
-
+            new Date(profile.membership_expiry_date);
 
           expiryElement.textContent =
-            expiryDate.toLocaleDateString(
-              "en-IN",
-              {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
-              }
-            );
+            expiryDate.toLocaleDateString("en-IN", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric"
+            });
 
-
-          expiryRow.style.display =
-            "block";
-
+          expiryRow.style.display = "block";
         }
 
-
-        /* ================================
-           PRO RESOURCES
-        ================================= */
+        /* PRO RESOURCES */
 
         const proResources =
-          document.querySelectorAll(
-            '[data-plan="Pro"]'
-          );
+          document.querySelectorAll('[data-plan="Pro"]');
 
-
-        proResources.forEach(
-          function(resource) {
-
-            if (
-              plan === "Pro" ||
-              plan === "Pro Plus"
-            ) {
-
-              resource.classList.remove(
-                "locked"
-              );
-
-            } else {
-
-              resource.classList.add(
-                "locked"
-              );
-
-            }
-
+        proResources.forEach(function(resource) {
+          if (plan === "Pro" || plan === "Pro Plus") {
+            resource.classList.remove("locked");
+          } else {
+            resource.classList.add("locked");
           }
-        );
+        });
 
-
-        /* ================================
-           PRO PLUS RESOURCES
-        ================================= */
+        /* PRO PLUS RESOURCES */
 
         const proPlusResources =
-          document.querySelectorAll(
-            '[data-plan="Pro Plus"]'
-          );
+          document.querySelectorAll('[data-plan="Pro Plus"]');
 
-
-        proPlusResources.forEach(
-          function(resource) {
-
-            if (
-              plan === "Pro Plus"
-            ) {
-
-              resource.classList.remove(
-                "locked"
-              );
-
-            } else {
-
-              resource.classList.add(
-                "locked"
-              );
-
-            }
-
+        proPlusResources.forEach(function(resource) {
+          if (plan === "Pro Plus") {
+            resource.classList.remove("locked");
+          } else {
+            resource.classList.add("locked");
           }
-        );
+        });
 
+        /* STATUS */
 
-        /* ================================
-           STATUS
-        ================================= */
-
-        document.getElementById(
-          "status"
-        ).textContent =
+        document.getElementById("status").textContent =
           "Your account is active.";
 
-
-        console.log(
-          "Dashboard loaded successfully"
-        );
-
-
-        console.log(
-          "Membership:",
-          plan
-        );
+        console.log("Dashboard loaded successfully");
+        console.log("Membership:", plan);
 
       } catch (error) {
+        console.error("Dashboard error:", error);
 
-        console.error(
-          "Dashboard error:",
-          error
-        );
-
+        document.getElementById("status").textContent =
+          "Something went wrong while loading your account.";
       }
-
     }
 
-
-    /* ================================
-       LOGOUT
-    ================================= */
+    /* LOGOUT */
 
     async function logoutUser() {
-
       try {
-
         if (supabaseClient) {
+          const { error } = await supabaseClient.auth.signOut();
 
-          await supabaseClient.auth.signOut();
-
+          if (error) {
+            throw error;
+          }
         }
 
-        window.location.replace(
-          "index.html"
-        );
+        window.location.replace("index.html");
 
       } catch (error) {
+        console.error("Logout error:", error);
 
-        console.error(
-          "Logout error:",
-          error
-        );
-
+        document.getElementById("status").textContent =
+          "Unable to log out. Please try again.";
       }
-
     }
 
+    /* PAGE LOAD */
 
-    /* ================================
-       PAGE LOAD
-    ================================= */
+    document.addEventListener("DOMContentLoaded", function() {
+      const logoutBtn = document.getElementById("logoutBtn");
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      function() {
-
-        const logoutBtn =
-          document.getElementById(
-            "logoutBtn"
-          );
-
-
-        if (logoutBtn) {
-
-          logoutBtn.addEventListener(
-            "click",
-            logoutUser
-          );
-
-        }
-
-
-        loadDashboard();
-
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", logoutUser);
       }
-    );
 
+      loadDashboard();
+    });
   </script>
 
 </body>
