@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,9 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -46,9 +45,7 @@
       display: block;
     }
 
-    .fin-red {
-      color: #8b1e2d;
-    }
+    .fin-red { color: #8b1e2d; }
 
     .back-btn {
       color: white;
@@ -59,9 +56,7 @@
       border-radius: 4px;
     }
 
-    .back-btn:hover {
-      border-color: white;
-    }
+    .back-btn:hover { border-color: white; }
 
     .container {
       max-width: 1100px;
@@ -69,9 +64,7 @@
       padding: 45px 20px 60px;
     }
 
-    .top-section {
-      margin-bottom: 35px;
-    }
+    .top-section { margin-bottom: 35px; }
 
     .eyebrow {
       color: #8b1e2d;
@@ -128,6 +121,8 @@
       font-weight: 600;
     }
 
+    #membershipStatus.status-warning { color: #8b1e2d; }
+
     .section-title {
       font-size: 23px;
       margin: 0 0 18px;
@@ -150,9 +145,7 @@
       flex-direction: column;
     }
 
-    .resource-card:hover {
-      border-color: #8b1e2d;
-    }
+    .resource-card:hover { border-color: #8b1e2d; }
 
     .resource-type {
       font-size: 11px;
@@ -190,20 +183,9 @@
       z-index: 2;
     }
 
-    .resource-btn:hover {
-      background: #711622;
-    }
+    .resource-btn:hover { background: #711622; }
 
-    /* LOCKED CARD */
-
-    .locked {
-      opacity: 0.58;
-    }
-
-    /*
-      Keep payment / upgrade buttons fully visible
-      even when the card is locked.
-    */
+    .locked { opacity: 0.68; }
 
     .locked .resource-btn {
       opacity: 1;
@@ -211,9 +193,7 @@
       color: white;
     }
 
-    .locked .resource-btn:hover {
-      background: #711622;
-    }
+    .locked .resource-btn:hover { background: #711622; }
 
     .lock-label {
       position: absolute;
@@ -248,6 +228,19 @@
       font-size: 14px;
     }
 
+    .page-message {
+      background: white;
+      border: 1px solid #ddd5ca;
+      padding: 24px;
+      line-height: 1.6;
+      margin: 24px 0;
+    }
+
+    .page-message a {
+      color: #8b1e2d;
+      font-weight: 700;
+    }
+
     footer {
       text-align: center;
       color: #888;
@@ -257,595 +250,309 @@
     }
 
     @media (max-width: 850px) {
-
-      .resource-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
+      .resource-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 600px) {
-
-      header {
-        padding: 16px 18px;
-      }
-
-      .logo {
-        font-size: 17px;
-      }
-
-      .logo img {
-        width: 28px;
-        height: 28px;
-      }
+      header { padding: 16px 18px; }
+      .logo { font-size: 17px; }
+      .logo img { width: 28px; height: 28px; }
 
       .back-btn {
         font-size: 12px;
         padding: 8px 11px;
       }
 
-      .container {
-        padding: 32px 16px 45px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .resource-grid {
-        grid-template-columns: 1fr;
-      }
+      .container { padding: 32px 16px 45px; }
+      h1 { font-size: 28px; }
+      .resource-grid { grid-template-columns: 1fr; }
 
       .membership-box {
         align-items: flex-start;
         flex-direction: column;
       }
-
     }
   </style>
 </head>
 
-
 <body>
-
   <header>
-
     <div class="logo">
-
       <img
         src="https://finportfolio0.wordpress.com/wp-content/uploads/2026/01/fin-logo-169-white.png"
         alt="FinPortfolio Logo"
       >
-
-      <span>
-        <span class="fin-red">FIN</span>PORTFOLIO
-      </span>
-
+      <span><span class="fin-red">FIN</span>PORTFOLIO</span>
     </div>
 
-    <a href="dashboard.html" class="back-btn">
-      ← Dashboard
-    </a>
-
+    <a href="dashboard.html" class="back-btn">← Dashboard</a>
   </header>
 
-
   <main class="container">
-
     <div class="top-section">
-
-      <div class="eyebrow">
-        Premium Library
-      </div>
-
-      <h1>
-        Premium Resources
-      </h1>
-
+      <div class="eyebrow">Premium Library</div>
+      <h1>Premium Resources</h1>
       <p class="intro">
         Practical finance resources, research and tools designed
         to help you understand markets, investments and financial
         decision-making with greater clarity.
       </p>
-
     </div>
-
-
-    <!-- MEMBERSHIP -->
 
     <div class="membership-box">
-
       <div>
-
-        <div class="membership-label">
-          Your Membership
-        </div>
-
-        <div id="membership">
-          Checking membership...
-        </div>
-
+        <div class="membership-label">Your Membership</div>
+        <div id="membership">Checking membership...</div>
       </div>
-
-      <div id="membershipStatus"></div>
-
+      <div id="membershipStatus">Verifying your account...</div>
     </div>
 
+    <div id="pageMessage" class="page-message" hidden></div>
 
-    <!-- PRO RESOURCES -->
+    <section id="resourcesContent" hidden>
+      <h2 class="section-title">Pro Resources</h2>
 
-    <h2 class="section-title">
-      Pro Resources
-    </h2>
-
-
-    <div class="resource-grid">
-
-
-      <!-- Premium Finance Insights -->
-
-      <div class="resource-card" data-plan="Pro">
-
-        <div class="resource-type">
-          Premium Insight
+      <div class="resource-grid">
+        <div class="resource-card" data-plan="Pro">
+          <div class="resource-type">Premium Insight</div>
+          <h3>Premium Finance Insights</h3>
+          <p>Practical explanations and insights on finance, investments and important financial concepts.</p>
+          <a href="premium-insights.html" class="resource-btn" data-resource="premium-insights">Read Resource →</a>
         </div>
 
-        <h3>
-          Premium Finance Insights
-        </h3>
+        <div class="resource-card" data-plan="Pro">
+          <div class="resource-type">Research</div>
+          <h3>Selected Research Reports</h3>
+          <p>Curated research material covering businesses, markets, investments and financial topics.</p>
+          <a href="selected-research.html" class="resource-btn" data-resource="selected-research">View Report →</a>
+        </div>
 
-        <p>
-          Practical explanations and insights on finance,
-          investments and important financial concepts.
-        </p>
+        <div class="resource-card" data-plan="Pro">
+          <div class="resource-type">Case Study</div>
+          <h3>Premium Case Studies</h3>
+          <p>Real-world business and finance case studies designed for practical learning.</p>
+          <a href="#" class="resource-btn" data-resource="case-study">Open Case Study →</a>
+        </div>
 
-        <a
-          href="premium-insights.html"
-          class="resource-btn"
-          data-resource="premium-insights"
-        >
-          Read Resource →
-        </a>
+        <div class="resource-card" data-plan="Pro">
+          <div class="resource-type">Tools</div>
+          <h3>Finance Tools &amp; Templates</h3>
+          <p>Useful finance templates and basic tools for learning, analysis and financial planning.</p>
+          <a href="#" class="resource-btn" data-resource="finance-tools">Access Tools →</a>
+        </div>
 
+        <div class="resource-card" data-plan="Pro">
+          <div class="resource-type">Resources</div>
+          <h3>Premium Resource Library</h3>
+          <p>A growing collection of selected finance resources available exclusively to members.</p>
+          <a href="#" class="resource-btn" data-resource="resource-library">Explore Library →</a>
+        </div>
+
+        <div class="resource-card" data-plan="Pro">
+          <div class="resource-type">Learning</div>
+          <h3>Premium Learning Material</h3>
+          <p>Additional learning resources created to support practical finance knowledge.</p>
+          <a href="#" class="resource-btn" data-resource="learning-material">Start Learning →</a>
+        </div>
       </div>
 
+      <h2 class="section-title">Pro Plus Resources</h2>
 
-      <!-- Selected Research -->
-
-      <div class="resource-card" data-plan="Pro">
-
-        <div class="resource-type">
-          Research
+      <div class="resource-grid">
+        <div class="resource-card" data-plan="Pro Plus">
+          <div class="lock-label">Pro Plus</div>
+          <div class="resource-type">Advanced Research</div>
+          <h3>Advanced Research Reports</h3>
+          <p>Deeper research material covering companies, sectors, markets and financial themes.</p>
+          <a href="#" class="resource-btn" data-resource="advanced-research">View Report →</a>
         </div>
 
-        <h3>
-          Selected Research Reports
-        </h3>
+        <div class="resource-card" data-plan="Pro Plus">
+          <div class="lock-label">Pro Plus</div>
+          <div class="resource-type">Market Insights</div>
+          <h3>Business &amp; Market Insights</h3>
+          <p>Practical observations and analysis of business and market developments.</p>
+          <a href="#" class="resource-btn" data-resource="market-insights">Explore Insights →</a>
+        </div>
 
-        <p>
-          Curated research material covering businesses,
-          markets, investments and financial topics.
-        </p>
+        <div class="resource-card" data-plan="Pro Plus">
+          <div class="lock-label">Pro Plus</div>
+          <div class="resource-type">Excel</div>
+          <h3>Advanced Excel Templates</h3>
+          <p>More advanced spreadsheet resources for financial analysis and practical work.</p>
+          <a href="#" class="resource-btn" data-resource="excel-templates">Access Templates →</a>
+        </div>
 
-        <a
-          href="selected-research.html"
-          class="resource-btn"
-          data-resource="selected-research"
-        >
-          View Report →
-        </a>
+        <div class="resource-card" data-plan="Pro Plus">
+          <div class="lock-label">Pro Plus</div>
+          <div class="resource-type">Financial Models</div>
+          <h3>Premium Financial Models</h3>
+          <p>Practical financial modelling resources for analysis, learning and decision-making.</p>
+          <a href="#" class="resource-btn" data-resource="financial-models">Open Models →</a>
+        </div>
 
+        <div class="resource-card" data-plan="Pro Plus">
+          <div class="lock-label">Pro Plus</div>
+          <div class="resource-type">Early Access</div>
+          <h3>Early Access Resources</h3>
+          <p>Get access to selected new FinPortfolio resources before general availability.</p>
+          <a href="#" class="resource-btn" data-resource="early-access">Explore →</a>
+        </div>
+
+        <div class="resource-card" data-plan="Pro Plus">
+          <div class="lock-label">Pro Plus</div>
+          <div class="resource-type">Exclusive</div>
+          <h3>Pro Plus Library</h3>
+          <p>Exclusive resources created for members who want deeper practical finance material.</p>
+          <a href="#" class="resource-btn" data-resource="pro-plus-library">Open Library →</a>
+        </div>
       </div>
 
-
-      <!-- Case Studies -->
-
-      <div class="resource-card" data-plan="Pro">
-
-        <div class="resource-type">
-          Case Study
-        </div>
-
-        <h3>
-          Premium Case Studies
-        </h3>
-
+      <div class="info-box">
+        <h2>More resources are coming.</h2>
         <p>
-          Real-world business and finance case studies
-          designed for practical learning.
+          FinPortfolio's premium library will continue to grow
+          with practical research, finance tools, case studies,
+          templates and learning resources.
         </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="case-study"
-        >
-          Open Case Study →
-        </a>
-
       </div>
-
-
-      <!-- Finance Tools -->
-
-      <div class="resource-card" data-plan="Pro">
-
-        <div class="resource-type">
-          Tools
-        </div>
-
-        <h3>
-          Finance Tools & Templates
-        </h3>
-
-        <p>
-          Useful finance templates and basic tools for
-          learning, analysis and financial planning.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="finance-tools"
-        >
-          Access Tools →
-        </a>
-
-      </div>
-
-
-      <!-- Resource Library -->
-
-      <div class="resource-card" data-plan="Pro">
-
-        <div class="resource-type">
-          Resources
-        </div>
-
-        <h3>
-          Premium Resource Library
-        </h3>
-
-        <p>
-          A growing collection of selected finance resources
-          available exclusively to members.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="resource-library"
-        >
-          Explore Library →
-        </a>
-
-      </div>
-
-
-      <!-- Learning Material -->
-
-      <div class="resource-card" data-plan="Pro">
-
-        <div class="resource-type">
-          Learning
-        </div>
-
-        <h3>
-          Premium Learning Material
-        </h3>
-
-        <p>
-          Additional learning resources created to support
-          practical finance knowledge.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="learning-material"
-        >
-          Start Learning →
-        </a>
-
-      </div>
-
-    </div>
-
-
-    <!-- PRO PLUS RESOURCES -->
-
-    <h2 class="section-title">
-      Pro Plus Resources
-    </h2>
-
-
-    <div class="resource-grid">
-
-
-      <!-- Advanced Research -->
-
-      <div class="resource-card" data-plan="Pro Plus">
-
-        <div class="lock-label">
-          Pro Plus
-        </div>
-
-        <div class="resource-type">
-          Advanced Research
-        </div>
-
-        <h3>
-          Advanced Research Reports
-        </h3>
-
-        <p>
-          Deeper research material covering companies,
-          sectors, markets and financial themes.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="advanced-research"
-        >
-          View Report →
-        </a>
-
-      </div>
-
-
-      <!-- Market Insights -->
-
-      <div class="resource-card" data-plan="Pro Plus">
-
-        <div class="lock-label">
-          Pro Plus
-        </div>
-
-        <div class="resource-type">
-          Market Insights
-        </div>
-
-        <h3>
-          Business & Market Insights
-        </h3>
-
-        <p>
-          Practical observations and analysis of business
-          and market developments.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="market-insights"
-        >
-          Explore Insights →
-        </a>
-
-      </div>
-
-
-      <!-- Excel -->
-
-      <div class="resource-card" data-plan="Pro Plus">
-
-        <div class="lock-label">
-          Pro Plus
-        </div>
-
-        <div class="resource-type">
-          Excel
-        </div>
-
-        <h3>
-          Advanced Excel Templates
-        </h3>
-
-        <p>
-          More advanced spreadsheet resources for financial
-          analysis and practical work.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="excel-templates"
-        >
-          Access Templates →
-        </a>
-
-      </div>
-
-
-      <!-- Financial Models -->
-
-      <div class="resource-card" data-plan="Pro Plus">
-
-        <div class="lock-label">
-          Pro Plus
-        </div>
-
-        <div class="resource-type">
-          Financial Models
-        </div>
-
-        <h3>
-          Premium Financial Models
-        </h3>
-
-        <p>
-          Practical financial modelling resources for
-          analysis, learning and decision-making.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="financial-models"
-        >
-          Open Models →
-        </a>
-
-      </div>
-
-
-      <!-- Early Access -->
-
-      <div class="resource-card" data-plan="Pro Plus">
-
-        <div class="lock-label">
-          Pro Plus
-        </div>
-
-        <div class="resource-type">
-          Early Access
-        </div>
-
-        <h3>
-          Early Access Resources
-        </h3>
-
-        <p>
-          Get access to selected new FinPortfolio resources
-          before general availability.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="early-access"
-        >
-          Explore →
-        </a>
-
-      </div>
-
-
-      <!-- Pro Plus Library -->
-
-      <div class="resource-card" data-plan="Pro Plus">
-
-        <div class="lock-label">
-          Pro Plus
-        </div>
-
-        <div class="resource-type">
-          Exclusive
-        </div>
-
-        <h3>
-          Pro Plus Library
-        </h3>
-
-        <p>
-          Exclusive resources created for members who want
-          deeper practical finance material.
-        </p>
-
-        <a
-          href="#"
-          class="resource-btn"
-          data-resource="pro-plus-library"
-        >
-          Open Library →
-        </a>
-
-      </div>
-
-    </div>
-
-
-    <!-- INFO -->
-
-    <div class="info-box">
-
-      <h2>
-        More resources are coming.
-      </h2>
-
-      <p>
-        FinPortfolio's premium library will continue to grow
-        with practical research, finance tools, case studies,
-        templates and learning resources.
-      </p>
-
-    </div>
-
+    </section>
   </main>
 
-
-  <footer>
-    © 2026 FinPortfolio — Where Finance Meets Clarity
-  </footer>
-
+  <footer>© 2026 FinPortfolio — Where Finance Meets Clarity</footer>
 
   <script>
-
     const SUPABASE_URL =
       "https://mxmxwosyhsfjaaocazdl.supabase.co";
 
-
-    /*
-      Use your existing Supabase publishable key here.
-      Do not use a service_role key.
-    */
-
+    // Use the public publishable key only. Never expose a service_role key.
     const SUPABASE_KEY =
       "sb_publishable_kvmNO1rhN8lO2rRmJLz48Q_2X1KoMA9";
 
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY,
-        {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-          }
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
         }
-      );
+      }
+    );
 
+    const membershipElement = document.getElementById("membership");
+    const statusElement = document.getElementById("membershipStatus");
+    const pageMessage = document.getElementById("pageMessage");
+    const resourcesContent = document.getElementById("resourcesContent");
 
-    async function loadPremiumResources() {
+    function showMessage(message, showLoginLink = false) {
+      pageMessage.hidden = false;
+      pageMessage.innerHTML = "";
 
-      const {
-        data: { session },
-        error: sessionError
-      } =
-        await supabaseClient.auth.getSession();
+      const paragraph = document.createElement("p");
+      paragraph.textContent = message;
+      pageMessage.appendChild(paragraph);
 
+      if (showLoginLink) {
+        const link = document.createElement("a");
+        link.href = "index.html";
+        link.textContent = "Go to login";
+        pageMessage.appendChild(link);
+      }
+    }
 
-      /*
-        USER NOT LOGGED IN
-      */
+    function normalizePlan(value) {
+      const plan = String(value || "Free")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
 
-      if (
-        sessionError ||
-        !session ||
-        !session.user
-      ) {
+      if (plan === "pro plus" || plan === "proplus") return "Pro Plus";
+      if (plan === "pro") return "Pro";
+      return "Free";
+    }
 
-        window.location.replace("index.html");
+    function isExpiryPassed(expiryValue) {
+      if (!expiryValue) return false;
 
+      const expiryText = String(expiryValue).trim();
+
+      // Date-only values remain valid through the stated calendar day.
+      const expiryDate = /^\d{4}-\d{2}-\d{2}$/.test(expiryText)
+        ? new Date(expiryText + "T23:59:59")
+        : new Date(expiryText);
+
+      if (Number.isNaN(expiryDate.getTime())) {
+        // Do not grant premium access if an expiry value is malformed.
+        return true;
+      }
+
+      return Date.now() > expiryDate.getTime();
+    }
+
+    function setLockLabel(card, labelText) {
+      let label = card.querySelector(".lock-label");
+
+      if (!label) {
+        label = document.createElement("div");
+        label.className = "lock-label";
+        card.appendChild(label);
+      }
+
+      label.textContent = labelText;
+    }
+
+    function configureCard(card, allowed, planRequired) {
+      const button = card.querySelector(".resource-btn");
+      if (!button) return;
+
+      if (allowed) {
+        card.classList.remove("locked");
+
+        const label = card.querySelector(".lock-label");
+        if (label) label.remove();
+
+        // Restore original destination and label after membership changes.
+        button.href = button.dataset.originalHref || "#";
+        button.textContent = button.dataset.originalText || "Open Resource →";
+        button.removeAttribute("aria-disabled");
         return;
       }
 
+      card.classList.add("locked");
 
-      const user = session.user;
+      const checkoutPlan = planRequired === "Pro Plus" ? "proplus" : "pro";
+      const checkoutURL = "payment.html?plan=" + checkoutPlan;
 
+      setLockLabel(card, planRequired);
 
-      /*
-        GET PROFILE
-      */
+      button.href = checkoutURL;
+      button.textContent = planRequired === "Pro Plus"
+        ? "Get Pro Plus — ₹149 →"
+        : "Get Pro — ₹99 →";
 
-      const {
-        data: profile,
-        error
-      } =
-        await supabaseClient
+      button.removeAttribute("aria-disabled");
+    }
+
+    async function loadPremiumResources() {
+      try {
+        const {
+          data: { session },
+          error: sessionError
+        } = await supabaseClient.auth.getSession();
+
+        if (sessionError || !session || !session.user) {
+          window.location.replace("index.html");
+          return;
+        }
+
+        const user = session.user;
+
+        const {
+          data: profile,
+          error: profileError
+        } = await supabaseClient
           .from("profiles")
           .select(`
             full_name,
@@ -858,289 +565,104 @@
           .eq("id", user.id)
           .single();
 
+        if (profileError || !profile) {
+          membershipElement.textContent = "Membership unavailable";
+          statusElement.textContent = "Could not verify your account.";
+          statusElement.classList.add("status-warning");
 
-      if (error || !profile) {
+          showMessage(
+            "We could not verify your membership. Please check your account and try again."
+          );
 
-        document.body.innerHTML = `
-          <div style="
-            max-width:600px;
-            margin:100px auto;
-            padding:30px;
-            text-align:center;
-            font-family:Arial;
-          ">
+          console.error("Profile lookup failed:", profileError);
+          return;
+        }
 
-            <h2>
-              Unable to load your account
-            </h2>
+        let plan = normalizePlan(
+          profile.membership_plan || profile.membership || "Free"
+        );
 
-            <p>
-              Please try again.
-            </p>
+        // Keep the existing profile convention, but reject explicitly inactive plans.
+        const rawStatus = String(profile.membership_status || "Active")
+          .trim()
+          .toLowerCase();
 
-          </div>
-        `;
+        const statusIsActive = [
+          "active",
+          "approved"
+        ].includes(rawStatus);
 
-        console.error(error);
+        const expired = isExpiryPassed(profile.membership_expiry_date);
 
-        return;
-      }
+        let membershipStatus = "Active";
 
-
-      /*
-        DETERMINE PLAN
-      */
-
-      const plan =
-        profile.membership_plan ||
-        profile.membership ||
-        "Free";
-
-
-      const status =
-        profile.membership_status ||
-        "Active";
-
-
-      /*
-        MEMBERSHIP DISPLAY
-      */
-
-      const membershipElement =
-        document.getElementById("membership");
-
-
-      if (membershipElement) {
+        if (plan !== "Free" && (!statusIsActive || expired)) {
+          plan = "Free";
+          membershipStatus = expired ? "Expired" : "Inactive";
+        } else if (plan === "Free") {
+          membershipStatus = "Free Account";
+        } else {
+          membershipStatus = "Active";
+        }
 
         membershipElement.textContent =
           plan === "Pro Plus"
             ? "FinPortfolio Pro Plus"
             : plan === "Pro"
             ? "FinPortfolio Pro"
-            : "Free";
+            : "FinPortfolio Free";
 
-      }
+        statusElement.textContent = "● " + membershipStatus;
 
+        if (plan === "Free") {
+          statusElement.classList.add("status-warning");
+        } else {
+          statusElement.classList.remove("status-warning");
+        }
 
-      /*
-        STATUS DISPLAY
-      */
+        document.querySelectorAll(".resource-card").forEach(function(card) {
+          const requiredPlan = card.dataset.plan || "Pro";
 
-      const statusElement =
-        document.getElementById("membershipStatus");
+          // Pro Plus includes access to Pro resources.
+          const allowed = requiredPlan === "Pro"
+            ? (plan === "Pro" || plan === "Pro Plus")
+            : plan === "Pro Plus";
 
+          configureCard(card, allowed, requiredPlan);
+        });
 
-      if (statusElement) {
+        if (expired) {
+          showMessage(
+            "Your premium membership has expired. You are seeing Free access until your membership is renewed."
+          );
+        } else if (plan === "Free" && membershipStatus === "Inactive") {
+          showMessage(
+            "Your premium membership is not currently active. You are seeing Free access."
+          );
+        }
 
-        statusElement.textContent =
-          plan !== "Free"
-            ? "● " + status
-            : "Free Account";
+        resourcesContent.hidden = false;
 
-      }
+      } catch (error) {
+        console.error("Membership page error:", error);
 
+        membershipElement.textContent = "Unable to verify";
+        statusElement.textContent = "Please try again.";
+        statusElement.classList.add("status-warning");
 
-      /*
-        PRO RESOURCES
-      */
-
-      const proResources =
-        document.querySelectorAll(
-          '[data-plan="Pro"]'
+        showMessage(
+          "Something went wrong while checking your membership. Please refresh the page."
         );
-
-
-      proResources.forEach(function(resource) {
-
-        const button =
-          resource.querySelector(".resource-btn");
-
-
-        /*
-          USER HAS PRO OR PRO PLUS
-        */
-
-        if (
-          plan === "Pro" ||
-          plan === "Pro Plus"
-        ) {
-
-          resource.classList.remove("locked");
-
-
-          const lock =
-            resource.querySelector(".lock-label");
-
-
-          if (lock) {
-            lock.remove();
-          }
-
-        }
-
-
-        /*
-          USER IS FREE
-        */
-
-        else {
-
-          resource.classList.add("locked");
-
-
-          if (
-            !resource.querySelector(".lock-label")
-          ) {
-
-            const lock =
-              document.createElement("div");
-
-            lock.className =
-              "lock-label";
-
-            lock.textContent =
-              "Pro";
-
-            resource.appendChild(lock);
-
-          }
-
-
-          if (button) {
-
-            /*
-              Keep existing real resource links
-              unavailable for Free users.
-            */
-
-            if (
-              button.getAttribute("data-resource") ===
-              "premium-insights" ||
-              button.getAttribute("data-resource") ===
-              "selected-research"
-            ) {
-
-              button.href =
-                "payment.html?plan=pro";
-
-            } else {
-
-              button.href =
-                "payment.html?plan=pro";
-
-            }
-
-            button.textContent =
-              "Get Pro — ₹99 →";
-
-          }
-
-        }
-
-      });
-
-
-      /*
-        PRO PLUS RESOURCES
-      */
-
-      const proPlusResources =
-        document.querySelectorAll(
-          '[data-plan="Pro Plus"]'
-        );
-
-
-      proPlusResources.forEach(function(resource) {
-
-        const button =
-          resource.querySelector(".resource-btn");
-
-        const lock =
-          resource.querySelector(".lock-label");
-
-
-        /*
-          PRO PLUS USER
-        */
-
-        if (plan === "Pro Plus") {
-
-          resource.classList.remove("locked");
-
-          if (lock) {
-            lock.remove();
-          }
-
-        }
-
-
-        /*
-          PRO USER
-        */
-
-        else if (plan === "Pro") {
-
-          resource.classList.add("locked");
-
-          if (lock) {
-
-            lock.textContent =
-              "Upgrade";
-
-          }
-
-          if (button) {
-
-            button.href =
-              "payment.html?plan=proplus";
-
-            button.textContent =
-              "Upgrade to Pro Plus — ₹149 →";
-
-          }
-
-        }
-
-
-        /*
-          FREE USER
-        */
-
-        else {
-
-          resource.classList.add("locked");
-
-          if (lock) {
-
-            lock.textContent =
-              "Pro Plus";
-
-          }
-
-          if (button) {
-
-            button.href =
-              "payment.html?plan=proplus";
-
-            button.textContent =
-              "Get Pro Plus — ₹149 →";
-
-          }
-
-        }
-
-      });
-
+      }
     }
 
-
-    /*
-      LOAD PAGE
-    */
+    // Save original card destinations and labels before applying membership locks.
+    document.querySelectorAll(".resource-btn").forEach(function(button) {
+      button.dataset.originalHref = button.getAttribute("href") || "#";
+      button.dataset.originalText = button.textContent.trim();
+    });
 
     loadPremiumResources();
-
   </script>
-
 </body>
 </html>
